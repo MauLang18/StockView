@@ -1,0 +1,171 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="StockView.Views.ListArticulosPage"
+             xmlns:xct="clr-namespace:Xamarin.CommunityToolkit.UI.Views;assembly=Xamarin.CommunityToolkit"
+             NavigationPage.HasNavigationBar="False">
+    <Grid BackgroundColor="#f3f5f9" 
+          RowSpacing="0" 
+          HorizontalOptions="FillAndExpand" 
+          VerticalOptions="FillAndExpand">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="180"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid BackgroundColor="#455399"
+              HorizontalOptions="FillAndExpand"
+              VerticalOptions="FillAndExpand">
+            <StackLayout Margin="0,-40,0,0"
+                         HorizontalOptions="Center"
+                         VerticalOptions="Center">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Image HeightRequest="20"
+                           WidthRequest="20"
+                           Margin="20,0"
+                           Source="search.png">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding BuscarCommand}"/>
+                        </Image.GestureRecognizers>
+                    </Image>
+                    <Entry Grid.Column="1"
+                           Placeholder="Buscar"
+                           TextColor="White"
+                           FontSize="15"
+                           HorizontalOptions="FillAndExpand"
+                           VerticalOptions="FillAndExpand"
+                           Text="{Binding Desc}"/>
+                </Grid>
+            </StackLayout>
+        </Grid>
+        <CollectionView Grid.Row="1"
+                        Margin="30"
+                        HorizontalOptions="FillAndExpand"
+                        VerticalOptions="FillAndExpand"
+                        SelectionMode="None"
+                        ItemsSource="{Binding ListArticulo}">
+            <CollectionView.Header>
+                <Label Text="Articulos" 
+                       TextColor="Black"
+                       FontSize="18"
+                       FontAttributes="Bold"/>
+            </CollectionView.Header>
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="20"/>
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame HasShadow="True"
+                           BackgroundColor="Transparent"
+                           VerticalOptions="StartAndExpand"
+                           HorizontalOptions="FillAndExpand"
+                           Padding="0">
+                        <Grid VerticalOptions="StartAndExpand"
+                              HorizontalOptions="FillAndExpand">
+                            <xct:Expander x:Name="MainExpander"
+                                      Tapped="MainExpander_Tapped"
+                                      CollapseAnimationLength="500">
+                                <xct:Expander.Header>
+                                    <Grid HorizontalOptions="FillAndExpand" BackgroundColor="White">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="3*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <BoxView BackgroundColor="#A0A4C9"
+                                                 Opacity="0.2"/>
+                                        <StackLayout HorizontalOptions="Center"
+                                                     VerticalOptions="Center">
+                                            <Label Text="{Binding Codigo}"
+                                                   TextColor="#6670CC"
+                                                   FontSize="13"/>
+                                        </StackLayout>
+                                        <StackLayout Grid.Column="1"
+                                                     HorizontalOptions="Start"
+                                                     VerticalOptions="Center"
+                                                     Margin="20">
+                                            <Label Text="{Binding Descripcion}" 
+                                                   TextColor="Black"
+                                                   FontSize="15"/>
+                                        </StackLayout>
+                                    </Grid>
+                                </xct:Expander.Header>
+                                <Grid RowSpacing="0"
+                                      HorizontalOptions="FillAndExpand"
+                                      HeightRequest="240">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="2*"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid x:Name="DetailsView"
+                                          BackgroundColor="White"
+                                          Padding="20"
+                                          IsVisible="false">
+                                        <StackLayout>
+                                            <Label Text="Detalles"
+                                                   TextColor="Black"
+                                                   FontSize="20"
+                                                   FontAttributes="Bold"
+                                                   Opacity="0.85"/>
+                                            <StackLayout Orientation="Horizontal">
+                                                <Label Text="Codigo:"
+                                                       TextColor="Black"
+                                                       FontSize="16.5"
+                                                       FontAttributes="Bold"/>
+                                                <Label Text="{Binding Codigo}"
+                                                       TextColor="Black"
+                                                       FontSize="16.5"
+                                                       Opacity="0.85"/>
+                                            </StackLayout>
+                                            <StackLayout Orientation="Horizontal">
+                                                <Label Text="Codigo de Proveedor:"
+                                                       TextColor="Black"
+                                                       FontSize="16.5"
+                                                       FontAttributes="Bold"/>
+                                                <Label Text="{Binding CodigoProveedor}"
+                                                       TextColor="Black"
+                                                       FontSize="16.5"
+                                                       Opacity="0.85"/>
+                                            </StackLayout>
+                                            <StackLayout Orientation="Horizontal">
+                                                <Label Text="Descripcion:"
+                                                       TextColor="Black"
+                                                       FontSize="16.5"
+                                                       FontAttributes="Bold"/>
+                                                <Label Text="{Binding Descripcion}"
+                                                       TextColor="Black"
+                                                       FontSize="16.5"
+                                                       Opacity="0.85"/>
+                                            </StackLayout>
+                                            <StackLayout Orientation="Horizontal">
+                                                <Label Text="Cantidad:"
+                                                       TextColor="Black"
+                                                       FontSize="16.5"
+                                                       FontAttributes="Bold"/>
+                                                <Label Text="{Binding CantidadDisponible}"
+                                                       TextColor="Black"
+                                                       FontSize="16.5"
+                                                       Opacity="0.85"/>
+                                            </StackLayout>
+                                            <StackLayout Orientation="Horizontal">
+                                                <Label Text="Precio:"
+                                                       TextColor="Black"
+                                                       FontSize="16.5"
+                                                       FontAttributes="Bold"/>
+                                                <Label Text="{Binding Precio}"
+                                                       TextColor="Black"
+                                                       FontSize="16.5"
+                                                       Opacity="0.85"/>
+                                            </StackLayout>
+                                        </StackLayout>
+                                    </Grid>
+                                </Grid>
+                            </xct:Expander>
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>
