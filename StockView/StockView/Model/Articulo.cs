@@ -11,12 +11,11 @@ namespace StockView.Model
         public decimal CantidadDisponible { get; set; }
     }
 
-    public class ApiResponse
+    public class ApiResponse1
     {
         public bool IsSuccess { get; set; }
         public List<Articulo> Data { get; set; }
         public string Message { get; set; }
         public object Errors { get; set; }
     }
-
 }

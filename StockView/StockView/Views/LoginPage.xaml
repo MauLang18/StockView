@@ -4,7 +4,7 @@
              x:Class="StockView.Views.LoginPage"
              NavigationPage.HasNavigationBar="False">
     <StackLayout BackgroundColor="#090979">
-        <Label Text="GUARIDAS"
+        <Label Text="StockView"
            HorizontalOptions="Center"
            TextColor="Gainsboro"
            FontSize="30"
@@ -27,7 +27,8 @@
                            TextColor="Black"/>
                         <Entry x:Name="txtUsuario"
                            Placeholder="Escribe el nombre de usuario"
-                           PlaceholderColor="Gray"/>
+                           PlaceholderColor="Gray"
+                           Text="{Binding Usuario}"/>
                     </StackLayout>
                 </Frame>
                 <Frame HasShadow="False"
@@ -40,7 +41,8 @@
                         <Entry x:Name="txtContrasena"
                            Placeholder="Escriba la contraseña"
                            IsPassword="True"
-                           PlaceholderColor="Gray"/>
+                           PlaceholderColor="Gray"
+                           Text="{Binding Password}"/>
                     </StackLayout>
                 </Frame>
                 <Frame HasShadow="False"
@@ -49,7 +51,7 @@
                         <Button Text="Iniciar Sesión"
                             BackgroundColor="#00d4ff"
                             TextColor="Gray"
-                            Command="{Binding IrListaEmpleadosCommand}"/>
+                            Command="{Binding LoginCommand}"/>
                     </StackLayout>
                 </Frame>
             </StackLayout>

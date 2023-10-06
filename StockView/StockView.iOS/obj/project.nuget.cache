@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "ikXthY0sdYFCOIcENPMpZiSwRMOqTIzuoWiFQ7EqUjWsmA4y46/GZ2PWytZTQRUVXRTsPQbZaJ1kCjE9VL7KAA==",
+  "dgSpecHash": "mSrSnT+HY3BJnASd05nkt9Gnr3rhYqE5YxvepJnw9NbTFty0/dBMFsfRrW8AS4988AEMwzOpke6DLW5eYORh0g==",
   "success": true,
   "projectFilePath": "C:\\Users\\Maurice Lang\\Desktop\\Aplicacion de vendedores\\FrontEnd\\StockView\\StockView.iOS\\StockView.iOS.csproj",
   "expectedPackageFiles": [
@@ -9,7 +9,7 @@
     "C:\\Users\\Maurice Lang\\.nuget\\packages\\system.numerics.vectors\\4.5.0\\system.numerics.vectors.4.5.0.nupkg.sha512",
     "C:\\Users\\Maurice Lang\\.nuget\\packages\\xamarin.communitytoolkit\\2.0.6\\xamarin.communitytoolkit.2.0.6.nupkg.sha512",
     "C:\\Users\\Maurice Lang\\.nuget\\packages\\xamarin.essentials\\1.7.0\\xamarin.essentials.1.7.0.nupkg.sha512",
-    "C:\\Users\\Maurice Lang\\.nuget\\packages\\xamarin.forms\\5.0.0.2612\\xamarin.forms.5.0.0.2612.nupkg.sha512",
+    "C:\\Users\\Maurice Lang\\.nuget\\packages\\xamarin.forms\\5.0.0.2291\\xamarin.forms.5.0.0.2291.nupkg.sha512",
     "C:\\Users\\Maurice Lang\\.nuget\\packages\\xamarin.forms.pancakeview\\2.3.0.759\\xamarin.forms.pancakeview.2.3.0.759.nupkg.sha512"
   ],
   "logs": []

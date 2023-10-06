@@ -1,4 +1,8 @@
-﻿using StockView.Views;
+﻿using StockView.Data;
+using StockView.Model;
+using StockView.Views;
+using System.Collections.ObjectModel;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -8,7 +12,7 @@ namespace StockView.ViewModel
     public class LoginPageViewModel : BaseViewModel
     {
         #region VARIABLES
-        string _Texto;
+        ObservableCollection<Login> _Data;
         string _Password;
         string _Usuario;
         #endregion
@@ -19,10 +23,14 @@ namespace StockView.ViewModel
         }
         #endregion
         #region OBJETOS
-        public string Texto
+        public ObservableCollection<Login> Data
         {
-            get { return _Texto; }
-            set { SetValue(ref _Texto, value); }
+            get { return _Data; }
+            set
+            {
+                SetValue(ref _Data, value);
+                OnPropertyChanged();
+            }
         }
         public string Password
         {
@@ -36,17 +44,29 @@ namespace StockView.ViewModel
         }
         #endregion
         #region PROCESOS
-        public async Task IrListaEmpleados()
+        public async Task Ingresar()
         {
-            await Navigation.PushAsync(new ListArticulosPage());
+            Data = await Metodos.Login(Usuario , Password);
+
+            if (Data == null)
+            {
+                await DisplayAlert("No se pudo ingresar","Usuario o Contraseña incorrecta, intentelo de nuevo","OK");
+            }
+            else
+            {
+                await Navigation.PushAsync(new ListArticulosPage());
+            }
+
+            Data.Clear();
         }
+
         public void ProcesoSimple()
         {
-
+            
         }
         #endregion
         #region COMANDOS
-        public ICommand IrListaEmpleadosCommand => new Command(async () => await IrListaEmpleados());
+        public ICommand LoginCommand => new Command(async () => await Ingresar());
         public ICommand ProcesoSimpcommand => new Command(ProcesoSimple);
         #endregion
     }
