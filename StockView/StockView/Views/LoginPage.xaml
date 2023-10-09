@@ -3,13 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="StockView.Views.LoginPage"
              NavigationPage.HasNavigationBar="False">
-    <StackLayout BackgroundColor="#090979">
+    <StackLayout BackgroundColor="#455399">
         <Label Text="StockView"
            HorizontalOptions="Center"
            TextColor="Gainsboro"
            FontSize="30"
            FontAttributes="Bold"/>
-        <Image Source="registro_en_linea.png"
+        <Image Source="packages.png"
            HorizontalOptions="Center"
            HeightRequest="250"/>
         <Frame HasShadow="False"

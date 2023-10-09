@@ -1,8 +1,6 @@
 ﻿using StockView.Data;
-using StockView.Model;
 using StockView.Views;
-using System.Collections.ObjectModel;
-using System.Security.Cryptography;
+using System;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -12,18 +10,54 @@ namespace StockView.ViewModel
     public class LoginPageViewModel : BaseViewModel
     {
         #region VARIABLES
-        ObservableCollection<Login> _Data;
+        string _Data;
         string _Password;
         string _Usuario;
+        private SecureStore _secureStore;
         #endregion
         #region CONSTRUCTOR
         public LoginPageViewModel(INavigation navigation)
         {
             Navigation = navigation;
+            _secureStore = new SecureStore();
+
+            Initialize();
+        }
+
+        private async void Initialize()
+        {
+            // Leer el token almacenado
+            string data = await _secureStore.ReadAuthTokenAsync();
+
+            // Validar y realizar acciones basadas en el token
+            if (string.IsNullOrEmpty(data))
+            {
+                // No hay token almacenado, realizar acciones correspondientes
+                Console.WriteLine("No hay token almacenado.");
+            }
+            else
+            {
+                // Hay un token almacenado, realizar acciones correspondientes
+                Console.WriteLine("Token almacenado: " + data);
+
+                // Puedes verificar si el token ha expirado y actuar en consecuencia
+                if (await _secureStore.IsAuthTokenExpiredAsync())
+                {
+                    Console.WriteLine("El token ha expirado.");
+                    // Realizar acciones para cerrar sesión y limpiar el token si es necesario
+                    await _secureStore.DeleteAuthTokenIfExpiredAsync();
+                }
+                else
+                {
+                    Console.WriteLine("El token es válido.");
+                    // El token es válido, puedes navegar a la página correspondiente
+                    await Navigation.PushAsync(new ListArticulosPage(data));
+                }
+            }
         }
         #endregion
         #region OBJETOS
-        public ObservableCollection<Login> Data
+        public string Data
         {
             get { return _Data; }
             set
@@ -48,16 +82,15 @@ namespace StockView.ViewModel
         {
             Data = await Metodos.Login(Usuario , Password);
 
-            if (Data == null)
+            if (Data == "El usuario y/o contraseña es incorrecta, compruébala.")
             {
-                await DisplayAlert("No se pudo ingresar","Usuario o Contraseña incorrecta, intentelo de nuevo","OK");
+                await DisplayAlert("No se pudo ingresar",Data,"OK");
             }
             else
             {
-                await Navigation.PushAsync(new ListArticulosPage());
+                await _secureStore.StoreAuthTokenAsync(Data);
+                await Navigation.PushAsync(new ListArticulosPage(Data));
             }
-
-            Data.Clear();
         }
 
         public void ProcesoSimple()

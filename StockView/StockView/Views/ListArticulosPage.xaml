@@ -38,6 +38,7 @@
                            HorizontalOptions="FillAndExpand"
                            VerticalOptions="FillAndExpand"
                            Text="{Binding Desc}"/>
+                    <Button Text="Cerrar Sesion" Command="{Binding LogoutCommand}"/>
                 </Grid>
             </StackLayout>
         </Grid>

@@ -10,10 +10,10 @@ namespace StockView.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ListArticulosPage : ContentPage
     {
-        public ListArticulosPage()
+        public ListArticulosPage(string token)
         {
             InitializeComponent();
-            BindingContext = new ListArticulosPageViewModel(Navigation);
+            BindingContext = new ListArticulosPageViewModel(Navigation, token);
         }
 
         private async Task OpenAnimation(View view, uint length = 250)

@@ -7,18 +7,22 @@ using System.Net.Http;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using System.Net.Http.Headers;
 
 namespace StockView.Data
 {
     public class Metodos
     {
-        public static async Task<ObservableCollection<Articulo>> ObtenerArticulos(string desc)
+        public static async Task<ObservableCollection<Articulo>> ObtenerArticulos(string desc, string token)
         {
             try
             {
                 using (HttpClient client = new HttpClient(await GetInsecureHandler()))
                 {
                     var uri = new Uri($"http://190.113.124.155:9090/api/Articulo?desc={Uri.EscapeDataString(desc)}");
+
+                    // Agregar el token a la cabecera de autorización
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
                     HttpResponseMessage response = await client.GetAsync(uri);
 
@@ -56,18 +60,19 @@ namespace StockView.Data
             }
         }
 
-        public static async Task<ObservableCollection<Login>> Login(string username, string password)
+
+        public static async Task<string> Login(string username, string password)
         {
             try
             {
                 using (HttpClient client = new HttpClient(await GetInsecureHandler()))
                 {
-                    var uri = new Uri("http://190.113.124.155:9090/api/Usuario");
+                    var uri = new Uri("http://190.113.124.155:9090/api/Auth/Login");
 
                     var loginData = new
                     {
                         Username = username,
-                        Pass = password
+                        Password = password
                     };
 
                     string jsonContent = JsonConvert.SerializeObject(loginData);
@@ -76,25 +81,28 @@ namespace StockView.Data
                     HttpResponseMessage response = await client.PostAsync(uri, content);
 
                     string resultado = await response.Content.ReadAsStringAsync();
-                    string mensaje = string.Empty;
+
+
 
                     if (response.IsSuccessStatusCode)
                     {
                         ApiResponse2 apiResponse = JsonConvert.DeserializeObject<ApiResponse2>(resultado);
                         if (apiResponse != null && apiResponse.IsSuccess)
                         {
-                            Console.WriteLine(apiResponse.Data);
-                            return new ObservableCollection<Login>(apiResponse.Data);
+                            string token = apiResponse.Data; // Guardar el token en una variable para uso posterior
+                            Console.WriteLine("Token: " + token);
+                            return token;
                         }
                         else
                         {
-                            mensaje = apiResponse != null ? apiResponse.Message : "Error desconocido en la respuesta.";
-                            throw new ApplicationException(mensaje);
+                            string mensaje = apiResponse != null ? apiResponse.Message : "Error desconocido en la respuesta.";
+                            //throw new ApplicationException(mensaje);
+                            return mensaje;
                         }
                     }
                     else
                     {
-                        mensaje = "Respuesta no exitosa. Código: " + response.StatusCode;
+                        string mensaje = "Respuesta no exitosa. Código: " + response.StatusCode;
                         throw new ApplicationException(mensaje);
                     }
                 }

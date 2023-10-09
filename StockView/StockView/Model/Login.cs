@@ -11,7 +11,7 @@ namespace StockView.Model
     public class ApiResponse2
     {
         public bool IsSuccess { get; set; }
-        public List<Login> Data { get; set; }
+        public string Data { get; set; }
         public string Message { get; set; }
         public object Errors { get; set; }
     }
