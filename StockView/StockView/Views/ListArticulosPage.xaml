@@ -22,9 +22,10 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
-                    <Image HeightRequest="20"
-                           WidthRequest="20"
+                    <Image HeightRequest="30"
+                           WidthRequest="30"
                            Margin="20,0"
                            Source="search.png">
                         <Image.GestureRecognizers>
@@ -38,7 +39,15 @@
                            HorizontalOptions="FillAndExpand"
                            VerticalOptions="FillAndExpand"
                            Text="{Binding Desc}"/>
-                    <Button Text="Cerrar Sesion" Command="{Binding LogoutCommand}"/>
+                    <Image Grid.Column="2"
+                           HeightRequest="30"
+                           WidthRequest="30"
+                           Margin="20,0"
+                           Source="logout.png">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding LogoutCommand}"/>
+                        </Image.GestureRecognizers>
+                    </Image>
                 </Grid>
             </StackLayout>
         </Grid>

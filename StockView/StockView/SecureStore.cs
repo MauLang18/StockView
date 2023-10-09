@@ -1,27 +1,17 @@
 ﻿using System;
 using System.Globalization;
-using System.IdentityModel.Tokens.Jwt;
 using System.Threading.Tasks;
 using Xamarin.Essentials;
-
-public class JwtTokenInfo
-{
-    public DateTime ExpiryTime { get; set; }
-}
 
 public class SecureStore
 {
     private const string AuthTokenKey = "AuthToken";
-    private const string AuthTokenDate = "AuthToken";
+    private const string ExpiryDateKey = "AuthTokenExpiry";
 
-    public async Task StoreAuthTokenAsync(string token)
+    public async Task StoreAuthTokenAsync(string token, DateTime expiryTime)
     {
-        DateTime fechaGuardado = DateTime.Now;
-        string fechaGuardadoString = fechaGuardado.ToString("o", CultureInfo.InvariantCulture);
-
-        // Guardar el token y la fecha de almacenamiento
         await SecureStorage.SetAsync(AuthTokenKey, token);
-        await SecureStorage.SetAsync(AuthTokenDate, fechaGuardadoString);
+        await SecureStorage.SetAsync(ExpiryDateKey, expiryTime.ToString("O"));
     }
 
     public async Task<string> ReadAuthTokenAsync()
@@ -35,43 +25,18 @@ public class SecureStore
         return token;
     }
 
-    public async Task<string> ReadDateTokeAsync()
-    {
-        string date = await SecureStorage.GetAsync(AuthTokenDate);
-        if (string.IsNullOrEmpty(date))
-        {
-            return null;
-        }
-
-        return date;
-    }
-
     public async Task<bool> IsAuthTokenExpiredAsync()
     {
         try
         {
-            string token = await SecureStorage.GetAsync(AuthTokenKey);
-            if (string.IsNullOrEmpty(token))
+            string expiryDateStr = await SecureStorage.GetAsync(ExpiryDateKey);
+            if (string.IsNullOrEmpty(expiryDateStr))
             {
+                // Si no se ha almacenado la fecha de expiración, consideramos que está expirado
                 return true;
             }
 
-            string date = await SecureStorage.GetAsync(AuthTokenKey);
-            if (string.IsNullOrEmpty(date))
-            {
-                return true;
-            }
-
-            var handler = new JwtSecurityTokenHandler();
-            var jsonToken = handler.ReadToken(token) as JwtSecurityToken;
-
-            if (jsonToken == null || jsonToken.Payload == null || !jsonToken.Payload.ContainsKey("exp"))
-            {
-                return true;
-            }
-
-            var expiryTimeUnix = Convert.ToDouble(jsonToken.Payload["exp"]);
-            var expiryTime = DateTimeOffset.FromUnixTimeSeconds((long)expiryTimeUnix).UtcDateTime;
+            DateTime expiryTime = DateTime.Parse(expiryDateStr, null, DateTimeStyles.RoundtripKind);
 
             // Verificar si ha pasado más de 24 horas desde la fecha de almacenamiento
             return DateTime.UtcNow > expiryTime.AddHours(24);
@@ -84,58 +49,17 @@ public class SecureStore
         }
     }
 
-
-
     public async Task DeleteAuthTokenIfExpiredAsync()
     {
         if (await IsAuthTokenExpiredAsync())
         {
-            SecureStorage.Remove(AuthTokenKey);
-        }   
+            await DeleteAuthTokenAsync();
+        }
     }
 
-    public async Task Delete()
+    public async Task DeleteAuthTokenAsync()
     {
         SecureStorage.Remove(AuthTokenKey);
-        SecureStorage.Remove(AuthTokenDate);
-    }
-}
-
-public class JwtTokenHelper
-{
-    public static JwtTokenInfo GetTokenInfo(string token)
-    {
-        var handler = new JwtSecurityTokenHandler();
-        var jsonToken = handler.ReadToken(token) as JwtSecurityToken;
-
-        if (jsonToken == null)
-        {
-            throw new ArgumentException("Invalid JWT token.");
-        }   
-
-        var expiryTimeUnix = jsonToken?.Payload?.Exp;
-        if (expiryTimeUnix == null)
-        {
-            throw new ArgumentException("Token does not contain expiration information.");
-        }  
-
-        var expiryTime = DateTimeOffset.FromUnixTimeSeconds((long)expiryTimeUnix).UtcDateTime;
-
-        return new JwtTokenInfo
-        {
-            ExpiryTime = expiryTime
-        };
-    }
-
-    public static async Task DeleteTokenOnExpiry(string token)
-    {
-        JwtTokenInfo tokenInfo = GetTokenInfo(token);
-
-        // Calcular el tiempo restante antes de la expiración del token
-        TimeSpan tiempoRestante = tokenInfo.ExpiryTime - DateTime.UtcNow;
-
-        // Eliminar el token del SecureStorage cuando expire
-        await Task.Delay(tiempoRestante);
-        SecureStorage.Remove("AuthToken");
+        SecureStorage.Remove(ExpiryDateKey);
     }
 }

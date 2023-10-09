@@ -62,7 +62,8 @@ namespace StockView.ViewModel
         }
         public async Task Logout()
         {
-            await _secureStore.Delete();
+            await _secureStore.DeleteAuthTokenAsync();
+            await Navigation.PopAsync();
         }
 
         public async Task Volver()

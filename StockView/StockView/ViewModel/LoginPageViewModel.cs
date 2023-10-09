@@ -81,6 +81,7 @@ namespace StockView.ViewModel
         public async Task Ingresar()
         {
             Data = await Metodos.Login(Usuario , Password);
+            DateTime fechaGuardado = DateTime.Now;
 
             if (Data == "El usuario y/o contraseña es incorrecta, compruébala.")
             {
@@ -88,7 +89,7 @@ namespace StockView.ViewModel
             }
             else
             {
-                await _secureStore.StoreAuthTokenAsync(Data);
+                await _secureStore.StoreAuthTokenAsync(Data, fechaGuardado);
                 await Navigation.PushAsync(new ListArticulosPage(Data));
             }
         }
