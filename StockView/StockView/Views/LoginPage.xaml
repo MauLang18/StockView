@@ -28,6 +28,7 @@
                         <Entry x:Name="txtUsuario"
                            Placeholder="Escribe el nombre de usuario"
                            PlaceholderColor="Gray"
+                           TextColor="Black"
                            Text="{Binding Usuario}"/>
                     </StackLayout>
                 </Frame>
@@ -41,6 +42,7 @@
                         <Entry x:Name="txtContrasena"
                            Placeholder="Escriba la contraseña"
                            IsPassword="True"
+                           TextColor="Black"
                            PlaceholderColor="Gray"
                            Text="{Binding Password}"/>
                     </StackLayout>
