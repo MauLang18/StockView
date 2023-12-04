@@ -3067,24 +3067,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Maurice Lang\\.nuget\\packages\\": {},
+    "C:\\Users\\MauLang18\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Maurice Lang\\Desktop\\Aplicacion de vendedores\\FrontEnd\\StockView\\StockView.iOS\\StockView.iOS.csproj",
+      "projectUniqueName": "C:\\Users\\MauLang18\\Desktop\\Sistemas\\Aplicacion de vendedores\\FrontEnd\\StockView\\StockView.iOS\\StockView.iOS.csproj",
       "projectName": "StockView.iOS",
-      "projectPath": "C:\\Users\\Maurice Lang\\Desktop\\Aplicacion de vendedores\\FrontEnd\\StockView\\StockView.iOS\\StockView.iOS.csproj",
-      "packagesPath": "C:\\Users\\Maurice Lang\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Maurice Lang\\Desktop\\Aplicacion de vendedores\\FrontEnd\\StockView\\StockView.iOS\\obj\\",
+      "projectPath": "C:\\Users\\MauLang18\\Desktop\\Sistemas\\Aplicacion de vendedores\\FrontEnd\\StockView\\StockView.iOS\\StockView.iOS.csproj",
+      "packagesPath": "C:\\Users\\MauLang18\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\MauLang18\\Desktop\\Sistemas\\Aplicacion de vendedores\\FrontEnd\\StockView\\StockView.iOS\\obj\\",
       "projectStyle": "PackageReference",
       "skipContentFileWrite": true,
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\Maurice Lang\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\MauLang18\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -3098,8 +3098,8 @@
       "frameworks": {
         "xamarinios10": {
           "projectReferences": {
-            "C:\\Users\\Maurice Lang\\Desktop\\Aplicacion de vendedores\\FrontEnd\\StockView\\StockView\\StockView.csproj": {
-              "projectPath": "C:\\Users\\Maurice Lang\\Desktop\\Aplicacion de vendedores\\FrontEnd\\StockView\\StockView\\StockView.csproj"
+            "C:\\Users\\MauLang18\\Desktop\\Sistemas\\Aplicacion de vendedores\\FrontEnd\\StockView\\StockView\\StockView.csproj": {
+              "projectPath": "C:\\Users\\MauLang18\\Desktop\\Sistemas\\Aplicacion de vendedores\\FrontEnd\\StockView\\StockView\\StockView.csproj"
             }
           }
         }

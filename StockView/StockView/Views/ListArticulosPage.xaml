@@ -3,7 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="StockView.Views.ListArticulosPage"
              xmlns:xct="clr-namespace:Xamarin.CommunityToolkit.UI.Views;assembly=Xamarin.CommunityToolkit"
+             xmlns:local="clr-namespace:StockView.Data"
              NavigationPage.HasNavigationBar="False">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local:CantidadStockConverter x:Key="CantidadStockConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <Grid BackgroundColor="#f3f5f9" 
           RowSpacing="0" 
           HorizontalOptions="FillAndExpand" 
@@ -33,6 +39,7 @@
                         </Image.GestureRecognizers>
                     </Image>
                     <Entry Grid.Column="1"
+                           x:Name="txtDescripcion"
                            Placeholder="Buscar"
                            TextColor="White"
                            FontSize="15"
@@ -58,10 +65,18 @@
                         SelectionMode="None"
                         ItemsSource="{Binding ListArticulo}">
             <CollectionView.Header>
-                <Label Text="Articulos" 
-                       TextColor="Black"
-                       FontSize="18"
-                       FontAttributes="Bold"/>
+                <StackLayout Orientation="Horizontal"
+                 VerticalOptions="Center"
+                 HorizontalOptions="Center">
+                    <Image HeightRequest="30"
+                           WidthRequest="30"
+                           Margin="20,0"
+                           Source="{Binding SortIcon}">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding SortCommand}"/>
+                        </Image.GestureRecognizers>
+                    </Image>
+                </StackLayout>
             </CollectionView.Header>
             <CollectionView.ItemsLayout>
                 <LinearItemsLayout Orientation="Vertical" ItemSpacing="20"/>
@@ -149,11 +164,21 @@
                                                        Opacity="0.85"/>
                                             </StackLayout>
                                             <StackLayout Orientation="Horizontal">
-                                                <Label Text="Cantidad:"
+                                                <Label Text="Bodega 1:"
                                                        TextColor="Black"
                                                        FontSize="16.5"
                                                        FontAttributes="Bold"/>
-                                                <Label Text="{Binding CantidadDisponible}"
+                                                <Label Text="{Binding CantidadBodega1, Converter={StaticResource CantidadStockConverter}}"
+                                                       TextColor="Black"
+                                                       FontSize="16.5"
+                                                       Opacity="0.85"/>
+                                            </StackLayout>
+                                            <StackLayout Orientation="Horizontal">
+                                                <Label Text="Bodega 2:"
+                                                       TextColor="Black"
+                                                       FontSize="16.5"
+                                                       FontAttributes="Bold"/>
+                                                <Label Text="{Binding CantidadBodega2, Converter={StaticResource CantidadStockConverter}}"
                                                        TextColor="Black"
                                                        FontSize="16.5"
                                                        Opacity="0.85"/>

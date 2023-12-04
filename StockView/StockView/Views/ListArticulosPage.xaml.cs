@@ -1,4 +1,6 @@
-﻿using StockView.ViewModel;
+﻿using StockView.Data;
+using StockView.Model;
+using StockView.ViewModel;
 using System;
 using System.Threading.Tasks;
 using Xamarin.CommunityToolkit.UI.Views;
@@ -10,10 +12,11 @@ namespace StockView.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ListArticulosPage : ContentPage
     {
-        public ListArticulosPage(string token)
+        public ListArticulosPage(string token, string privilegios)
         {
             InitializeComponent();
-            BindingContext = new ListArticulosPageViewModel(Navigation, token);
+            BindingContext = new ListArticulosPageViewModel(Navigation, token, privilegios);
+            txtDescripcion.Completed += OnDescripcionEntryCompleted;
         }
 
         private async Task OpenAnimation(View view, uint length = 250)
@@ -45,6 +48,15 @@ namespace StockView.Views
             else
             {
                 await CloseAnimation(detailsView);
+            }
+        }
+
+        private async void OnDescripcionEntryCompleted(object sender, EventArgs e)
+        {
+            if (BindingContext is ListArticulosPageViewModel viewModel)
+            {
+                if (viewModel.BuscarCommand.CanExecute(null))
+                    viewModel.BuscarCommand.Execute(null);
             }
         }
     }

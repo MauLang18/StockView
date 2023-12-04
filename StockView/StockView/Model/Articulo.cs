@@ -8,7 +8,8 @@ namespace StockView.Model
         public string CodigoProveedor { get; set; }
         public string Descripcion { get; set; }
         public decimal Precio { get; set; }
-        public decimal CantidadDisponible { get; set; }
+        public decimal CantidadBodega1 { get; set; }
+        public decimal CantidadBodega2 { get; set; }
     }
 
     public class ApiResponse1

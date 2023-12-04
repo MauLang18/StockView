@@ -13,50 +13,52 @@ namespace StockView.Data
 {
     public class Metodos
     {
-        public static async Task<ObservableCollection<Articulo>> ObtenerArticulos(string desc, string token)
+        public static async Task<ObservableCollection<Articulo>> ObtenerArticulos(string desc, string token, string priv, string order)
         {
             try
             {
                 using (HttpClient client = new HttpClient(await GetInsecureHandler()))
                 {
-                    var uri = new Uri($"http://190.113.124.155:9090/api/Articulo?desc={Uri.EscapeDataString(desc)}");
+                    var uri = new Uri($"http://190.113.124.155:9092/api/Articulo?desc={Uri.EscapeDataString(desc)}&priv={Uri.EscapeDataString(priv)}&order={Uri.EscapeDataString(order)}");
 
-                    // Agregar el token a la cabecera de autorización
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
                     HttpResponseMessage response = await client.GetAsync(uri);
 
                     string resultado = await response.Content.ReadAsStringAsync();
-                    string mensaje = string.Empty;
 
                     if (response.IsSuccessStatusCode)
                     {
                         ApiResponse1 apiResponse = JsonConvert.DeserializeObject<ApiResponse1>(resultado);
+
                         if (apiResponse != null && apiResponse.IsSuccess)
                         {
                             return new ObservableCollection<Articulo>(apiResponse.Data);
                         }
                         else
                         {
-                            mensaje = apiResponse != null ? apiResponse.Message : "Error desconocido en la respuesta.";
+                            string mensaje = apiResponse != null ? apiResponse.Message : "Error desconocido en la respuesta.";
                             throw new ApplicationException(mensaje);
                         }
                     }
                     else
                     {
-                        mensaje = "Respuesta no exitosa. Código: " + response.StatusCode;
+                        string mensaje = "Respuesta no exitosa. Código: " + response.StatusCode;
                         throw new ApplicationException(mensaje);
                     }
                 }
             }
-            catch (WebException wex)
+            catch (HttpRequestException hrex)
             {
-                throw new ApplicationException("WEB_ERROR: [" + wex.Message + "]" + (wex.InnerException != null ? " INNER: [" + wex.InnerException.Message + "]" : ""));
+                throw new ApplicationException("Error al realizar la solicitud HTTP: " + hrex.Message, hrex);
+            }
+            catch (JsonException jex)
+            {
+                throw new ApplicationException("Error al deserializar la respuesta JSON: " + jex.Message, jex);
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Se produjo una excepción: {0}", ex.Message);
-                throw new ApplicationException("ERROR: [" + ex.Message + "]" + (ex.InnerException != null ? " INNER: [" + ex.InnerException.Message + "]" : ""));
+                throw new ApplicationException("Se produjo una excepción: " + ex.Message, ex);
             }
         }
 
@@ -67,7 +69,7 @@ namespace StockView.Data
             {
                 using (HttpClient client = new HttpClient(await GetInsecureHandler()))
                 {
-                    var uri = new Uri("http://190.113.124.155:9090/api/Auth/Login");
+                    var uri = new Uri("http://190.113.124.155:9092/api/Auth/Login");
 
                     var loginData = new
                     {
@@ -103,6 +105,100 @@ namespace StockView.Data
                     else
                     {
                         string mensaje = "Respuesta no exitosa. Código: " + response.StatusCode;
+                        throw new ApplicationException(mensaje);
+                    }
+                }
+            }
+            catch (WebException wex)
+            {
+                throw new ApplicationException("WEB_ERROR: [" + wex.Message + "]" + (wex.InnerException != null ? " INNER: [" + wex.InnerException.Message + "]" : ""));
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Se produjo una excepción: {0}", ex.Message);
+                throw new ApplicationException("ERROR: [" + ex.Message + "]" + (ex.InnerException != null ? " INNER: [" + ex.InnerException.Message + "]" : ""));
+            }
+        }
+
+        public static async Task<RolsData> ObtenerRol(int id, string token)
+        {
+            try
+            {
+                using (HttpClient client = new HttpClient(await GetInsecureHandler()))
+                {
+                    var uri = new Uri($"http://190.113.124.155:9092/api/Rol/{Uri.EscapeDataString(id.ToString())}");
+
+                    // Agregar el token a la cabecera de autorización
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+                    HttpResponseMessage response = await client.GetAsync(uri);
+
+                    string resultado = await response.Content.ReadAsStringAsync();
+                    string mensaje = string.Empty;
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        Rols apiResponse = JsonConvert.DeserializeObject<Rols>(resultado);
+                        if (apiResponse != null && apiResponse.IsSuccess)
+                        {
+                            return apiResponse.Data;
+                        }
+                        else
+                        {
+                            mensaje = apiResponse != null ? apiResponse.Message : "Error desconocido en la respuesta.";
+                            throw new ApplicationException(mensaje);
+                        }
+                    }
+                    else
+                    {
+                        mensaje = "Respuesta no exitosa. Código: " + response.StatusCode;
+                        throw new ApplicationException(mensaje);
+                    }
+                }
+            }
+            catch (WebException wex)
+            {
+                throw new ApplicationException("WEB_ERROR: [" + wex.Message + "]" + (wex.InnerException != null ? " INNER: [" + wex.InnerException.Message + "]" : ""));
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Se produjo una excepción: {0}", ex.Message);
+                throw new ApplicationException("ERROR: [" + ex.Message + "]" + (ex.InnerException != null ? " INNER: [" + ex.InnerException.Message + "]" : ""));
+            }
+        }
+
+        public static async Task<UsuariosData> ObtenerUsuario(string user, string token)
+        {
+            try
+            {
+                using (HttpClient client = new HttpClient(await GetInsecureHandler()))
+                {
+                    var uri = new Uri($"http://190.113.124.155:9092/api/Usuario/User?user={Uri.EscapeDataString(user)}");
+
+                    // Agregar el token a la cabecera de autorización
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+                    HttpResponseMessage response = await client.GetAsync(uri);
+
+                    string resultado = await response.Content.ReadAsStringAsync();
+                    string mensaje = string.Empty;
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        Usuarios apiResponse = JsonConvert.DeserializeObject<Usuarios>(resultado);
+                        if (apiResponse != null && apiResponse.IsSuccess)
+                        {
+                            return apiResponse.Data;
+                        }
+                        else
+                        {
+                            mensaje = apiResponse != null ? apiResponse.Message : "Error desconocido en la respuesta.";
+                            throw new ApplicationException(mensaje);
+                        }
+                    }
+                    else
+                    {
+                        mensaje = "Respuesta no exitosa. Código: " + response.StatusCode;
                         throw new ApplicationException(mensaje);
                     }
                 }
