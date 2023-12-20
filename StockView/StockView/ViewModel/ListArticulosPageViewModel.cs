@@ -35,7 +35,10 @@ namespace StockView.ViewModel
             Privilegios = privilegios;
             _secureStore = new SecureStore();
 
-            MostrarArticulo();
+            MessagingCenter.Subscribe<CarritoCompraPageViewModel>(this, "ActualizarPagina", async (sender) =>
+            {
+                await MostrarArticulo();
+            });
         }
         #endregion
 
@@ -88,18 +91,25 @@ namespace StockView.ViewModel
         #region PROCESOS
         public async Task MostrarArticulo()
         {
-            ListArticulo = await Metodos.ObtenerArticulos("", Token, Privilegios, "asc");
-            ListCarritoCompra = await Metodos.ObtenerByVendedor(User, Token);
-
-            if (ListArticulo != null && ListArticulo.Any())
+            if (Desc == null || Desc == "")
             {
-                foreach (var articulo in ListArticulo)
+                ListArticulo = null;
+            }
+            else
+            {
+                ListArticulo = await Metodos.ObtenerArticulos(Desc, Token, Privilegios, "asc");
+                ListCarritoCompra = await Metodos.ObtenerByVendedor(User, Token);
+
+                if (ListArticulo != null && ListArticulo.Any())
                 {
-                    articulo.Count = 0;
-                    // Verificar si el artículo está en ListCarritoCompra y establecer IsCarrito en consecuencia
-                    if (ListCarritoCompra != null && ListCarritoCompra.Any(a => a.Codigo == articulo.Codigo))
+                    foreach (var articulo in ListArticulo)
                     {
-                        articulo.IsCarrito = true;
+                        articulo.Count = 0;
+                        // Verificar si el artículo está en ListCarritoCompra y establecer IsCarrito en consecuencia
+                        if (ListCarritoCompra != null && ListCarritoCompra.Any(a => a.Codigo == articulo.Codigo))
+                        {
+                            articulo.IsCarrito = true;
+                        }
                     }
                 }
             }
@@ -314,6 +324,7 @@ namespace StockView.ViewModel
 
                         selectedArticulo.IsCarrito = true;
                         OnPropertyChanged(nameof(selectedArticulo.CarritoIcon));
+                        MessagingCenter.Send(this, "ActualizarPagina");
                     }
                     else
                     {
@@ -322,15 +333,6 @@ namespace StockView.ViewModel
                 }
             }
         }
-
-        public async Task Less(Articulo selectedArticulo)
-        {
-            if (selectedArticulo != null && selectedArticulo.Count > 0)
-            {
-                selectedArticulo.Count -= 1;
-            }
-        }
-
         #endregion
 
         #region COMANDOS
@@ -345,7 +347,6 @@ namespace StockView.ViewModel
         public ICommand SortCommand => new Command(async () => await Sort());
         public ICommand CarritoCommand => new Command(async () => await Carrito());
         public ICommand MoreCommand => new Command<Articulo>(async (articulo) => await More(articulo));
-        public ICommand LessCommand => new Command<Articulo>(async (articulo) => await Less(articulo));
         #endregion
     }
 }

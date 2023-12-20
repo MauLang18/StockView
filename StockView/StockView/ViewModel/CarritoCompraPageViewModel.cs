@@ -12,6 +12,7 @@ namespace StockView.ViewModel
     public class CarritoCompraPageViewModel : BaseViewModel
     {
         string _Desc;
+        string _Data;
         string User;
         string Token;
         ObservableCollection<CarritoCompra> _ListCarritoCompra;
@@ -23,12 +24,28 @@ namespace StockView.ViewModel
             Token = token;
 
             MostrarArticulo();
+
+            MessagingCenter.Subscribe<ListArticulosPageViewModel>(this, "ActualizarPagina", async (sender) =>
+            {
+                await MostrarArticulo();
+            });
+
+            MessagingCenter.Subscribe<CarritoCompraPageViewModel>(this, "ActualizarPagina", async (sender) =>
+            {
+                await MostrarArticulo();
+            });
         }
 
         public string Desc
         {
             get { return _Desc; }
             set { SetValue(ref _Desc, value); }
+        }
+
+        public string Data
+        {
+            get { return _Data; }
+            set { SetValue(ref _Data, value); }
         }
 
         public ObservableCollection<CarritoCompra> ListCarritoCompra
@@ -51,25 +68,110 @@ namespace StockView.ViewModel
             OpenMenuRequested?.Invoke(this, EventArgs.Empty);
         }
 
-        public async Task More(Articulo selectedArticulo)
+        public async Task More(CarritoCompra selectedArticulo)
         {
             if (selectedArticulo != null)
             {
-                selectedArticulo.Count += 1;
+                selectedArticulo.Cantidad += 1;
+
+                bool actualizado = await Metodos.ActualizarEnCarrito(selectedArticulo.Id, selectedArticulo.Cantidad, Token);
+
+                if (actualizado)
+                {
+                    Console.WriteLine("modificado del carrito");
+                    MessagingCenter.Send(this, "ActualizarPagina");
+                }
+                else
+                {
+                    await DisplayAlert("No se pudo modificar", Data, "OK");
+                }
             }
         }
 
-        public async Task Less(Articulo selectedArticulo)
+        public async Task Less(CarritoCompra selectedArticulo)
         {
-            if (selectedArticulo != null && selectedArticulo.Count > 0)
+            if (selectedArticulo != null && selectedArticulo.Cantidad > 0)
             {
-                selectedArticulo.Count -= 1;
+                selectedArticulo.Cantidad -= 1;
+
+                bool actualizado = await Metodos.ActualizarEnCarrito(selectedArticulo.Id, selectedArticulo.Cantidad, Token);
+
+                if (actualizado)
+                {
+                    Console.WriteLine("modificado del carrito");
+                    MessagingCenter.Send(this, "ActualizarPagina");
+                }
+                else
+                {
+                    await DisplayAlert("No se pudo modificar", Data, "OK");
+                }
             }
         }
+
+        public async Task Delete(CarritoCompra selectedArticulo)
+        {
+            if (selectedArticulo != null)
+            {
+                bool eliminado = await Metodos.EliminarDelCarrito(selectedArticulo.Id ,Token);
+
+                if (eliminado)
+                {
+                    await DisplayAlert("Eliminado del carrito", Data, "OK");
+                    MessagingCenter.Send(this, "ActualizarPagina");
+                }
+                else
+                {
+                    await DisplayAlert("No se pudo eliminar", Data, "OK");
+                }
+            }
+        }
+
+        public async Task GenerarOrden()
+        {
+            if (ListCarritoCompra != null && ListCarritoCompra.Any())
+            {
+                string correoHTML = "<h1>Detalles del Pedido</h1><ul>";
+
+                foreach (var item in ListCarritoCompra)
+                {
+                    correoHTML += $"<li><strong>Producto:</strong> {item.Descripcion} - <strong>Cantidad:</strong> {item.Cantidad}</li>";
+                }
+
+                correoHTML += "</ul>";
+
+                bool enviado = await Metodos.EnviarCorreo("mlang@grupostedi.com", "Pedido", correoHTML, Token);
+
+                if (enviado)
+                {
+                    bool eliminado = await Metodos.EliminarDelCarritoByVendedor(User, Token);
+
+                    if (eliminado)
+                    {
+                        await DisplayAlert("Pedido realizado", Data, "OK");
+                        MessagingCenter.Send(this, "ActualizarPagina");
+                    }
+                    else
+                    {
+                        await DisplayAlert("No se pudo realizar el pedido", Data, "OK");
+                    }
+                }
+                else
+                {
+                    await DisplayAlert("No se pudo realizar el pedido", Data, "OK");
+                }
+            }
+            else
+            {
+                await DisplayAlert("No hay productos en el carrito", Data, "OK");
+            }
+        }
+
 
         public event EventHandler OpenMenuRequested;
         public ICommand CarritoCommand => new Command(async () => await Carrito());
-        public ICommand MoreCommand => new Command<Articulo>(async (articulo) => await More(articulo));
-        public ICommand LessCommand => new Command<Articulo>(async (articulo) => await Less(articulo));
+        public ICommand IncrementCommand => new Command<CarritoCompra>(async (articulo) => await More(articulo));
+        public ICommand DecrementCommand => new Command<CarritoCompra>(async (articulo) => await Less(articulo));
+        public ICommand DeleteCommand => new Command<CarritoCompra>(async (articulo) => await Delete(articulo));
+        public ICommand GenerateOrderCommand => new Command(async () => await GenerarOrden());
     }
 }

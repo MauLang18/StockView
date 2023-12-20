@@ -50,7 +50,7 @@ namespace StockView.ViewModel
                 else
                 {
                     Console.WriteLine("El token es válido.");
-                    await Navigation.PushAsync(new ListArticulosPage(data, privilegios, user));
+                    await Navigation.PushAsync(new MainPage(data, privilegios, user));
                 }
             }
         }

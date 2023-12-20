@@ -346,6 +346,60 @@ namespace StockView.Data
             }
         }
 
+        public static async Task<bool> EliminarDelCarritoByVendedor(string vendedor, string token)
+        {
+            try
+            {
+                using (HttpClient client = new HttpClient(await GetInsecureHandler()))
+                {
+                    var uri = new Uri($"http://190.113.124.155:9092/api/CarritoCompra/Remove/Vendedor?vendedor={Uri.EscapeDataString(vendedor)}");
+
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+                    HttpResponseMessage response = await client.DeleteAsync(uri);
+
+                    return response.IsSuccessStatusCode;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Se produjo una excepción: {0}", ex.Message);
+                throw new ApplicationException("ERROR: [" + ex.Message + "]" + (ex.InnerException != null ? " INNER: [" + ex.InnerException.Message + "]" : ""));
+            }
+        }
+
+        public static async Task<bool> EnviarCorreo(string para, string asunto, string contenido, string token)
+        {
+            try
+            {
+                using (HttpClient client = new HttpClient(await GetInsecureHandler()))
+                {
+                    var uri = new Uri("http://190.113.124.155:9092/api/Mail/Send");
+
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+                    var nuevoArticulo = new
+                    {
+                        para = para,
+                        asunto = asunto,
+                        contenido = contenido
+                    };
+
+                    string jsonBody = JsonConvert.SerializeObject(nuevoArticulo);
+                    HttpContent content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
+
+                    HttpResponseMessage response = await client.PostAsync(uri, content);
+
+                    return response.IsSuccessStatusCode;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Se produjo una excepción: {0}", ex.Message);
+                throw new ApplicationException("ERROR: [" + ex.Message + "]" + (ex.InnerException != null ? " INNER: [" + ex.InnerException.Message + "]" : ""));
+            }
+        }
+
         private static async Task<HttpClientHandler> GetInsecureHandler()
         {
             HttpClientHandler handler = new HttpClientHandler();

@@ -27,6 +27,15 @@ namespace StockView.Views
         {
             IsPresented = true;
         }
+
+        // En la página donde ocurre la acción que requiere la actualización en ambas páginas
+        private void OnActionRequiringUpdate()
+        {
+            // Lógica que desencadena la actualización
+
+            // Envía un mensaje para notificar a las páginas suscritas que deben actualizarse
+            MessagingCenter.Send(this, "ActualizarPagina");
+        }
     }
 
 }
