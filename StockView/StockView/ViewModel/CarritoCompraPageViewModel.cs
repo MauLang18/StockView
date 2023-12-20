@@ -1,5 +1,6 @@
 ﻿using StockView.Data;
 using StockView.Model;
+using StockView.Views;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -130,42 +131,68 @@ namespace StockView.ViewModel
         {
             if (ListCarritoCompra != null && ListCarritoCompra.Any())
             {
-                string correoHTML = "<h1>Detalles del Pedido</h1><ul>";
+                // Crear la página modal para obtener el nombre del cliente
+                var nombrePage = new ClientePage();
 
-                foreach (var item in ListCarritoCompra)
+                // Manejar el evento OKClicked cuando el usuario ingresa un nombre
+                nombrePage.OKClicked += async (sender, nombre) =>
                 {
-                    correoHTML += $"<li><strong>Producto:</strong> {item.Descripcion} - <strong>Cantidad:</strong> {item.Cantidad}</li>";
-                }
-
-                correoHTML += "</ul>";
-
-                bool enviado = await Metodos.EnviarCorreo("mlang@grupostedi.com", "Pedido", correoHTML, Token);
-
-                if (enviado)
-                {
-                    bool eliminado = await Metodos.EliminarDelCarritoByVendedor(User, Token);
-
-                    if (eliminado)
+                    if (!string.IsNullOrWhiteSpace(nombre))
                     {
-                        await DisplayAlert("Pedido realizado", Data, "OK");
-                        MessagingCenter.Send(this, "ActualizarPagina");
+                        // Resto del código para enviar el correo y realizar acciones con el nombre ingresado
+                        string correoHTML = GenerarContenidoCorreo(nombre); // Método para generar el contenido del correo
+
+                        bool enviado = await Metodos.EnviarCorreo("mlang@grupostedi.com","Pedido",correoHTML,Token);
+
+                        if (enviado)
+                        {
+                            bool eliminado = await Metodos.EliminarDelCarritoByVendedor(User, Token);
+
+                            if (eliminado)
+                            {
+                                await Application.Current.MainPage.DisplayAlert("Pedido realizado", Data, "OK");
+                                MessagingCenter.Send(this, "ActualizarPagina");
+                            }
+                            else
+                            {
+                                await Application.Current.MainPage.DisplayAlert("No se pudo realizar el pedido", Data, "OK");
+                            }
+                        }
+                        else
+                        {
+                            await Application.Current.MainPage.DisplayAlert("No se pudo realizar el pedido", Data, "OK");
+                        }
                     }
                     else
                     {
-                        await DisplayAlert("No se pudo realizar el pedido", Data, "OK");
+                        // El usuario no ingresó un nombre
+                        await Application.Current.MainPage.DisplayAlert("Nombre no válido", "Por favor, ingrese un nombre válido.", "OK");
                     }
-                }
-                else
-                {
-                    await DisplayAlert("No se pudo realizar el pedido", Data, "OK");
-                }
+                };
+
+                // Mostrar la página modal para ingresar el nombre
+                await Application.Current.MainPage.Navigation.PushModalAsync(nombrePage);
             }
             else
             {
-                await DisplayAlert("No hay productos en el carrito", Data, "OK");
+                await Application.Current.MainPage.DisplayAlert("No hay productos en el carrito", Data, "OK");
             }
         }
 
+        // Método para generar el contenido del correo
+        private string GenerarContenidoCorreo(string nombreCliente)
+        {
+            string correoHTML = $"<h1>Detalles del Pedido para {nombreCliente}</h1><ul>";
+
+            foreach (var item in ListCarritoCompra)
+            {
+                correoHTML += $"<li><strong>Codigo:</strong> {item.Codigo} - <strong>Producto:</strong> {item.Descripcion} - <strong>Cantidad:</strong> {item.Cantidad}</li>";
+            }
+
+            correoHTML += "</ul>";
+
+            return correoHTML;
+        }
 
         public event EventHandler OpenMenuRequested;
         public ICommand CarritoCommand => new Command(async () => await Carrito());
