@@ -28,34 +28,29 @@ namespace StockView.ViewModel
 
         private async void Initialize()
         {
-            // Leer el token almacenado
             string data = await _secureStore.ReadAuthTokenAsync();
 
             string privilegios = await _secureStore.ReadRolAsync();
 
-            // Validar y realizar acciones basadas en el token
+            string user = await _secureStore.ReadUserAsync();
+
             if (string.IsNullOrEmpty(data))
             {
-                // No hay token almacenado, realizar acciones correspondientes
                 Console.WriteLine("No hay token almacenado.");
             }
             else
             {
-                // Hay un token almacenado, realizar acciones correspondientes
                 Console.WriteLine("Token almacenado: " + data);
 
-                // Puedes verificar si el token ha expirado y actuar en consecuencia
                 if (await _secureStore.IsAuthTokenExpiredAsync())
                 {
                     Console.WriteLine("El token ha expirado.");
-                    // Realizar acciones para cerrar sesión y limpiar el token si es necesario
                     await _secureStore.DeleteAuthTokenIfExpiredAsync();
                 }
                 else
                 {
                     Console.WriteLine("El token es válido.");
-                    // El token es válido, puedes navegar a la página correspondiente
-                    await Navigation.PushAsync(new ListArticulosPage(data, privilegios));
+                    await Navigation.PushAsync(new ListArticulosPage(data, privilegios, user));
                 }
             }
         }
@@ -105,8 +100,8 @@ namespace StockView.ViewModel
                 UsuariosData rol = await Metodos.ObtenerUsuario(Usuario, Data);
                 RolsData priv = await Metodos.ObtenerRol(rol.Rol, Data);
                 Privilegios = priv.Privilegios.ToString();
-                await _secureStore.StoreAuthTokenAsync(Data, fechaGuardado, Privilegios);
-                await Navigation.PushAsync(new ListArticulosPage(Data, Privilegios));
+                await _secureStore.StoreAuthTokenAsync(Data, fechaGuardado, Privilegios, Usuario);
+                await Navigation.PushAsync(new MainPage(Data, Privilegios, Usuario));
             }
         }
 

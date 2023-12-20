@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="StockView.Views.CarritoCompraPage"
+             Title="CarritoCompra"
+             NavigationPage.HasNavigationBar="False">
+
+    <CollectionView Grid.Row="1"
+                    Margin="30"
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="FillAndExpand"
+                    SelectionMode="None"
+                    x:Name="collectionViewName"
+                    ItemsSource="{Binding ListCarritoCompra}">
+        <CollectionView.ItemTemplate>
+            <DataTemplate>
+                <SwipeView>
+                    <SwipeView.RightItems>
+                        <SwipeItems>
+                            <SwipeItem Text="Eliminar"
+                                       BackgroundColor="Red"
+                                       Command="{Binding BindingContext.DeleteCommand, Source={x:Reference Name=collectionViewName}}"
+                                       CommandParameter="{Binding .}" />
+                        </SwipeItems>
+                    </SwipeView.RightItems>
+                    <Frame HasShadow="True"
+                           BackgroundColor="Transparent"
+                           VerticalOptions="StartAndExpand"
+                           HorizontalOptions="FillAndExpand"
+                           Padding="0">
+                        <Grid VerticalOptions="StartAndExpand"
+                              HorizontalOptions="FillAndExpand">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.Column="0"
+                                   x:Name="txtCodigo"
+                                   Text="{Binding Codigo}"
+                                   TextColor="Black"
+                                   FontSize="15"/>
+                            <Label Grid.Column="1"
+                                   x:Name="txtDescripcion"
+                                   Text="{Binding Descripcion}"
+                                   TextColor="Black"
+                                   FontSize="15"/>
+                            <StackLayout Grid.Column="2"
+                                         Orientation="Horizontal"
+                                         HorizontalOptions="End"
+                                         VerticalOptions="Center">
+                                <Button Text="+"
+                                        BackgroundColor="Transparent"
+                                        TextColor="Black"
+                                        FontSize="20"
+                                        Command="{Binding BindingContext.MoreCommand, Source={x:Reference Name=collectionViewName}}"
+                                        CommandParameter="{Binding .}" />
+                                <Label Text="{Binding Cantidad}"
+                                       x:Name="txtCantidad"
+                                       TextColor="Black"
+                                       FontSize="15"/>
+                                <Button Text="-"
+                                        BackgroundColor="Transparent"
+                                        TextColor="Black"
+                                        FontSize="20"
+                                        Command="{Binding BindingContext.LessCommand, Source={x:Reference Name=collectionViewName}}"
+                                        CommandParameter="{Binding .}" />
+                            </StackLayout>
+                        </Grid>
+                    </Frame>
+                </SwipeView>
+            </DataTemplate>
+        </CollectionView.ItemTemplate>
+    </CollectionView>
+</ContentPage>

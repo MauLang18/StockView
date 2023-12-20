@@ -1,0 +1,32 @@
+﻿using Xamarin.Forms;
+using Xamarin.Forms.Xaml;
+using StockView.ViewModel;
+using StockView.Model;
+
+namespace StockView.Views
+{
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class MainPage : FlyoutPage
+    {
+        private readonly ListArticulosPageViewModel _viewModel;
+
+        public MainPage(string token, string privilegios, string user)
+        {
+            InitializeComponent();
+
+            _viewModel = new ListArticulosPageViewModel(null, token, privilegios, user);
+            _viewModel.OpenMenuRequested += HandleOpenMenuRequested;
+
+            Articulo selectedArticulo = new Articulo();
+
+            Flyout = new CarritoCompraPage(user, token);
+            Detail = new NavigationPage(new ListArticulosPage(token, privilegios, user) { BindingContext = _viewModel });
+        }
+
+        private void HandleOpenMenuRequested(object sender, System.EventArgs e)
+        {
+            IsPresented = true;
+        }
+    }
+
+}

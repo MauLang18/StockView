@@ -9,12 +9,14 @@ public class SecureStore
     private const string AuthTokenKey = "AuthToken";
     private const string ExpiryDateKey = "AuthTokenExpiry";
     private const string PrivKey = "Priv";
+    private const string UserKey = "User";
 
-    public async Task StoreAuthTokenAsync(string token, DateTime expiryTime, string priv)
+    public async Task StoreAuthTokenAsync(string token, DateTime expiryTime, string priv, string user)
     {
         await SecureStorage.SetAsync(AuthTokenKey, token);
         await SecureStorage.SetAsync(ExpiryDateKey, expiryTime.ToString("O"));
         await SecureStorage.SetAsync(PrivKey, priv);
+        await SecureStorage.SetAsync(UserKey, user);
     }
 
     public async Task<string> ReadAuthTokenAsync()
@@ -31,6 +33,17 @@ public class SecureStore
     public async Task<string> ReadRolAsync()
     {
         string token = await SecureStorage.GetAsync(PrivKey);
+        if (string.IsNullOrEmpty(token))
+        {
+            return null;
+        }
+
+        return token;
+    }
+
+    public async Task<string> ReadUserAsync()
+    {
+        string token = await SecureStorage.GetAsync(UserKey);
         if (string.IsNullOrEmpty(token))
         {
             return null;
@@ -76,6 +89,7 @@ public class SecureStore
         SecureStorage.Remove(AuthTokenKey);
         SecureStorage.Remove(ExpiryDateKey);
         SecureStorage.Remove(PrivKey);
+        SecureStorage.Remove(UserKey);
     }
 
     public async Task DeletePrivAsync()

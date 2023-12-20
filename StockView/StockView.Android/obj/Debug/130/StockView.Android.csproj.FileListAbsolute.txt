@@ -2098,3 +2098,11 @@ C:\Users\MauLang18\Desktop\Sistemas\Aplicacion de vendedores\FrontEnd\StockView\
 C:\Users\MauLang18\Desktop\Sistemas\Aplicacion de vendedores\FrontEnd\StockView\StockView.Android\obj\Debug\130\res\drawable\sort.png
 C:\Users\MauLang18\Desktop\Sistemas\Aplicacion de vendedores\FrontEnd\StockView\StockView.Android\obj\Debug\130\res\drawable\asc.png
 C:\Users\MauLang18\Desktop\Sistemas\Aplicacion de vendedores\FrontEnd\StockView\StockView.Android\obj\Debug\130\res\drawable\desc.png
+C:\Users\MauLang18\Desktop\Sistemas\Aplicacion de vendedores\FrontEnd\StockView\StockView.Android\obj\Debug\130\res\drawable\carrito.png
+C:\Users\MauLang18\Desktop\Sistemas\Aplicacion de vendedores\FrontEnd\StockView\StockView.Android\obj\Debug\130\res\drawable\fajas.png
+C:\Users\MauLang18\Desktop\Sistemas\Aplicacion de vendedores\FrontEnd\StockView\StockView.Android\obj\Debug\130\res\drawable\amortiguadores.png
+C:\Users\MauLang18\Desktop\Sistemas\Aplicacion de vendedores\FrontEnd\StockView\StockView.Android\obj\Debug\130\res\drawable\frenos.png
+C:\Users\MauLang18\Desktop\Sistemas\Aplicacion de vendedores\FrontEnd\StockView\StockView.Android\obj\Debug\130\res\drawable\llantas.png
+C:\Users\MauLang18\Desktop\Sistemas\Aplicacion de vendedores\FrontEnd\StockView\StockView.Android\obj\Debug\130\res\drawable\bin.png
+C:\Users\MauLang18\Desktop\Sistemas\Aplicacion de vendedores\FrontEnd\StockView\StockView.Android\obj\Debug\130\res\drawable\addcart.png
+C:\Users\MauLang18\Desktop\Sistemas\Aplicacion de vendedores\FrontEnd\StockView\StockView.Android\obj\Debug\130\res\drawable\incart.png

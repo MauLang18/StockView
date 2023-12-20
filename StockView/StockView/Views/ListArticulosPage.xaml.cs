@@ -2,6 +2,9 @@
 using StockView.Model;
 using StockView.ViewModel;
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Threading.Tasks;
 using Xamarin.CommunityToolkit.UI.Views;
 using Xamarin.Forms;
@@ -12,11 +15,13 @@ namespace StockView.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ListArticulosPage : ContentPage
     {
-        public ListArticulosPage(string token, string privilegios)
+        public ListArticulosPage(string token, string privilegios, string user)
         {
             InitializeComponent();
-            BindingContext = new ListArticulosPageViewModel(Navigation, token, privilegios);
+            BindingContext = new ListArticulosPageViewModel(Navigation, token, privilegios, user);
             txtDescripcion.Completed += OnDescripcionEntryCompleted;
+
+            NavigationPage.SetHasNavigationBar(this, false);
         }
 
         private async Task OpenAnimation(View view, uint length = 250)
@@ -57,6 +62,42 @@ namespace StockView.Views
             {
                 if (viewModel.BuscarCommand.CanExecute(null))
                     viewModel.BuscarCommand.Execute(null);
+            }
+        }
+
+        private void ActualizarVisibilidad(ObservableCollection<Articulo> listArticulo)
+        {
+            if (listArticulo == null || listArticulo.Count == 0)
+            {
+                botonesLayout.IsVisible = true;
+                collectionViewName.IsVisible = false;
+            }
+            else
+            {
+                botonesLayout.IsVisible = false;
+                collectionViewName.IsVisible = true;
+            }
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+
+            if (BindingContext is ListArticulosPageViewModel viewModel)
+            {
+                viewModel.PropertyChanged += ViewModel_PropertyChanged;
+                ActualizarVisibilidad(viewModel.ListArticulo);
+            }
+        }
+
+        private void ViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(ListArticulosPageViewModel.ListArticulo))
+            {
+                if (BindingContext is ListArticulosPageViewModel viewModel)
+                {
+                    ActualizarVisibilidad(viewModel.ListArticulo);
+                }
             }
         }
     }
