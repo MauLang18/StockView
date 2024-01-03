@@ -113,7 +113,7 @@
                                         <Image HeightRequest="30"
                                                WidthRequest="30"
                                                Margin="20,0"
-                                               Source="inCart.png">
+                                               Source="check-mark.png">
                                             <Image.GestureRecognizers>
                                                 <TapGestureRecognizer Command="{Binding BindingContext.MoreCommand, Source={x:Reference Name=collectionViewName}}"
                                                                       CommandParameter="{Binding .}" />
