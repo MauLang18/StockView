@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StockView.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,11 +13,22 @@ namespace StockView.Views
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class ClientePage : ContentPage
 	{
-		public ClientePage ()
+		public ClientePage(string token)
 		{
-			InitializeComponent ();
-		}
+            InitializeComponent ();
+            BindingContext = new ClientePageViewModel(Navigation, token);
+            txtDescripcion.Completed += OnDescripcionEntryCompleted;
+        }
 
         public event EventHandler<string> OKClicked;
+
+        private async void OnDescripcionEntryCompleted(object sender, EventArgs e)
+        {
+            if (BindingContext is ListArticulosPageViewModel viewModel)
+            {
+                if (viewModel.BuscarCommand.CanExecute(null))
+                    viewModel.BuscarCommand.Execute(null);
+            }
+        }
     }
 }

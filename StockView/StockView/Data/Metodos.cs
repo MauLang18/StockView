@@ -61,6 +61,55 @@ namespace StockView.Data
             }
         }
 
+        public static async Task<ObservableCollection<Clientes>> ObtenerClientes(string desc, string token)
+        {
+            try
+            {
+                using (HttpClient client = new HttpClient(await GetInsecureHandler()))
+                {
+                    var uri = new Uri($"http://190.113.124.155:9092/api/Cliente?clie={Uri.EscapeDataString(desc)}");
+
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+                    HttpResponseMessage response = await client.GetAsync(uri);
+
+                    string resultado = await response.Content.ReadAsStringAsync();
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        ApiResponse4 apiResponse = JsonConvert.DeserializeObject<ApiResponse4>(resultado);
+
+                        if (apiResponse != null && apiResponse.IsSuccess)
+                        {
+                            return new ObservableCollection<Clientes>(apiResponse.Data);
+                        }
+                        else
+                        {
+                            string mensaje = apiResponse != null ? apiResponse.Message : "Error desconocido en la respuesta.";
+                            throw new ApplicationException(mensaje);
+                        }
+                    }
+                    else
+                    {
+                        string mensaje = "Respuesta no exitosa. Código: " + response.StatusCode;
+                        throw new ApplicationException(mensaje);
+                    }
+                }
+            }
+            catch (HttpRequestException hrex)
+            {
+                throw new ApplicationException("Error al realizar la solicitud HTTP: " + hrex.Message, hrex);
+            }
+            catch (JsonException jex)
+            {
+                throw new ApplicationException("Error al deserializar la respuesta JSON: " + jex.Message, jex);
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("Se produjo una excepción: " + ex.Message, ex);
+            }
+        }
+
         public static async Task<string> Login(string username, string password)
         {
             try

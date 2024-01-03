@@ -50,3 +50,4 @@ C:\Users\MauLang18\Desktop\Sistemas\Aplicacion de vendedores\FrontEnd\StockView\
 C:\Users\MauLang18\Desktop\Sistemas\Aplicacion de vendedores\FrontEnd\StockView\StockView\obj\Debug\netstandard2.0\StockView.pdb
 C:\Users\MauLang18\Desktop\Sistemas\Aplicacion de vendedores\FrontEnd\StockView\StockView\obj\Debug\netstandard2.0\Views\CarritoCompraPage.xaml.g.cs
 C:\Users\MauLang18\Desktop\Sistemas\Aplicacion de vendedores\FrontEnd\StockView\StockView\obj\Debug\netstandard2.0\Views\MainPage.xaml.g.cs
+C:\Users\MauLang18\Desktop\Sistemas\Aplicacion de vendedores\FrontEnd\StockView\StockView\obj\Debug\netstandard2.0\Views\ClientePage.xaml.g.cs

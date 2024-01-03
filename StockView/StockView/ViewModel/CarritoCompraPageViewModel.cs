@@ -129,20 +129,20 @@ namespace StockView.ViewModel
 
         public async Task GenerarOrden()
         {
+            await Navigation.PushAsync(new ClientePage(Token));
+
             if (ListCarritoCompra != null && ListCarritoCompra.Any())
             {
-                // Crear la página modal para obtener el nombre del cliente
-                var nombrePage = new ClientePage();
-
-                // Manejar el evento OKClicked cuando el usuario ingresa un nombre
-                nombrePage.OKClicked += async (sender, nombre) =>
+                MessagingCenter.Subscribe<ClientePageViewModel, Clientes>(this, "ActualizarPagina", async (sender, arg) =>
                 {
-                    if (!string.IsNullOrWhiteSpace(nombre))
-                    {
-                        // Resto del código para enviar el correo y realizar acciones con el nombre ingresado
-                        string correoHTML = GenerarContenidoCorreo(nombre); // Método para generar el contenido del correo
+                    string cliente = arg.Cliente;
+                    string codigo = arg.Codigo;
 
-                        bool enviado = await Metodos.EnviarCorreo("mlang@grupostedi.com","Pedido",correoHTML,Token);
+                    if (!string.IsNullOrWhiteSpace(cliente))
+                    {
+                        string correoHTML = GenerarContenidoCorreo(cliente, codigo);
+
+                        bool enviado = await Metodos.EnviarCorreo("mlang@grupostedi.com", $"Pedido para {codigo} - {cliente}", correoHTML, Token);
 
                         if (enviado)
                         {
@@ -152,6 +152,7 @@ namespace StockView.ViewModel
                             {
                                 await Application.Current.MainPage.DisplayAlert("Pedido realizado", Data, "OK");
                                 MessagingCenter.Send(this, "ActualizarPagina");
+
                             }
                             else
                             {
@@ -165,13 +166,9 @@ namespace StockView.ViewModel
                     }
                     else
                     {
-                        // El usuario no ingresó un nombre
                         await Application.Current.MainPage.DisplayAlert("Nombre no válido", "Por favor, ingrese un nombre válido.", "OK");
                     }
-                };
-
-                // Mostrar la página modal para ingresar el nombre
-                await Application.Current.MainPage.Navigation.PushModalAsync(nombrePage);
+                });
             }
             else
             {
@@ -179,10 +176,9 @@ namespace StockView.ViewModel
             }
         }
 
-        // Método para generar el contenido del correo
-        private string GenerarContenidoCorreo(string nombreCliente)
+        private string GenerarContenidoCorreo(string nombreCliente, string codigo)
         {
-            string correoHTML = $"<h1>Detalles del Pedido para {nombreCliente}</h1><ul>";
+            string correoHTML = $"<h1>Detalles del Pedido para {codigo} - {nombreCliente}</h1><ul>";
 
             foreach (var item in ListCarritoCompra)
             {
