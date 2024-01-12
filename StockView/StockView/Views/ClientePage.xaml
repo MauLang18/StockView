@@ -27,6 +27,7 @@
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*"/>
+                            <RowDefinition Height="1"/>
                             <RowDefinition Height="auto"/>
                         </Grid.RowDefinitions>
                         <Image HeightRequest="30"
@@ -54,6 +55,16 @@
                                 <TapGestureRecognizer Command="{Binding LogoutCommand}"/>
                             </Image.GestureRecognizers>
                         </Image>
+                        <Editor Grid.Column="1"
+                                Grid.Row="2"
+                                x:Name="txtObservaciones"
+                                Placeholder="Observaciones"
+                                TextColor="White"
+                                FontSize="15"
+                                HorizontalOptions="FillAndExpand"
+                                VerticalOptions="StartAndExpand"
+                                AutoSize="TextChanges"
+                                Text="{Binding Obser}"/>
                     </Grid>
                 </StackLayout>
             </Grid>
@@ -113,7 +124,7 @@
                                         <Image HeightRequest="30"
                                                WidthRequest="30"
                                                Margin="20,0"
-                                               Source="check-mark.png">
+                                               Source="check.png">
                                             <Image.GestureRecognizers>
                                                 <TapGestureRecognizer Command="{Binding BindingContext.MoreCommand, Source={x:Reference Name=collectionViewName}}"
                                                                       CommandParameter="{Binding .}" />

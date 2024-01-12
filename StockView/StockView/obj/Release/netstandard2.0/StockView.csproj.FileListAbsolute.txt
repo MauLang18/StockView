@@ -38,8 +38,11 @@ C:\Users\MauLang18\Desktop\Sistemas\Aplicacion de vendedores\FrontEnd\StockView\
 C:\Users\MauLang18\Desktop\Sistemas\Aplicacion de vendedores\FrontEnd\StockView\StockView\obj\Release\netstandard2.0\StockView.csproj.AssemblyReference.cache
 C:\Users\MauLang18\Desktop\Sistemas\Aplicacion de vendedores\FrontEnd\StockView\StockView\obj\Release\netstandard2.0\StockView.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\MauLang18\Desktop\Sistemas\Aplicacion de vendedores\FrontEnd\StockView\StockView\obj\Release\netstandard2.0\App.xaml.g.cs
+C:\Users\MauLang18\Desktop\Sistemas\Aplicacion de vendedores\FrontEnd\StockView\StockView\obj\Release\netstandard2.0\Views\CarritoCompraPage.xaml.g.cs
+C:\Users\MauLang18\Desktop\Sistemas\Aplicacion de vendedores\FrontEnd\StockView\StockView\obj\Release\netstandard2.0\Views\ClientePage.xaml.g.cs
 C:\Users\MauLang18\Desktop\Sistemas\Aplicacion de vendedores\FrontEnd\StockView\StockView\obj\Release\netstandard2.0\Views\ListArticulosPage.xaml.g.cs
 C:\Users\MauLang18\Desktop\Sistemas\Aplicacion de vendedores\FrontEnd\StockView\StockView\obj\Release\netstandard2.0\Views\LoginPage.xaml.g.cs
+C:\Users\MauLang18\Desktop\Sistemas\Aplicacion de vendedores\FrontEnd\StockView\StockView\obj\Release\netstandard2.0\Views\MainPage.xaml.g.cs
 C:\Users\MauLang18\Desktop\Sistemas\Aplicacion de vendedores\FrontEnd\StockView\StockView\obj\Release\netstandard2.0\StockView.AssemblyInfoInputs.cache
 C:\Users\MauLang18\Desktop\Sistemas\Aplicacion de vendedores\FrontEnd\StockView\StockView\obj\Release\netstandard2.0\StockView.AssemblyInfo.cs
 C:\Users\MauLang18\Desktop\Sistemas\Aplicacion de vendedores\FrontEnd\StockView\StockView\obj\Release\netstandard2.0\StockView.csproj.CoreCompileInputs.cache
@@ -48,5 +51,3 @@ C:\Users\MauLang18\Desktop\Sistemas\Aplicacion de vendedores\FrontEnd\StockView\
 C:\Users\MauLang18\Desktop\Sistemas\Aplicacion de vendedores\FrontEnd\StockView\StockView\obj\Release\netstandard2.0\StockView.dll
 C:\Users\MauLang18\Desktop\Sistemas\Aplicacion de vendedores\FrontEnd\StockView\StockView\obj\Release\netstandard2.0\refint\StockView.dll
 C:\Users\MauLang18\Desktop\Sistemas\Aplicacion de vendedores\FrontEnd\StockView\StockView\obj\Release\netstandard2.0\StockView.pdb
-C:\Users\MauLang18\Desktop\Sistemas\Aplicacion de vendedores\FrontEnd\StockView\StockView\obj\Release\netstandard2.0\Views\CarritoCompraPage.xaml.g.cs
-C:\Users\MauLang18\Desktop\Sistemas\Aplicacion de vendedores\FrontEnd\StockView\StockView\obj\Release\netstandard2.0\Views\MainPage.xaml.g.cs

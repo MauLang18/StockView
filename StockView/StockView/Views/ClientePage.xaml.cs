@@ -24,7 +24,7 @@ namespace StockView.Views
 
         private async void OnDescripcionEntryCompleted(object sender, EventArgs e)
         {
-            if (BindingContext is ListArticulosPageViewModel viewModel)
+            if (BindingContext is ClientePageViewModel viewModel)
             {
                 if (viewModel.BuscarCommand.CanExecute(null))
                     viewModel.BuscarCommand.Execute(null);

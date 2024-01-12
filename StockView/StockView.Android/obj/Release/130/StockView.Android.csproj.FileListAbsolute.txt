@@ -1103,6 +1103,17 @@ C:\Users\MauLang18\Desktop\Sistemas\Aplicacion de vendedores\FrontEnd\StockView\
 C:\Users\MauLang18\Desktop\Sistemas\Aplicacion de vendedores\FrontEnd\StockView\StockView.Android\obj\Release\130\res\drawable\sort.png
 C:\Users\MauLang18\Desktop\Sistemas\Aplicacion de vendedores\FrontEnd\StockView\StockView.Android\obj\Release\130\res\drawable\asc.png
 C:\Users\MauLang18\Desktop\Sistemas\Aplicacion de vendedores\FrontEnd\StockView\StockView.Android\obj\Release\130\res\drawable\desc.png
+C:\Users\MauLang18\Desktop\Sistemas\Aplicacion de vendedores\FrontEnd\StockView\StockView.Android\obj\Release\130\res\drawable\carrito.png
+C:\Users\MauLang18\Desktop\Sistemas\Aplicacion de vendedores\FrontEnd\StockView\StockView.Android\obj\Release\130\res\drawable\fajas.png
+C:\Users\MauLang18\Desktop\Sistemas\Aplicacion de vendedores\FrontEnd\StockView\StockView.Android\obj\Release\130\res\drawable\amortiguadores.png
+C:\Users\MauLang18\Desktop\Sistemas\Aplicacion de vendedores\FrontEnd\StockView\StockView.Android\obj\Release\130\res\drawable\frenos.png
+C:\Users\MauLang18\Desktop\Sistemas\Aplicacion de vendedores\FrontEnd\StockView\StockView.Android\obj\Release\130\res\drawable\llantas.png
+C:\Users\MauLang18\Desktop\Sistemas\Aplicacion de vendedores\FrontEnd\StockView\StockView.Android\obj\Release\130\res\drawable\bin.png
+C:\Users\MauLang18\Desktop\Sistemas\Aplicacion de vendedores\FrontEnd\StockView\StockView.Android\obj\Release\130\res\drawable\addcart.png
+C:\Users\MauLang18\Desktop\Sistemas\Aplicacion de vendedores\FrontEnd\StockView\StockView.Android\obj\Release\130\res\drawable\incart.png
+C:\Users\MauLang18\Desktop\Sistemas\Aplicacion de vendedores\FrontEnd\StockView\StockView.Android\obj\Release\130\res\drawable\check.png
+C:\Users\MauLang18\Desktop\Sistemas\Aplicacion de vendedores\FrontEnd\StockView\StockView.Android\obj\Release\130\res\drawable\oilpump.png
+C:\Users\MauLang18\Desktop\Sistemas\Aplicacion de vendedores\FrontEnd\StockView\StockView.Android\obj\Release\130\res\drawable\carburetor.png
 C:\Users\MauLang18\Desktop\Sistemas\Aplicacion de vendedores\FrontEnd\StockView\StockView.Android\obj\Release\130\uploadflags.txt
 C:\Users\MauLang18\Desktop\Sistemas\Aplicacion de vendedores\FrontEnd\StockView\StockView.Android\obj\Release\130\resolvedassemblies.hash
 C:\Users\MauLang18\Desktop\Sistemas\Aplicacion de vendedores\FrontEnd\StockView\StockView.Android\obj\Release\130\link.flag
@@ -1528,4 +1539,3 @@ C:\Users\MauLang18\Desktop\Sistemas\Aplicacion de vendedores\FrontEnd\StockView\
 C:\Users\MauLang18\Desktop\Sistemas\Aplicacion de vendedores\FrontEnd\StockView\StockView.Android\obj\Release\130\stamp\_GenerateJavaStubs.stamp
 C:\Users\MauLang18\Desktop\Sistemas\Aplicacion de vendedores\FrontEnd\StockView\StockView.Android\obj\Release\130\stamp\_GeneratePackageManagerJava.stamp
 C:\Users\MauLang18\Desktop\Sistemas\Aplicacion de vendedores\FrontEnd\StockView\StockView.Android\obj\Release\130\stamp\_ResolveLibraryProjectImports.stamp
-C:\Users\MauLang18\Desktop\Sistemas\Aplicacion de vendedores\FrontEnd\StockView\StockView.Android\obj\Release\130\res\drawable\carrito.png

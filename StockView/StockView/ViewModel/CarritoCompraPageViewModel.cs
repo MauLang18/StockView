@@ -137,12 +137,13 @@ namespace StockView.ViewModel
                 {
                     string cliente = arg.Cliente;
                     string codigo = arg.Codigo;
+                    string obser = arg.Obser;
 
                     if (!string.IsNullOrWhiteSpace(cliente))
                     {
-                        string correoHTML = GenerarContenidoCorreo(cliente, codigo);
+                        string correoHTML = GenerarContenidoCorreo(cliente, codigo, obser);
 
-                        bool enviado = await Metodos.EnviarCorreo("mlang@grupostedi.com", $"Pedido para {codigo} - {cliente}", correoHTML, Token);
+                        bool enviado = await Metodos.EnviarCorreo("lquiros@motornovacr.com", $"Pedido para {codigo} - {cliente}", correoHTML, Token, $"{User}@motornovacr.com");
 
                         if (enviado)
                         {
@@ -176,7 +177,7 @@ namespace StockView.ViewModel
             }
         }
 
-        private string GenerarContenidoCorreo(string nombreCliente, string codigo)
+        private string GenerarContenidoCorreo(string nombreCliente, string codigo, string obser)
         {
             string correoHTML = $"<h1>Detalles del Pedido para {codigo} - {nombreCliente}</h1><ul>";
 
@@ -186,6 +187,8 @@ namespace StockView.ViewModel
             }
 
             correoHTML += "</ul>";
+
+            correoHTML += $"<p><strong>Observaciones:</strong> {obser}</p>";
 
             return correoHTML;
         }

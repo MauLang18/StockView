@@ -2106,3 +2106,6 @@ C:\Users\MauLang18\Desktop\Sistemas\Aplicacion de vendedores\FrontEnd\StockView\
 C:\Users\MauLang18\Desktop\Sistemas\Aplicacion de vendedores\FrontEnd\StockView\StockView.Android\obj\Debug\130\res\drawable\bin.png
 C:\Users\MauLang18\Desktop\Sistemas\Aplicacion de vendedores\FrontEnd\StockView\StockView.Android\obj\Debug\130\res\drawable\addcart.png
 C:\Users\MauLang18\Desktop\Sistemas\Aplicacion de vendedores\FrontEnd\StockView\StockView.Android\obj\Debug\130\res\drawable\incart.png
+C:\Users\MauLang18\Desktop\Sistemas\Aplicacion de vendedores\FrontEnd\StockView\StockView.Android\obj\Debug\130\res\drawable\check.png
+C:\Users\MauLang18\Desktop\Sistemas\Aplicacion de vendedores\FrontEnd\StockView\StockView.Android\obj\Debug\130\res\drawable\oilpump.png
+C:\Users\MauLang18\Desktop\Sistemas\Aplicacion de vendedores\FrontEnd\StockView\StockView.Android\obj\Debug\130\res\drawable\carburetor.png

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 
 namespace StockView.Model
@@ -8,11 +9,22 @@ namespace StockView.Model
         public string Codigo { get; set; }
         public string CodigoProveedor { get; set; }
         public string Descripcion { get; set; }
-        public decimal Precio { get; set; }
         public decimal CantidadBodega1 { get; set; }
         public decimal CantidadBodega2 { get; set; }
-
+        private decimal _precio;
         private int _count;
+
+        public decimal Precio
+        {
+            get { return _precio; }
+            set
+            {
+                // Redondea el valor a dos decimales después de la coma
+                _precio = Math.Round(value, 2);
+                OnPropertyChanged(nameof(Precio));
+            }
+        }
+
         public int Count
         {
             get { return _count; }

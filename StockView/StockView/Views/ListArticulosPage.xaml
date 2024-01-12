@@ -216,16 +216,16 @@
                                 <Image HeightRequest="50"
                                        WidthRequest="50"
                                        Margin="20,0"
-                                       Source="frenos.png">
+                                       Source="oilPump.png">
                                     <Image.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding FrenosCommand}"/>
+                                        <TapGestureRecognizer Command="{Binding BombasCommand}"/>
                                     </Image.GestureRecognizers>
                                 </Image>
                                 <Label FontAttributes="Bold"
                                        FontSize="20"
                                        HorizontalOptions="CenterAndExpand"
                                        HorizontalTextAlignment="Center"
-                                       Text="Frenos"
+                                       Text="Bombas de agua/aceite"
                                        TextColor="Black"
                                        VerticalOptions="CenterAndExpand" />
                             </StackLayout>
@@ -239,16 +239,16 @@
                                 <Image HeightRequest="50"
                                        WidthRequest="50"
                                        Margin="20,0"
-                                       Source="frenos.png">
+                                       Source="carburetor.png">
                                     <Image.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding FrenosCommand}"/>
+                                        <TapGestureRecognizer Command="{Binding CarburadorCommand}"/>
                                     </Image.GestureRecognizers>
                                 </Image>
                                 <Label FontAttributes="Bold"
                                        FontSize="20"
                                        HorizontalOptions="CenterAndExpand"
                                        HorizontalTextAlignment="Center"
-                                       Text="Frenos"
+                                       Text="Carburador"
                                        TextColor="Black"
                                        VerticalOptions="CenterAndExpand" />
                             </StackLayout>

@@ -209,7 +209,47 @@ namespace StockView.ViewModel
 
         public async Task Amortiguadores()
         {
-            Desc = "amortiguador";
+            Desc = "comp";
+            ListArticulo = await Metodos.ObtenerArticulos(Desc, Token, Privilegios, "asc");
+            ListCarritoCompra = await Metodos.ObtenerByVendedor(User, Token);
+
+            if (ListArticulo != null && ListArticulo.Any())
+            {
+                foreach (var articulo in ListArticulo)
+                {
+                    articulo.Count = 0;
+                    // Verificar si el artículo está en ListCarritoCompra y establecer IsCarrito en consecuencia
+                    if (ListCarritoCompra != null && ListCarritoCompra.Any(a => a.Codigo == articulo.Codigo))
+                    {
+                        articulo.IsCarrito = true;
+                    }
+                }
+            }
+        }
+
+        public async Task Bombas()
+        {
+            Desc = "bomba";
+            ListArticulo = await Metodos.ObtenerArticulos(Desc, Token, Privilegios, "asc");
+            ListCarritoCompra = await Metodos.ObtenerByVendedor(User, Token);
+
+            if (ListArticulo != null && ListArticulo.Any())
+            {
+                foreach (var articulo in ListArticulo)
+                {
+                    articulo.Count = 0;
+                    // Verificar si el artículo está en ListCarritoCompra y establecer IsCarrito en consecuencia
+                    if (ListCarritoCompra != null && ListCarritoCompra.Any(a => a.Codigo == articulo.Codigo))
+                    {
+                        articulo.IsCarrito = true;
+                    }
+                }
+            }
+        }
+
+        public async Task Carburador()
+        {
+            Desc = "carburador";
             ListArticulo = await Metodos.ObtenerArticulos(Desc, Token, Privilegios, "asc");
             ListCarritoCompra = await Metodos.ObtenerByVendedor(User, Token);
 
@@ -342,6 +382,8 @@ namespace StockView.ViewModel
         public ICommand FrenosCommand => new Command(async () => await Frenos());
         public ICommand FajasCommand => new Command(async () => await Fajas());
         public ICommand AmortiguadoresCommand => new Command(async () => await Amortiguadores());
+        public ICommand BombasCommand => new Command(async () => await Bombas());
+        public ICommand CarburadorCommand => new Command(async () => await Carburador());
         public ICommand LogoutCommand => new Command(async () => await Logout());
         public ICommand VolverCommand => new Command(async () => await Volver());
         public ICommand SortCommand => new Command(async () => await Sort());

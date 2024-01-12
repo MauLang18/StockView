@@ -10,13 +10,15 @@ namespace StockView.Data
         {
             if (value is decimal cantidad)
             {
+                cantidad = Math.Round(cantidad, 2);
+
                 if (cantidad <= 0)
                 {
                     return "No hay Stock";
                 }
                 else if (cantidad <= 10)
                 {
-                    return $"Quedan {cantidad}";
+                    return $"Quedan {cantidad.ToString("0.00", CultureInfo.InvariantCulture)}";
                 }
                 else
                 {

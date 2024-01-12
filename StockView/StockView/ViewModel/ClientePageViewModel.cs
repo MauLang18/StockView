@@ -13,6 +13,7 @@ namespace StockView.ViewModel
     {
         #region VARIABLES
         string _Desc;
+        string _Obser;
         string _Data;
         ObservableCollection<Clientes> _ListCliente;
         string Token;
@@ -34,6 +35,12 @@ namespace StockView.ViewModel
         {
             get { return _Desc; }
             set { SetValue(ref _Desc, value); }
+        }
+
+        public string Obser
+        {
+            get { return _Obser; }
+            set { SetValue(ref _Obser, value); }
         }
 
         public string Data
@@ -88,6 +95,7 @@ namespace StockView.ViewModel
             {
                 Cliente = selectedCliente.Cliente,
                 Codigo = selectedCliente.Codigo,
+                Obser = Obser
             };
 
             MessagingCenter.Send(this, "ActualizarPagina", cliente);
