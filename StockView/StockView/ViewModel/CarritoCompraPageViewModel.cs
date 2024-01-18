@@ -143,13 +143,19 @@ namespace StockView.ViewModel
                     {
                         string correoHTML = GenerarContenidoCorreo(cliente, codigo, obser);
 
-                        bool enviado = await Metodos.EnviarCorreo("lquiros@motornovacr.com", $"Pedido para {codigo} - {cliente}", correoHTML, Token, $"{User}@motornovacr.com");
+                        bool enviado = await Metodos.EnviarCorreo("lquiros@motornovacr.com", $"Pedido para {codigo} - {cliente} / vendedor {User}", correoHTML, Token, $"{User}@motornovacr.com");
 
                         if (enviado)
                         {
                             bool eliminado = await Metodos.EliminarDelCarritoByVendedor(User, Token);
+                            bool agregado = false;
 
-                            if (eliminado)
+                            foreach (var item in ListCarritoCompra)
+                            {
+                                agregado = await Metodos.AgregarPedido(item.Codigo, item.Descripcion, codigo, cliente, item.Vendedor, item.Cantidad, Token);
+                            }
+
+                            if (eliminado && agregado)
                             {
                                 await Application.Current.MainPage.DisplayAlert("Pedido realizado", Data, "OK");
                                 MessagingCenter.Send(this, "ActualizarPagina");

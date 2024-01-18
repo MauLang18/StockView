@@ -1,5 +1,6 @@
 ﻿using StockView.Data;
 using StockView.Model;
+using StockView.Views;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -270,8 +271,7 @@ namespace StockView.ViewModel
         public async Task Logout()
         {
             await _secureStore.DeleteAuthTokenAsync();
-            await _secureStore.DeletePrivAsync();
-            await Navigation.PopAsync();
+            await Navigation.PushAsync(new LoginPage());
         }
 
         public async Task Volver()
@@ -344,6 +344,25 @@ namespace StockView.ViewModel
             OpenMenuRequested?.Invoke(this, EventArgs.Empty);
         }
 
+        public async Task History()
+        {
+            try
+            {
+                if (Navigation != null)
+                {
+                    await Navigation.PushAsync(new HistoryPage(Token, User));
+                }
+                else
+                {
+                    Console.WriteLine("La propiedad Navigation es nula.");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error al navegar a HistoryPage: {ex.Message}");
+            }
+        }
+
         public async Task More(Articulo selectedArticulo)
         {
             if (selectedArticulo.IsCarrito)
@@ -388,6 +407,7 @@ namespace StockView.ViewModel
         public ICommand VolverCommand => new Command(async () => await Volver());
         public ICommand SortCommand => new Command(async () => await Sort());
         public ICommand CarritoCommand => new Command(async () => await Carrito());
+        public ICommand HistoryCommand => new Command(async () => await History());
         public ICommand MoreCommand => new Command<Articulo>(async (articulo) => await More(articulo));
         #endregion
     }

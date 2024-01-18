@@ -91,15 +91,22 @@ namespace StockView.ViewModel
 
         public async Task More(Clientes selectedCliente)
         {
-            Clientes cliente = new Clientes
+            if(Obser != null && Obser != "")
             {
-                Cliente = selectedCliente.Cliente,
-                Codigo = selectedCliente.Codigo,
-                Obser = Obser
-            };
+                Clientes cliente = new Clientes
+                {
+                    Cliente = selectedCliente.Cliente,
+                    Codigo = selectedCliente.Codigo,
+                    Obser = Obser
+                };
 
-            MessagingCenter.Send(this, "ActualizarPagina", cliente);
-            await Navigation.PopAsync();
+                MessagingCenter.Send(this, "ActualizarPagina", cliente);
+                await Navigation.PopAsync();
+            }
+            else
+            {
+                await DisplayAlert("Tiene que agregar una observación antes de enviar el pedido.", Data, "OK");
+            }
         }
 
         public async Task Logout()

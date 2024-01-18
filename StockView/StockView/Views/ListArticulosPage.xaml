@@ -82,6 +82,16 @@
                                 <TapGestureRecognizer Command="{Binding CarritoCommand}" />
                             </Image.GestureRecognizers>
                         </Image>
+                        <Image Source="history.png"
+                               Grid.Row="1"
+                               Grid.Column="2"
+                               HeightRequest="30"
+                               WidthRequest="30"
+                               VerticalOptions="Center">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding HistoryCommand}" />
+                            </Image.GestureRecognizers>
+                        </Image>
                     </Grid>
                 </StackLayout>
             </Grid>

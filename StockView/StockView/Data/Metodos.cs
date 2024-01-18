@@ -2,6 +2,7 @@
 using StockView.Model;
 using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -82,6 +83,59 @@ namespace StockView.Data
                         if (apiResponse != null && apiResponse.IsSuccess)
                         {
                             return new ObservableCollection<Clientes>(apiResponse.Data);
+                        }
+                        else
+                        {
+                            string mensaje = apiResponse != null ? apiResponse.Message : "Error desconocido en la respuesta.";
+                            throw new ApplicationException(mensaje);
+                        }
+                    }
+                    else
+                    {
+                        string mensaje = "Respuesta no exitosa. Código: " + response.StatusCode;
+                        throw new ApplicationException(mensaje);
+                    }
+                }
+            }
+            catch (HttpRequestException hrex)
+            {
+                throw new ApplicationException("Error al realizar la solicitud HTTP: " + hrex.Message, hrex);
+            }
+            catch (JsonException jex)
+            {
+                throw new ApplicationException("Error al deserializar la respuesta JSON: " + jex.Message, jex);
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("Se produjo una excepción: " + ex.Message, ex);
+            }
+        }
+
+        public static async Task<ObservableCollection<Pedido>> ObtenerPedidos(string token, string user)
+        {
+            try
+            {
+                using (HttpClient client = new HttpClient(await GetInsecureHandler()))
+                {
+                    var uri = new Uri($"http://190.113.124.155:9092/Pedido");
+
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+                    HttpResponseMessage response = await client.GetAsync(uri);
+
+                    string resultado = await response.Content.ReadAsStringAsync();
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        ApiResponse5 apiResponse = JsonConvert.DeserializeObject<ApiResponse5>(resultado);
+
+                        if (apiResponse != null && apiResponse.IsSuccess)
+                        {
+                            var pedidosDelVendedor = apiResponse.Data
+                                .Where(pedido => pedido.Vendedor == user)
+                                .ToList();
+
+                            return new ObservableCollection<Pedido>(pedidosDelVendedor);
                         }
                         else
                         {
@@ -325,6 +379,42 @@ namespace StockView.Data
                         descripcionArticulo = descripcionArticulo,
                         vendedor = vendedor,
                         cantidad = cantidad
+                    };
+
+                    string jsonBody = JsonConvert.SerializeObject(nuevoArticulo);
+                    HttpContent content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
+
+                    HttpResponseMessage response = await client.PostAsync(uri, content);
+
+                    return response.IsSuccessStatusCode;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Se produjo una excepción: {0}", ex.Message);
+                throw new ApplicationException("ERROR: [" + ex.Message + "]" + (ex.InnerException != null ? " INNER: [" + ex.InnerException.Message + "]" : ""));
+            }
+        }
+
+        public static async Task<bool> AgregarPedido(string codigoArticulo, string articulo, string codigoCliente, string cliente, string vendedor, int cantidad, string token)
+        {
+            try
+            {
+                using (HttpClient client = new HttpClient(await GetInsecureHandler()))
+                {
+                    var uri = new Uri("http://190.113.124.155:9092/Pedido/Register");
+
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+                    var nuevoArticulo = new
+                    {
+                        codigoArticulo = codigoArticulo,
+                        articulo = articulo,
+                        codigoCliente = codigoCliente,
+                        cliente = cliente,
+                        vendedor = vendedor,
+                        cantidad = cantidad,
+                        estadoPedido = 0
                     };
 
                     string jsonBody = JsonConvert.SerializeObject(nuevoArticulo);

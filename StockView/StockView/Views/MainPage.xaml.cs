@@ -14,7 +14,7 @@ namespace StockView.Views
         {
             InitializeComponent();
 
-            _viewModel = new ListArticulosPageViewModel(null, token, privilegios, user);
+            _viewModel = new ListArticulosPageViewModel(Navigation, token, privilegios, user);
             _viewModel.OpenMenuRequested += HandleOpenMenuRequested;
 
             Articulo selectedArticulo = new Articulo();
