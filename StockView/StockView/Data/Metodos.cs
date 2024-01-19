@@ -19,7 +19,7 @@ namespace StockView.Data
             {
                 using (HttpClient client = new HttpClient(await GetInsecureHandler()))
                 {
-                    var uri = new Uri($"http://190.113.124.155:9092/Articulo?desc={Uri.EscapeDataString(desc)}&priv={Uri.EscapeDataString(priv)}&order={Uri.EscapeDataString(order)}");
+                    var uri = new Uri($"http://190.113.124.155:9096/Articulo?desc={Uri.EscapeDataString(desc)}&priv={Uri.EscapeDataString(priv)}&order={Uri.EscapeDataString(order)}");
 
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
@@ -68,7 +68,7 @@ namespace StockView.Data
             {
                 using (HttpClient client = new HttpClient(await GetInsecureHandler()))
                 {
-                    var uri = new Uri($"http://190.113.124.155:9092/Cliente?clie={Uri.EscapeDataString(desc)}");
+                    var uri = new Uri($"http://190.113.124.155:9096/Cliente?clie={Uri.EscapeDataString(desc)}");
 
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
@@ -117,7 +117,7 @@ namespace StockView.Data
             {
                 using (HttpClient client = new HttpClient(await GetInsecureHandler()))
                 {
-                    var uri = new Uri($"http://190.113.124.155:9092/Pedido");
+                    var uri = new Uri($"http://190.113.124.155:9096/Pedido");
 
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
@@ -170,7 +170,7 @@ namespace StockView.Data
             {
                 using (HttpClient client = new HttpClient(await GetInsecureHandler()))
                 {
-                    var uri = new Uri("http://190.113.124.155:9092/Auth/Login");
+                    var uri = new Uri("http://190.113.124.155:9096/Auth/Login");
 
                     var loginData = new
                     {
@@ -227,7 +227,7 @@ namespace StockView.Data
             {
                 using (HttpClient client = new HttpClient(await GetInsecureHandler()))
                 {
-                    var uri = new Uri($"http://190.113.124.155:9092/Rol/{Uri.EscapeDataString(id.ToString())}");
+                    var uri = new Uri($"http://190.113.124.155:9096/Rol/{Uri.EscapeDataString(id.ToString())}");
 
                     // Agregar el token a la cabecera de autorización
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
@@ -274,7 +274,7 @@ namespace StockView.Data
             {
                 using (HttpClient client = new HttpClient(await GetInsecureHandler()))
                 {
-                    var uri = new Uri($"http://190.113.124.155:9092/Usuario/User?user={Uri.EscapeDataString(user)}");
+                    var uri = new Uri($"http://190.113.124.155:9096/Usuario/User?user={Uri.EscapeDataString(user)}");
 
                     // Agregar el token a la cabecera de autorización
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
@@ -321,7 +321,7 @@ namespace StockView.Data
             {
                 using (HttpClient client = new HttpClient(await GetInsecureHandler()))
                 {
-                    var uri = new Uri($"http://190.113.124.155:9092/CarritoCompra/Usuario?vendedor={Uri.EscapeDataString(vendedor)}");
+                    var uri = new Uri($"http://190.113.124.155:9096/CarritoCompra/Usuario?vendedor={Uri.EscapeDataString(vendedor)}");
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
                     HttpResponseMessage response = await client.GetAsync(uri);
@@ -369,7 +369,7 @@ namespace StockView.Data
             {
                 using (HttpClient client = new HttpClient(await GetInsecureHandler()))
                 {
-                    var uri = new Uri("http://190.113.124.155:9092/CarritoCompra/Register");
+                    var uri = new Uri("http://190.113.124.155:9096/CarritoCompra/Register");
 
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
@@ -402,7 +402,7 @@ namespace StockView.Data
             {
                 using (HttpClient client = new HttpClient(await GetInsecureHandler()))
                 {
-                    var uri = new Uri("http://190.113.124.155:9092/Pedido/Register");
+                    var uri = new Uri("http://190.113.124.155:9096/Pedido/Register");
 
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
@@ -438,7 +438,7 @@ namespace StockView.Data
             {
                 using (HttpClient client = new HttpClient(await GetInsecureHandler()))
                 {
-                    var uri = new Uri($"http://190.113.124.155:9092/CarritoCompra/Edit/Cantidad");
+                    var uri = new Uri($"http://190.113.124.155:9096/CarritoCompra/Edit/Cantidad");
 
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
@@ -469,7 +469,7 @@ namespace StockView.Data
             {
                 using (HttpClient client = new HttpClient(await GetInsecureHandler()))
                 {
-                    var uri = new Uri($"http://190.113.124.155:9092/CarritoCompra/Remove/{Uri.EscapeDataString(id.ToString())}");
+                    var uri = new Uri($"http://190.113.124.155:9096/CarritoCompra/Remove/{Uri.EscapeDataString(id.ToString())}");
 
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
@@ -491,7 +491,7 @@ namespace StockView.Data
             {
                 using (HttpClient client = new HttpClient(await GetInsecureHandler()))
                 {
-                    var uri = new Uri($"http://190.113.124.155:9092/CarritoCompra/Remove/Vendedor?vendedor={Uri.EscapeDataString(vendedor)}");
+                    var uri = new Uri($"http://190.113.124.155:9096/CarritoCompra/Remove/Vendedor?vendedor={Uri.EscapeDataString(vendedor)}");
 
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
@@ -513,7 +513,7 @@ namespace StockView.Data
             {
                 using (HttpClient client = new HttpClient(await GetInsecureHandler()))
                 {
-                    var uri = new Uri("http://190.113.124.155:9092/Mail/Send");
+                    var uri = new Uri("http://190.113.124.155:9096/Mail/Send");
 
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
