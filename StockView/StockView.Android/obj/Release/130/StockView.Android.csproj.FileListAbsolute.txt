@@ -2081,6 +2081,7 @@ C:\Users\MauriceLang18\Desktop\Sistemas\Aplicacion de vendedores\FrontEnd\StockV
 C:\Users\MauriceLang18\Desktop\Sistemas\Aplicacion de vendedores\FrontEnd\StockView\StockView.Android\obj\Release\130\android\src\mono\com\google\android\material\navigation\NavigationBarView_OnItemSelectedListenerImplementor.java
 C:\Users\MauriceLang18\Desktop\Sistemas\Aplicacion de vendedores\FrontEnd\StockView\StockView.Android\obj\Release\130\android\src\mono\com\google\android\material\tabs\TabLayout_BaseOnTabSelectedListenerImplementor.java
 C:\Users\MauriceLang18\Desktop\Sistemas\Aplicacion de vendedores\FrontEnd\StockView\StockView.Android\obj\Release\130\android\src\mono\MonoPackageManager_Resources.java
+C:\Users\MauriceLang18\Desktop\Sistemas\Aplicacion de vendedores\FrontEnd\StockView\StockView.Android\obj\Release\130\android\src\xamarin\essentials\fileProvider.java
 C:\Users\MauriceLang18\Desktop\Sistemas\Aplicacion de vendedores\FrontEnd\StockView\StockView.Android\obj\Release\130\android\bin\packaged_resources
 C:\Users\MauriceLang18\Desktop\Sistemas\Aplicacion de vendedores\FrontEnd\StockView\StockView.Android\obj\Release\130\android\src\com\motornova\stockview\R.java
 C:\Users\MauriceLang18\Desktop\Sistemas\Aplicacion de vendedores\FrontEnd\StockView\StockView.Android\obj\Release\130\android\compressed_assemblies.armeabi-v7a.ll

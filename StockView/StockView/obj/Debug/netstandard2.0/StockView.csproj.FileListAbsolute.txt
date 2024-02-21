@@ -61,6 +61,7 @@ C:\Users\MauriceLang18\Desktop\Sistemas\Aplicacion de vendedores\FrontEnd\StockV
 C:\Users\MauriceLang18\Desktop\Sistemas\Aplicacion de vendedores\FrontEnd\StockView\StockView\obj\Debug\netstandard2.0\App.xaml.g.cs
 C:\Users\MauriceLang18\Desktop\Sistemas\Aplicacion de vendedores\FrontEnd\StockView\StockView\obj\Debug\netstandard2.0\Views\CarritoCompraPage.xaml.g.cs
 C:\Users\MauriceLang18\Desktop\Sistemas\Aplicacion de vendedores\FrontEnd\StockView\StockView\obj\Debug\netstandard2.0\Views\ClientePage.xaml.g.cs
+C:\Users\MauriceLang18\Desktop\Sistemas\Aplicacion de vendedores\FrontEnd\StockView\StockView\obj\Debug\netstandard2.0\Views\CotizacionPage.xaml.g.cs
 C:\Users\MauriceLang18\Desktop\Sistemas\Aplicacion de vendedores\FrontEnd\StockView\StockView\obj\Debug\netstandard2.0\Views\HistoryPage.xaml.g.cs
 C:\Users\MauriceLang18\Desktop\Sistemas\Aplicacion de vendedores\FrontEnd\StockView\StockView\obj\Debug\netstandard2.0\Views\ListArticulosPage.xaml.g.cs
 C:\Users\MauriceLang18\Desktop\Sistemas\Aplicacion de vendedores\FrontEnd\StockView\StockView\obj\Debug\netstandard2.0\Views\LoginPage.xaml.g.cs
@@ -73,4 +74,3 @@ C:\Users\MauriceLang18\Desktop\Sistemas\Aplicacion de vendedores\FrontEnd\StockV
 C:\Users\MauriceLang18\Desktop\Sistemas\Aplicacion de vendedores\FrontEnd\StockView\StockView\obj\Debug\netstandard2.0\StockView.dll
 C:\Users\MauriceLang18\Desktop\Sistemas\Aplicacion de vendedores\FrontEnd\StockView\StockView\obj\Debug\netstandard2.0\refint\StockView.dll
 C:\Users\MauriceLang18\Desktop\Sistemas\Aplicacion de vendedores\FrontEnd\StockView\StockView\obj\Debug\netstandard2.0\StockView.pdb
-C:\Users\MauriceLang18\Desktop\Sistemas\Aplicacion de vendedores\FrontEnd\StockView\StockView\obj\Debug\netstandard2.0\Views\CotizacionPage.xaml.g.cs

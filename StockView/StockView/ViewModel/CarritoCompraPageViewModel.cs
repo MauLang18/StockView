@@ -156,7 +156,7 @@ namespace StockView.ViewModel
                         if (eliminado && agregado)
                         {
 
-                            await Metodos.EnviarCorreo(cliente, User, DateTime.Now.ToString(), Token);
+                            await Metodos.EnviarCorreo(cliente, User, DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss.fffffff"), Token);
                             await Application.Current.MainPage.DisplayAlert("Pedido realizado", Data, "OK");
                             
                             MessagingCenter.Send(this, "ActualizarPagina");

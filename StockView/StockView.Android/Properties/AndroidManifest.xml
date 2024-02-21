@@ -1,16 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="11" android:versionName="4.0" package="com.motornova.stockview" android:installLocation="auto" xmlns:tools="http://schemas.android.com/tools">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="13" android:versionName="4.1.0" package="com.motornova.stockview" android:installLocation="auto" xmlns:tools="http://schemas.android.com/tools">
 	<uses-sdk android:minSdkVersion="21" android:targetSdkVersion="33" />
-
-	<application android:label="StockView" android:theme="@style/MainTheme" android:icon="@mipmap/ic_launcher" tools:replace="android:icon">
-		<activity android:label="StockView" android:theme="@style/MainTheme" android:configChanges="screenSize|orientation|uiMode|screenLayout|smallestScreenSize" android:name=".MainActivity" android:resizeableActivity="false">
-			<intent-filter>
-				<action android:name="android.intent.action.MAIN" />
-				<category android:name="android.intent.category.LAUNCHER" />
-			</intent-filter>
-		</activity>
-	</application>
-
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 	<uses-permission android:name="android.permission.READ_PRIVILEGED_PHONE_STATE" />
 	<uses-permission android:name="android.permission.READ_PHONE_STATE" />
