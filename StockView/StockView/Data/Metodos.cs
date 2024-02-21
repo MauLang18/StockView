@@ -8,6 +8,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace StockView.Data
 {
@@ -19,7 +20,7 @@ namespace StockView.Data
             {
                 using (HttpClient client = new HttpClient(await GetInsecureHandler()))
                 {
-                    var uri = new Uri($"http://190.113.124.155:9096/Articulo?desc={Uri.EscapeDataString(desc)}&priv={Uri.EscapeDataString(priv)}&order={Uri.EscapeDataString(order)}");
+                    var uri = new Uri($"http://190.113.124.155:9099/Articulo?desc={Uri.EscapeDataString(desc)}&priv={Uri.EscapeDataString(priv)}&order={Uri.EscapeDataString(order)}");
 
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
@@ -68,7 +69,7 @@ namespace StockView.Data
             {
                 using (HttpClient client = new HttpClient(await GetInsecureHandler()))
                 {
-                    var uri = new Uri($"http://190.113.124.155:9096/Cliente?clie={Uri.EscapeDataString(desc)}");
+                    var uri = new Uri($"http://190.113.124.155:9099/Cliente?clie={Uri.EscapeDataString(desc)}");
 
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
@@ -117,7 +118,7 @@ namespace StockView.Data
             {
                 using (HttpClient client = new HttpClient(await GetInsecureHandler()))
                 {
-                    var uri = new Uri($"http://190.113.124.155:9096/Pedido");
+                    var uri = new Uri($"http://190.113.124.155:9099/Pedido");
 
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
@@ -164,13 +165,68 @@ namespace StockView.Data
             }
         }
 
+        public static async Task<CotizacionData> ObtenerCotizacion(string token, string cliente, string vendedor, string fecha)
+        {
+            try
+            {
+                using (HttpClient client = new HttpClient(await GetInsecureHandler()))
+                {
+                    var uriBuilder = new UriBuilder("http://190.113.124.155:9099/Cotizacion/First");
+                    var query = HttpUtility.ParseQueryString(uriBuilder.Query);
+                    query["cliente"] = cliente;
+                    query["vendedor"] = vendedor;
+                    query["fecha"] = fecha;
+                    uriBuilder.Query = query.ToString();
+                    var uri = uriBuilder.Uri;
+
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+                    HttpResponseMessage response = await client.GetAsync(uri);
+
+                    string resultado = await response.Content.ReadAsStringAsync();
+                    string mensaje = string.Empty;
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        Cotizacion apiResponse = JsonConvert.DeserializeObject<Cotizacion>(resultado);
+                        if (apiResponse != null && apiResponse.IsSuccess)
+                        {
+                            return apiResponse.Data;
+                        }
+                        else
+                        {
+                            mensaje = apiResponse != null ? apiResponse.Message : "Error desconocido en la respuesta.";
+                            throw new ApplicationException(mensaje);
+                        }
+                    }
+                    else
+                    {
+                        mensaje = "Respuesta no exitosa. Código: " + response.StatusCode;
+                        throw new ApplicationException(mensaje);
+                    }
+                }
+            }
+            catch (HttpRequestException hrex)
+            {
+                throw new ApplicationException("Error al realizar la solicitud HTTP: " + hrex.Message, hrex);
+            }
+            catch (JsonException jex)
+            {
+                throw new ApplicationException("Error al deserializar la respuesta JSON: " + jex.Message, jex);
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("Se produjo una excepción: " + ex.Message, ex);
+            }
+        }
+
         public static async Task<string> Login(string username, string password)
         {
             try
             {
                 using (HttpClient client = new HttpClient(await GetInsecureHandler()))
                 {
-                    var uri = new Uri("http://190.113.124.155:9096/Auth/Login");
+                    var uri = new Uri("http://190.113.124.155:9099/Auth/Login");
 
                     var loginData = new
                     {
@@ -184,8 +240,6 @@ namespace StockView.Data
                     HttpResponseMessage response = await client.PostAsync(uri, content);
 
                     string resultado = await response.Content.ReadAsStringAsync();
-
-
 
                     if (response.IsSuccessStatusCode)
                     {
@@ -221,13 +275,48 @@ namespace StockView.Data
             }
         }
 
+        public static async Task<byte[]> GenerarCotizacion(int id, string token)
+        {
+            try
+            {
+                using (HttpClient client = new HttpClient(await GetInsecureHandler()))
+                {
+                    var uri = new Uri($"http://190.113.124.155:9099/Report/Cotizacion/{id.ToString()}");
+
+                    // Agregar el token al encabezado de la solicitud para la autenticación
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+                    HttpResponseMessage response = await client.GetAsync(uri);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        return await response.Content.ReadAsByteArrayAsync();
+                    }
+                    else
+                    {
+                        string mensaje = "Respuesta no exitosa. Código: " + response.StatusCode;
+                        throw new ApplicationException(mensaje);
+                    }
+                }
+            }
+            catch (WebException wex)
+            {
+                throw new ApplicationException("WEB_ERROR: [" + wex.Message + "]" + (wex.InnerException != null ? " INNER: [" + wex.InnerException.Message + "]" : ""));
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Se produjo una excepción: {0}", ex.Message);
+                throw new ApplicationException("ERROR: [" + ex.Message + "]" + (ex.InnerException != null ? " INNER: [" + ex.InnerException.Message + "]" : ""));
+            }
+        }
+
         public static async Task<RolsData> ObtenerRol(int id, string token)
         {
             try
             {
                 using (HttpClient client = new HttpClient(await GetInsecureHandler()))
                 {
-                    var uri = new Uri($"http://190.113.124.155:9096/Rol/{Uri.EscapeDataString(id.ToString())}");
+                    var uri = new Uri($"http://190.113.124.155:9099/Rol/{Uri.EscapeDataString(id.ToString())}");
 
                     // Agregar el token a la cabecera de autorización
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
@@ -274,7 +363,7 @@ namespace StockView.Data
             {
                 using (HttpClient client = new HttpClient(await GetInsecureHandler()))
                 {
-                    var uri = new Uri($"http://190.113.124.155:9096/Usuario/User?user={Uri.EscapeDataString(user)}");
+                    var uri = new Uri($"http://190.113.124.155:9099/Usuario/User?user={Uri.EscapeDataString(user)}");
 
                     // Agregar el token a la cabecera de autorización
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
@@ -321,7 +410,7 @@ namespace StockView.Data
             {
                 using (HttpClient client = new HttpClient(await GetInsecureHandler()))
                 {
-                    var uri = new Uri($"http://190.113.124.155:9096/CarritoCompra/Usuario?vendedor={Uri.EscapeDataString(vendedor)}");
+                    var uri = new Uri($"http://190.113.124.155:9099/CarritoCompra/Usuario?vendedor={Uri.EscapeDataString(vendedor)}");
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
                     HttpResponseMessage response = await client.GetAsync(uri);
@@ -363,13 +452,13 @@ namespace StockView.Data
             }
         }
 
-        public static async Task<bool> AgregarAlCarrito(string codigoArticulo, string descripcionArticulo, string vendedor, int cantidad, string token)
+        public static async Task<bool> AgregarAlCarrito(string codigoArticulo, string descripcionArticulo, string vendedor, int cantidad, string token, decimal precio)
         {
             try
             {
                 using (HttpClient client = new HttpClient(await GetInsecureHandler()))
                 {
-                    var uri = new Uri("http://190.113.124.155:9096/CarritoCompra/Register");
+                    var uri = new Uri("http://190.113.124.155:9099/CarritoCompra/Register");
 
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
@@ -378,7 +467,8 @@ namespace StockView.Data
                         codigoArticulo = codigoArticulo,
                         descripcionArticulo = descripcionArticulo,
                         vendedor = vendedor,
-                        cantidad = cantidad
+                        cantidad = cantidad,
+                        precio = precio
                     };
 
                     string jsonBody = JsonConvert.SerializeObject(nuevoArticulo);
@@ -396,13 +486,13 @@ namespace StockView.Data
             }
         }
 
-        public static async Task<bool> AgregarPedido(string codigoArticulo, string articulo, string codigoCliente, string cliente, string vendedor, int cantidad, string token)
+        public static async Task<bool> AgregarPedido(string codigoArticulo, string articulo, string codigoCliente, string cliente, string vendedor, int cantidad, string token, string observacion)
         {
             try
             {
                 using (HttpClient client = new HttpClient(await GetInsecureHandler()))
                 {
-                    var uri = new Uri("http://190.113.124.155:9096/Pedido/Register");
+                    var uri = new Uri("http://190.113.124.155:9099/Pedido/Register");
 
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
@@ -414,7 +504,76 @@ namespace StockView.Data
                         cliente = cliente,
                         vendedor = vendedor,
                         cantidad = cantidad,
+                        observacion = observacion,
                         estadoPedido = 0
+                    };
+
+                    string jsonBody = JsonConvert.SerializeObject(nuevoArticulo);
+                    HttpContent content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
+
+                    HttpResponseMessage response = await client.PostAsync(uri, content);
+
+                    return response.IsSuccessStatusCode;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Se produjo una excepción: {0}", ex.Message);
+                throw new ApplicationException("ERROR: [" + ex.Message + "]" + (ex.InnerException != null ? " INNER: [" + ex.InnerException.Message + "]" : ""));
+            }
+        }
+
+        public static async Task<bool> AgregarCotizacion(string codigoCliente, string cliente, string vendedor, decimal descuento, string token, string fecha)
+        {
+            try
+            {
+                using (HttpClient client = new HttpClient(await GetInsecureHandler()))
+                {
+                    var uri = new Uri("http://190.113.124.155:9099/Cotizacion/Register");
+
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+                    var nuevoArticulo = new
+                    {
+                        codigoCliente = codigoCliente,
+                        cliente = cliente,
+                        vendedor = vendedor,
+                        descuento = descuento,
+                        fecha = fecha
+                    };
+
+                    string jsonBody = JsonConvert.SerializeObject(nuevoArticulo);
+                    HttpContent content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
+
+                    HttpResponseMessage response = await client.PostAsync(uri, content);
+
+                    return response.IsSuccessStatusCode;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Se produjo una excepción: {0}", ex.Message);
+                throw new ApplicationException("ERROR: [" + ex.Message + "]" + (ex.InnerException != null ? " INNER: [" + ex.InnerException.Message + "]" : ""));
+            }
+        }
+
+        public static async Task<bool> AgregarDetalleCotizacion(string codigoArticulo, string articulo, decimal precio, int cantidad, int idCotizacion, string token)
+        {
+            try
+            {
+                using (HttpClient client = new HttpClient(await GetInsecureHandler()))
+                {
+                    var uri = new Uri("http://190.113.124.155:9099/DetalleCotizacion/Register");
+
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+                    var nuevoArticulo = new
+                    {
+                        codigoArticulo = codigoArticulo,
+                        articulo = articulo,
+                        precio = precio,
+                        cantidad = cantidad,
+                        idCotizacion = idCotizacion
                     };
 
                     string jsonBody = JsonConvert.SerializeObject(nuevoArticulo);
@@ -438,7 +597,7 @@ namespace StockView.Data
             {
                 using (HttpClient client = new HttpClient(await GetInsecureHandler()))
                 {
-                    var uri = new Uri($"http://190.113.124.155:9096/CarritoCompra/Edit/Cantidad");
+                    var uri = new Uri($"http://190.113.124.155:9099/CarritoCompra/Edit/Cantidad");
 
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
@@ -469,7 +628,7 @@ namespace StockView.Data
             {
                 using (HttpClient client = new HttpClient(await GetInsecureHandler()))
                 {
-                    var uri = new Uri($"http://190.113.124.155:9096/CarritoCompra/Remove/{Uri.EscapeDataString(id.ToString())}");
+                    var uri = new Uri($"http://190.113.124.155:9099/CarritoCompra/Remove/{Uri.EscapeDataString(id.ToString())}");
 
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
@@ -491,7 +650,7 @@ namespace StockView.Data
             {
                 using (HttpClient client = new HttpClient(await GetInsecureHandler()))
                 {
-                    var uri = new Uri($"http://190.113.124.155:9096/CarritoCompra/Remove/Vendedor?vendedor={Uri.EscapeDataString(vendedor)}");
+                    var uri = new Uri($"http://190.113.124.155:9099/CarritoCompra/Remove/Vendedor?vendedor={Uri.EscapeDataString(vendedor)}");
 
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
@@ -507,28 +666,24 @@ namespace StockView.Data
             }
         }
 
-        public static async Task<bool> EnviarCorreo(string para, string asunto, string contenido, string token, string cc)
+        public static async Task<bool> EnviarCorreo(string codigoCliente, string vendedor, string fechaPedido, string token)
         {
             try
             {
                 using (HttpClient client = new HttpClient(await GetInsecureHandler()))
                 {
-                    var uri = new Uri("http://190.113.124.155:9096/Mail/Send");
+                    // Construir la URL con los parámetros
+                    var uriBuilder = new UriBuilder("http://190.113.124.155:9099/Pedido/Estado");
+                    var query = HttpUtility.ParseQueryString(uriBuilder.Query);
+                    query["codigoCliente"] = codigoCliente;
+                    query["vendedor"] = vendedor;
+                    query["fechaPedido"] = fechaPedido;
+                    uriBuilder.Query = query.ToString();
+                    var uri = uriBuilder.Uri;
 
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-                    var nuevoArticulo = new
-                    {
-                        cc = cc,
-                        para = para,
-                        asunto = asunto,
-                        contenido = contenido
-                    };
-
-                    string jsonBody = JsonConvert.SerializeObject(nuevoArticulo);
-                    HttpContent content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
-
-                    HttpResponseMessage response = await client.PostAsync(uri, content);
+                    HttpResponseMessage response = await client.GetAsync(uri);
 
                     return response.IsSuccessStatusCode;
                 }

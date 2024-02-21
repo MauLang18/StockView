@@ -375,7 +375,7 @@ namespace StockView.ViewModel
                 {
                     selectedArticulo.Count += 1;
 
-                    bool agregado = await Metodos.AgregarAlCarrito(selectedArticulo.Codigo, selectedArticulo.Descripcion, User, selectedArticulo.Count, Token);
+                    bool agregado = await Metodos.AgregarAlCarrito(selectedArticulo.Codigo, selectedArticulo.Descripcion, User, selectedArticulo.Count, Token, selectedArticulo.Precio);
 
                     if (agregado)
                     {

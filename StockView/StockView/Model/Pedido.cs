@@ -14,6 +14,7 @@ namespace StockView.Model
         public string Vendedor { get; set; }
         public int Cantidad { get; set; }
         public DateTime FechaPedido { get; set; }
+        public string Observacion { get; set; }
         private int _EstadoPedido { get; set; }
         private string _EstadoTexto { get; set; }
         public int EstadoPedido

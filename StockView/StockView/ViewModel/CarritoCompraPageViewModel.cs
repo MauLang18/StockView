@@ -3,9 +3,11 @@ using StockView.Model;
 using StockView.Views;
 using System;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace StockView.ViewModel
@@ -133,6 +135,7 @@ namespace StockView.ViewModel
 
             if (ListCarritoCompra != null && ListCarritoCompra.Any())
             {
+                MessagingCenter.Unsubscribe<ClientePageViewModel, Clientes>(this, "ActualizarPagina");
                 MessagingCenter.Subscribe<ClientePageViewModel, Clientes>(this, "ActualizarPagina", async (sender, arg) =>
                 {
                     string cliente = arg.Cliente;
@@ -141,30 +144,23 @@ namespace StockView.ViewModel
 
                     if (!string.IsNullOrWhiteSpace(cliente))
                     {
-                        string correoHTML = GenerarContenidoCorreo(cliente, codigo, obser);
 
-                        bool enviado = await Metodos.EnviarCorreo("lquiros@motornovacr.com", $"Pedido para {codigo} - {cliente} / vendedor {User}", correoHTML, Token, $"{User}@motornovacr.com");
+                        bool eliminado = await Metodos.EliminarDelCarritoByVendedor(User, Token);
+                        bool agregado = false;
 
-                        if (enviado)
+                        foreach (var item in ListCarritoCompra)
                         {
-                            bool eliminado = await Metodos.EliminarDelCarritoByVendedor(User, Token);
-                            bool agregado = false;
+                            agregado = await Metodos.AgregarPedido(item.Codigo, item.Descripcion, codigo, cliente, item.Vendedor, item.Cantidad, Token, obser);
+                        }
 
-                            foreach (var item in ListCarritoCompra)
-                            {
-                                agregado = await Metodos.AgregarPedido(item.Codigo, item.Descripcion, codigo, cliente, item.Vendedor, item.Cantidad, Token);
-                            }
+                        if (eliminado && agregado)
+                        {
 
-                            if (eliminado && agregado)
-                            {
-                                await Application.Current.MainPage.DisplayAlert("Pedido realizado", Data, "OK");
-                                MessagingCenter.Send(this, "ActualizarPagina");
+                            await Metodos.EnviarCorreo(cliente, User, DateTime.Now.ToString(), Token);
+                            await Application.Current.MainPage.DisplayAlert("Pedido realizado", Data, "OK");
+                            
+                            MessagingCenter.Send(this, "ActualizarPagina");
 
-                            }
-                            else
-                            {
-                                await Application.Current.MainPage.DisplayAlert("No se pudo realizar el pedido", Data, "OK");
-                            }
                         }
                         else
                         {
@@ -183,20 +179,89 @@ namespace StockView.ViewModel
             }
         }
 
-        private string GenerarContenidoCorreo(string nombreCliente, string codigo, string obser)
+        public async Task GenerarCotizacion()
         {
-            string correoHTML = $"<h1>Detalles del Pedido para {codigo} - {nombreCliente}</h1><ul>";
+            await Navigation.PushAsync(new ClientePage(Token));
 
-            foreach (var item in ListCarritoCompra)
+            if (ListCarritoCompra != null && ListCarritoCompra.Any())
             {
-                correoHTML += $"<li><strong>Codigo:</strong> {item.Codigo} - <strong>Producto:</strong> {item.Descripcion} - <strong>Cantidad:</strong> {item.Cantidad}</li>";
+                MessagingCenter.Unsubscribe<ClientePageViewModel, Clientes>(this, "ActualizarPagina");
+                MessagingCenter.Subscribe<ClientePageViewModel, Clientes>(this, "ActualizarPagina", async (sender, arg) =>
+                {
+                    string cliente = arg.Cliente;
+                    string codigo = arg.Codigo;
+                    string obser = arg.Obser;
+
+                    if (!string.IsNullOrWhiteSpace(cliente))
+                    {
+                        string fecha = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss.fffffff");
+                        bool agregadoCoti = false;
+                        bool agregado = await Metodos.AgregarCotizacion(codigo, cliente, User, Decimal.Parse(obser), Token, fecha);
+
+                        if (agregado)
+                        {
+                            CotizacionData cotizacion = await Metodos.ObtenerCotizacion(Token, cliente, User, fecha);
+                            
+                            if (cotizacion != null)
+                            {
+                                foreach (var item in ListCarritoCompra)
+                                {
+                                    agregadoCoti = await Metodos.AgregarDetalleCotizacion(item.Codigo, item.Descripcion, item.Precio, item.Cantidad, cotizacion.Id, Token);
+                                }
+
+                                if (agregadoCoti)
+                                {
+                                    // Generar y guardar el archivo PDF
+                                    byte[] pdfBytes = await Metodos.GenerarCotizacion(cotizacion.Id, Token);
+
+                                    // Guardar el archivo PDF en el almacenamiento local del dispositivo
+                                    string nombreArchivo = $"{cotizacion.Id}-cotizacion.pdf"; // Ajusta el nombre del archivo según tus necesidades
+                                    string rutaArchivo = Path.Combine(FileSystem.AppDataDirectory, nombreArchivo);
+
+                                    try
+                                    {
+                                        // Guardar el archivo PDF
+                                        File.WriteAllBytes(rutaArchivo, pdfBytes);
+                                        Console.WriteLine($"Archivo PDF guardado en: {rutaArchivo}");
+
+                                        // Abrir el archivo PDF con el visor predeterminado
+                                        await Launcher.OpenAsync(new OpenFileRequest
+                                        {
+                                            File = new ReadOnlyFile(rutaArchivo)
+                                        });
+
+                                        // Mostrar una alerta indicando que la cotización se ha creado
+                                        await Application.Current.MainPage.DisplayAlert("Cotización creada", "La cotización se ha creado correctamente.", "OK");
+
+                                        // Enviar un mensaje para actualizar la página (si es necesario)
+                                        MessagingCenter.Send(this, "ActualizarPagina");
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        // Capturar y manejar cualquier error durante el proceso
+                                        Console.WriteLine($"Error al guardar o abrir el archivo PDF: {ex.Message}");
+
+                                        // Mostrar una alerta con el mensaje de error
+                                        await Application.Current.MainPage.DisplayAlert("Error", $"Se ha producido un error: {ex.Message}", "OK");
+                                    }
+                                }
+                            }
+                        }
+                        else
+                        {
+                            await Application.Current.MainPage.DisplayAlert("No se pudo realizar la cotizacion", Data, "OK");
+                        }
+                    }
+                    else
+                    {
+                        await Application.Current.MainPage.DisplayAlert("Nombre no válido", "Por favor, ingrese un nombre válido.", "OK");
+                    }
+                });
             }
-
-            correoHTML += "</ul>";
-
-            correoHTML += $"<p><strong>Observaciones:</strong> {obser}</p>";
-
-            return correoHTML;
+            else
+            {
+                await Application.Current.MainPage.DisplayAlert("No hay productos en el carrito", Data, "OK");
+            }
         }
 
         public event EventHandler OpenMenuRequested;
@@ -205,5 +270,6 @@ namespace StockView.ViewModel
         public ICommand DecrementCommand => new Command<CarritoCompra>(async (articulo) => await Less(articulo));
         public ICommand DeleteCommand => new Command<CarritoCompra>(async (articulo) => await Delete(articulo));
         public ICommand GenerateOrderCommand => new Command(async () => await GenerarOrden());
+        public ICommand GenerateQuoteCommand => new Command(async () => await GenerarCotizacion());
     }
 }
