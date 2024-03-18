@@ -15,6 +15,9 @@ namespace StockView.ViewModel
         string _Privilegios;
         string _Password;
         string _Usuario;
+        string _Drainsa;
+        string _Motornova;
+        string _Despacho;
         private SecureStore _secureStore;
         #endregion
         #region CONSTRUCTOR
@@ -34,6 +37,12 @@ namespace StockView.ViewModel
 
             string user = await _secureStore.ReadUserAsync();
 
+            string despacho = await _secureStore.ReadDespachoAsync();
+
+            string drainsa = await _secureStore.ReadDrainsaAsync();
+
+            string motornova = await _secureStore.ReadMotornovaAsync();
+
             if (string.IsNullOrEmpty(data))
             {
                 Console.WriteLine("No hay token almacenado.");
@@ -50,7 +59,7 @@ namespace StockView.ViewModel
                 else
                 {
                     Console.WriteLine("El token es válido.");
-                    await Navigation.PushAsync(new MainPage(data, privilegios, user));
+                    await Navigation.PushAsync(new MainPage(data, privilegios, user, despacho, drainsa, motornova));
                 }
             }
         }
@@ -84,6 +93,21 @@ namespace StockView.ViewModel
             get { return _Usuario; }
             set { SetValue(ref _Usuario, value); }
         }
+        public string Drainsa
+        {
+            get { return _Drainsa; }
+            set { SetValue(ref _Drainsa, value); }
+        }
+        public string Motornova
+        {
+            get { return _Motornova; }
+            set { SetValue(ref _Motornova, value); }
+        }
+        public string Despacho
+        {
+            get { return _Despacho; }
+            set { SetValue(ref _Despacho, value); }
+        }
         #endregion
         #region PROCESOS
         public async Task Ingresar()
@@ -100,8 +124,11 @@ namespace StockView.ViewModel
                 UsuariosData rol = await Metodos.ObtenerUsuario(Usuario, Data);
                 RolsData priv = await Metodos.ObtenerRol(rol.Rol, Data);
                 Privilegios = priv.Privilegios.ToString();
-                await _secureStore.StoreAuthTokenAsync(Data, fechaGuardado, Privilegios, Usuario);
-                await Navigation.PushAsync(new MainPage(Data, Privilegios, Usuario));
+                Motornova = priv.Motornova.ToString();
+                Drainsa = priv.Drainsa.ToString();
+                Despacho = rol.Despacho.ToString();
+                await _secureStore.StoreAuthTokenAsync(Data, fechaGuardado, Privilegios, Usuario, Motornova, Drainsa, Despacho);
+                await Navigation.PushAsync(new MainPage(Data, Privilegios, Usuario, Despacho, Drainsa, Motornova));
             }
         }
 

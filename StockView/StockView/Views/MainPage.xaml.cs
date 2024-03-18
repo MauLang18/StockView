@@ -10,17 +10,17 @@ namespace StockView.Views
     {
         private readonly ListArticulosPageViewModel _viewModel;
 
-        public MainPage(string token, string privilegios, string user)
+        public MainPage(string token, string privilegios, string user, string despacho, string drainsa, string motornova)
         {
             InitializeComponent();
 
-            _viewModel = new ListArticulosPageViewModel(Navigation, token, privilegios, user);
+            _viewModel = new ListArticulosPageViewModel(Navigation, token, privilegios, user, despacho, drainsa, motornova);
             _viewModel.OpenMenuRequested += HandleOpenMenuRequested;
 
             Articulo selectedArticulo = new Articulo();
 
-            Flyout = new CarritoCompraPage(user, token);
-            Detail = new NavigationPage(new ListArticulosPage(token, privilegios, user) { BindingContext = _viewModel });
+            Flyout = new CarritoCompraPage(user, token, despacho);
+            Detail = new NavigationPage(new ListArticulosPage(token, privilegios, user, despacho, drainsa, motornova) { BindingContext = _viewModel });
         }
 
         private void HandleOpenMenuRequested(object sender, System.EventArgs e)

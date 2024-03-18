@@ -18,13 +18,15 @@ namespace StockView.ViewModel
         string _Data;
         string User;
         string Token;
+        string Despacho;
         ObservableCollection<CarritoCompra> _ListCarritoCompra;
 
-        public CarritoCompraPageViewModel(INavigation navigation, string user, string token)
+        public CarritoCompraPageViewModel(INavigation navigation, string user, string token, string despacho)
         {
             Navigation = navigation;
             User = user;
             Token = token;
+            Despacho = despacho;
 
             MostrarArticulo();
 
@@ -37,6 +39,7 @@ namespace StockView.ViewModel
             {
                 await MostrarArticulo();
             });
+            Despacho = despacho;
         }
 
         public string Desc
@@ -150,13 +153,13 @@ namespace StockView.ViewModel
 
                         foreach (var item in ListCarritoCompra)
                         {
-                            agregado = await Metodos.AgregarPedido(item.Codigo, item.Descripcion, codigo, cliente, item.Vendedor, item.Cantidad, Token, obser);
+                            agregado = await Metodos.AgregarPedido(item.Codigo, item.Descripcion, codigo, cliente, item.Vendedor, item.Cantidad, Token, obser, Despacho);
                         }
 
                         if (eliminado && agregado)
                         {
 
-                            await Metodos.EnviarCorreo(cliente, User, DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss.fffffff"), Token);
+                            await Metodos.EnviarCorreo(codigo, User, DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss.fffffff"), Token, Despacho);
                             await Application.Current.MainPage.DisplayAlert("Pedido realizado", Data, "OK");
                             
                             MessagingCenter.Send(this, "ActualizarPagina");

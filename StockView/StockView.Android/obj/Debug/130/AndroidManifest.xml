@@ -5,21 +5,15 @@
     Changes to this file may cause incorrect behavior and will be lost if
     the contents are regenerated.
     -->
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="11" android:versionName="4.0" package="com.motornova.stockview" android:installLocation="auto" xmlns:tools="http://schemas.android.com/tools">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="14" android:versionName="4.1.1" package="com.motornova.stockview" android:installLocation="auto" xmlns:tools="http://schemas.android.com/tools">
   <uses-sdk android:minSdkVersion="21" android:targetSdkVersion="33" />
-  <uses-permission android:name="android.permission.INTERNET" />
   <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
   <uses-permission android:name="android.permission.READ_PRIVILEGED_PHONE_STATE" />
   <uses-permission android:name="android.permission.READ_PHONE_STATE" />
   <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
   <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-  <application android:label="StockView" android:theme="@style/MainTheme" android:icon="@mipmap/ic_launcher" tools:replace="android:icon" android:name="android.app.Application" android:allowBackup="true" android:debuggable="true" android:extractNativeLibs="true">
-    <activity android:label="StockView" android:theme="@style/MainTheme" android:configChanges="screenSize|orientation|uiMode|screenLayout|smallestScreenSize" android:name=".MainActivity" android:resizeableActivity="false">
-      <intent-filter>
-        <action android:name="android.intent.action.MAIN" />
-        <category android:name="android.intent.category.LAUNCHER" />
-      </intent-filter>
-    </activity>
+  <uses-permission android:name="android.permission.INTERNET" />
+  <application android:name="android.app.Application" android:allowBackup="true" android:label="com.motornova.stockview" android:icon="@mipmap/ic_launcher" android:debuggable="true" android:extractNativeLibs="true">
     <activity android:configChanges="orientation|smallestScreenSize|screenLayout|screenSize|uiMode" android:icon="@mipmap/ic_launcher" android:label="StockView" android:theme="@style/MainTheme" android:name="crc64b160581d9f0d0aa7.MainActivity" android:exported="true">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />

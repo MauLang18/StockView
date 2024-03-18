@@ -20,6 +20,9 @@ namespace StockView.ViewModel
         string Token;
         string User;
         string Privilegios;
+        string Despacho;
+        string Drainsa;
+        string Motornova;
         private SecureStore _secureStore;
         private bool _IsAscending = false;
         public string SortIcon => _IsAscending ? "asc.png" : "desc.png";
@@ -28,11 +31,14 @@ namespace StockView.ViewModel
         #endregion
 
         #region CONSTRUCTOR
-        public ListArticulosPageViewModel(INavigation navigation, string token, string privilegios, string user)
+        public ListArticulosPageViewModel(INavigation navigation, string token, string privilegios, string user, string despacho, string drainsa, string motornova)
         {
             Navigation = navigation;
             Token = token;
             User = user;
+            Despacho = despacho;
+            Drainsa = drainsa;
+            Motornova = motornova;
             Privilegios = privilegios;
             _secureStore = new SecureStore();
 
@@ -98,7 +104,7 @@ namespace StockView.ViewModel
             }
             else
             {
-                ListArticulo = await Metodos.ObtenerArticulos(Desc, Token, Privilegios, "asc");
+                ListArticulo = await Metodos.ObtenerArticulos(Desc, Token, Privilegios, "asc", Drainsa, Motornova);
                 ListCarritoCompra = await Metodos.ObtenerByVendedor(User, Token);
 
                 if (ListArticulo != null && ListArticulo.Any())
@@ -124,7 +130,7 @@ namespace StockView.ViewModel
             }
             else
             {
-                ListArticulo = await Metodos.ObtenerArticulos(Desc, Token, Privilegios, "asc");
+                ListArticulo = await Metodos.ObtenerArticulos(Desc, Token, Privilegios, "asc", Drainsa, Motornova);
                 ListCarritoCompra = await Metodos.ObtenerByVendedor(User, Token);
 
                 if (ListArticulo != null && ListArticulo.Any())
@@ -151,7 +157,7 @@ namespace StockView.ViewModel
         public async Task Llantas()
         {
             Desc = "llanta";
-            ListArticulo = await Metodos.ObtenerArticulos(Desc, Token, Privilegios, "asc");
+            ListArticulo = await Metodos.ObtenerArticulos(Desc, Token, Privilegios, "asc", Drainsa, Motornova);
             ListCarritoCompra = await Metodos.ObtenerByVendedor(User, Token);
 
             if (ListArticulo != null && ListArticulo.Any())
@@ -171,7 +177,7 @@ namespace StockView.ViewModel
         public async Task Frenos()
         {
             Desc = "freno";
-            ListArticulo = await Metodos.ObtenerArticulos(Desc, Token, Privilegios, "asc");
+            ListArticulo = await Metodos.ObtenerArticulos(Desc, Token, Privilegios, "asc", Drainsa, Motornova);
             ListCarritoCompra = await Metodos.ObtenerByVendedor(User, Token);
 
             if (ListArticulo != null && ListArticulo.Any())
@@ -191,7 +197,7 @@ namespace StockView.ViewModel
         public async Task Fajas()
         {
             Desc = "faja";
-            ListArticulo = await Metodos.ObtenerArticulos(Desc, Token, Privilegios, "asc");
+            ListArticulo = await Metodos.ObtenerArticulos(Desc, Token, Privilegios, "asc", Drainsa, Motornova);
             ListCarritoCompra = await Metodos.ObtenerByVendedor(User, Token);
 
             if (ListArticulo != null && ListArticulo.Any())
@@ -211,7 +217,7 @@ namespace StockView.ViewModel
         public async Task Amortiguadores()
         {
             Desc = "comp";
-            ListArticulo = await Metodos.ObtenerArticulos(Desc, Token, Privilegios, "asc");
+            ListArticulo = await Metodos.ObtenerArticulos(Desc, Token, Privilegios, "asc", Drainsa, Motornova);
             ListCarritoCompra = await Metodos.ObtenerByVendedor(User, Token);
 
             if (ListArticulo != null && ListArticulo.Any())
@@ -231,7 +237,7 @@ namespace StockView.ViewModel
         public async Task Bombas()
         {
             Desc = "bomba";
-            ListArticulo = await Metodos.ObtenerArticulos(Desc, Token, Privilegios, "asc");
+            ListArticulo = await Metodos.ObtenerArticulos(Desc, Token, Privilegios, "asc", Drainsa, Motornova);
             ListCarritoCompra = await Metodos.ObtenerByVendedor(User, Token);
 
             if (ListArticulo != null && ListArticulo.Any())
@@ -251,7 +257,7 @@ namespace StockView.ViewModel
         public async Task Carburador()
         {
             Desc = "carburador";
-            ListArticulo = await Metodos.ObtenerArticulos(Desc, Token, Privilegios, "asc");
+            ListArticulo = await Metodos.ObtenerArticulos(Desc, Token, Privilegios, "asc", Drainsa, Motornova);
             ListCarritoCompra = await Metodos.ObtenerByVendedor(User, Token);
 
             if (ListArticulo != null && ListArticulo.Any())
@@ -292,7 +298,7 @@ namespace StockView.ViewModel
                 }
                 else
                 {
-                    ListArticulo = await Metodos.ObtenerArticulos(Desc, Token, Privilegios, "asc");
+                    ListArticulo = await Metodos.ObtenerArticulos(Desc, Token, Privilegios, "asc", Drainsa, Motornova);
                     ListCarritoCompra = await Metodos.ObtenerByVendedor(User, Token);
 
                     if (ListArticulo != null && ListArticulo.Any())
@@ -317,7 +323,7 @@ namespace StockView.ViewModel
                 }
                 else
                 {
-                    ListArticulo = await Metodos.ObtenerArticulos(Desc, Token, Privilegios, "desc");
+                    ListArticulo = await Metodos.ObtenerArticulos(Desc, Token, Privilegios, "desc", Drainsa, Motornova);
                     ListCarritoCompra = await Metodos.ObtenerByVendedor(User, Token);
 
                     if (ListArticulo != null && ListArticulo.Any())

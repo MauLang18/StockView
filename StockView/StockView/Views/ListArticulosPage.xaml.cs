@@ -15,10 +15,10 @@ namespace StockView.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ListArticulosPage : ContentPage
     {
-        public ListArticulosPage(string token, string privilegios, string user)
+        public ListArticulosPage(string token, string privilegios, string user, string despacho, string drainsa, string motornova)
         {
             InitializeComponent();
-            BindingContext = new ListArticulosPageViewModel(Navigation, token, privilegios, user);
+            BindingContext = new ListArticulosPageViewModel(Navigation, token, privilegios, user, despacho, drainsa, motornova);
             txtDescripcion.Completed += OnDescripcionEntryCompleted;
 
             NavigationPage.SetHasNavigationBar(this, false);

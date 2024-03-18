@@ -10,13 +10,19 @@ public class SecureStore
     private const string ExpiryDateKey = "AuthTokenExpiry";
     private const string PrivKey = "Priv";
     private const string UserKey = "User";
+    private const string DrainsaKey = "Drainsa";
+    private const string MotornovaKey = "Motornova";
+    private const string DespachoKey = "Despacho";
 
-    public async Task StoreAuthTokenAsync(string token, DateTime expiryTime, string priv, string user)
+    public async Task StoreAuthTokenAsync(string token, DateTime expiryTime, string priv, string user, string motornova, string drainsa, string despacho)
     {
         await SecureStorage.SetAsync(AuthTokenKey, token);
         await SecureStorage.SetAsync(ExpiryDateKey, expiryTime.ToString("O"));
         await SecureStorage.SetAsync(PrivKey, priv);
         await SecureStorage.SetAsync(UserKey, user);
+        await SecureStorage.SetAsync(DrainsaKey, drainsa);
+        await SecureStorage.SetAsync(MotornovaKey, motornova);
+        await SecureStorage.SetAsync(DespachoKey, despacho);
     }
 
     public async Task<string> ReadAuthTokenAsync()
@@ -44,6 +50,39 @@ public class SecureStore
     public async Task<string> ReadUserAsync()
     {
         string token = await SecureStorage.GetAsync(UserKey);
+        if (string.IsNullOrEmpty(token))
+        {
+            return null;
+        }
+
+        return token;
+    }
+
+    public async Task<string> ReadDespachoAsync()
+    {
+        string token = await SecureStorage.GetAsync(DespachoKey);
+        if (string.IsNullOrEmpty(token))
+        {
+            return null;
+        }
+
+        return token;
+    }
+
+    public async Task<string> ReadDrainsaAsync()
+    {
+        string token = await SecureStorage.GetAsync(DrainsaKey);
+        if (string.IsNullOrEmpty(token))
+        {
+            return null;
+        }
+
+        return token;
+    }
+
+    public async Task<string> ReadMotornovaAsync()
+    {
+        string token = await SecureStorage.GetAsync(MotornovaKey);
         if (string.IsNullOrEmpty(token))
         {
             return null;
@@ -90,6 +129,9 @@ public class SecureStore
         SecureStorage.Remove(ExpiryDateKey);
         SecureStorage.Remove(PrivKey);
         SecureStorage.Remove(UserKey);
+        SecureStorage.Remove(DrainsaKey);
+        SecureStorage.Remove(MotornovaKey);
+        SecureStorage.Remove(DespachoKey);
     }
 
     public async Task DeletePrivAsync()

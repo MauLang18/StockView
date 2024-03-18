@@ -14,10 +14,10 @@ namespace StockView.Views
     {
         //private Articulo selectedArticulo;
 
-        public CarritoCompraPage(string user, string token)
+        public CarritoCompraPage(string user, string token, string despacho)
         {
             InitializeComponent();
-            BindingContext = new CarritoCompraPageViewModel(Navigation, user, token);
+            BindingContext = new CarritoCompraPageViewModel(Navigation, user, token, despacho);
             //this.selectedArticulo = selectedArticulo;
             
         }

@@ -14,13 +14,13 @@ namespace StockView.Data
 {
     public class Metodos
     {
-        public static async Task<ObservableCollection<Articulo>> ObtenerArticulos(string desc, string token, string priv, string order)
+        public static async Task<ObservableCollection<Articulo>> ObtenerArticulos(string desc, string token, string priv, string order, string drainsa, string motornova)
         {
             try
             {
                 using (HttpClient client = new HttpClient(await GetInsecureHandler()))
                 {
-                    var uri = new Uri($"http://190.113.124.155:9099/Articulo?desc={Uri.EscapeDataString(desc)}&priv={Uri.EscapeDataString(priv)}&order={Uri.EscapeDataString(order)}");
+                    var uri = new Uri($"http://190.113.124.155:9098/Articulo?desc={Uri.EscapeDataString(desc)}&priv={Uri.EscapeDataString(priv)}&order={Uri.EscapeDataString(order)}&drainsa={Uri.EscapeDataString(drainsa)}&motornova={Uri.EscapeDataString(motornova)}");
 
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
@@ -69,7 +69,7 @@ namespace StockView.Data
             {
                 using (HttpClient client = new HttpClient(await GetInsecureHandler()))
                 {
-                    var uri = new Uri($"http://190.113.124.155:9099/Cliente?clie={Uri.EscapeDataString(desc)}");
+                    var uri = new Uri($"http://190.113.124.155:9098/Cliente?clie={Uri.EscapeDataString(desc)}");
 
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
@@ -118,7 +118,7 @@ namespace StockView.Data
             {
                 using (HttpClient client = new HttpClient(await GetInsecureHandler()))
                 {
-                    var uri = new Uri($"http://190.113.124.155:9099/Pedido");
+                    var uri = new Uri($"http://190.113.124.155:9098/Pedido");
 
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
@@ -171,7 +171,7 @@ namespace StockView.Data
             {
                 using (HttpClient client = new HttpClient(await GetInsecureHandler()))
                 {
-                    var uriBuilder = new UriBuilder("http://190.113.124.155:9099/Cotizacion/First");
+                    var uriBuilder = new UriBuilder("http://190.113.124.155:9098/Cotizacion/First");
                     var query = HttpUtility.ParseQueryString(uriBuilder.Query);
                     query["cliente"] = cliente;
                     query["vendedor"] = vendedor;
@@ -226,7 +226,7 @@ namespace StockView.Data
             {
                 using (HttpClient client = new HttpClient(await GetInsecureHandler()))
                 {
-                    var uri = new Uri("http://190.113.124.155:9099/Auth/Login");
+                    var uri = new Uri("http://190.113.124.155:9098/Auth/Login");
 
                     var loginData = new
                     {
@@ -281,7 +281,7 @@ namespace StockView.Data
             {
                 using (HttpClient client = new HttpClient(await GetInsecureHandler()))
                 {
-                    var uri = new Uri($"http://190.113.124.155:9099/Report/Cotizacion/{id.ToString()}");
+                    var uri = new Uri($"http://190.113.124.155:9098/Report/Cotizacion/{id.ToString()}");
 
                     // Agregar el token al encabezado de la solicitud para la autenticación
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
@@ -316,7 +316,7 @@ namespace StockView.Data
             {
                 using (HttpClient client = new HttpClient(await GetInsecureHandler()))
                 {
-                    var uri = new Uri($"http://190.113.124.155:9099/Rol/{Uri.EscapeDataString(id.ToString())}");
+                    var uri = new Uri($"http://190.113.124.155:9098/Rol/{Uri.EscapeDataString(id.ToString())}");
 
                     // Agregar el token a la cabecera de autorización
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
@@ -363,7 +363,7 @@ namespace StockView.Data
             {
                 using (HttpClient client = new HttpClient(await GetInsecureHandler()))
                 {
-                    var uri = new Uri($"http://190.113.124.155:9099/Usuario/User?user={Uri.EscapeDataString(user)}");
+                    var uri = new Uri($"http://190.113.124.155:9098/Usuario/User?user={Uri.EscapeDataString(user)}");
 
                     // Agregar el token a la cabecera de autorización
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
@@ -410,7 +410,7 @@ namespace StockView.Data
             {
                 using (HttpClient client = new HttpClient(await GetInsecureHandler()))
                 {
-                    var uri = new Uri($"http://190.113.124.155:9099/CarritoCompra/Usuario?vendedor={Uri.EscapeDataString(vendedor)}");
+                    var uri = new Uri($"http://190.113.124.155:9098/CarritoCompra/Usuario?vendedor={Uri.EscapeDataString(vendedor)}");
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
                     HttpResponseMessage response = await client.GetAsync(uri);
@@ -458,7 +458,7 @@ namespace StockView.Data
             {
                 using (HttpClient client = new HttpClient(await GetInsecureHandler()))
                 {
-                    var uri = new Uri("http://190.113.124.155:9099/CarritoCompra/Register");
+                    var uri = new Uri("http://190.113.124.155:9098/CarritoCompra/Register");
 
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
@@ -486,13 +486,13 @@ namespace StockView.Data
             }
         }
 
-        public static async Task<bool> AgregarPedido(string codigoArticulo, string articulo, string codigoCliente, string cliente, string vendedor, int cantidad, string token, string observacion)
+        public static async Task<bool> AgregarPedido(string codigoArticulo, string articulo, string codigoCliente, string cliente, string vendedor, int cantidad, string token, string observacion, string despacho)
         {
             try
             {
                 using (HttpClient client = new HttpClient(await GetInsecureHandler()))
                 {
-                    var uri = new Uri("http://190.113.124.155:9099/Pedido/Register");
+                    var uri = new Uri("http://190.113.124.155:9098/Pedido/Register");
 
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
@@ -505,7 +505,8 @@ namespace StockView.Data
                         vendedor = vendedor,
                         cantidad = cantidad,
                         observacion = observacion,
-                        estadoPedido = 0
+                        estadoPedido = 0,
+                        despacho = despacho,
                     };
 
                     string jsonBody = JsonConvert.SerializeObject(nuevoArticulo);
@@ -529,7 +530,7 @@ namespace StockView.Data
             {
                 using (HttpClient client = new HttpClient(await GetInsecureHandler()))
                 {
-                    var uri = new Uri("http://190.113.124.155:9099/Cotizacion/Register");
+                    var uri = new Uri("http://190.113.124.155:9098/Cotizacion/Register");
 
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
@@ -563,7 +564,7 @@ namespace StockView.Data
             {
                 using (HttpClient client = new HttpClient(await GetInsecureHandler()))
                 {
-                    var uri = new Uri("http://190.113.124.155:9099/DetalleCotizacion/Register");
+                    var uri = new Uri("http://190.113.124.155:9098/DetalleCotizacion/Register");
 
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
@@ -597,7 +598,7 @@ namespace StockView.Data
             {
                 using (HttpClient client = new HttpClient(await GetInsecureHandler()))
                 {
-                    var uri = new Uri($"http://190.113.124.155:9099/CarritoCompra/Edit/Cantidad");
+                    var uri = new Uri($"http://190.113.124.155:9098/CarritoCompra/Edit/Cantidad");
 
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
@@ -628,7 +629,7 @@ namespace StockView.Data
             {
                 using (HttpClient client = new HttpClient(await GetInsecureHandler()))
                 {
-                    var uri = new Uri($"http://190.113.124.155:9099/CarritoCompra/Remove/{Uri.EscapeDataString(id.ToString())}");
+                    var uri = new Uri($"http://190.113.124.155:9098/CarritoCompra/Remove/{Uri.EscapeDataString(id.ToString())}");
 
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
@@ -650,7 +651,7 @@ namespace StockView.Data
             {
                 using (HttpClient client = new HttpClient(await GetInsecureHandler()))
                 {
-                    var uri = new Uri($"http://190.113.124.155:9099/CarritoCompra/Remove/Vendedor?vendedor={Uri.EscapeDataString(vendedor)}");
+                    var uri = new Uri($"http://190.113.124.155:9098/CarritoCompra/Remove/Vendedor?vendedor={Uri.EscapeDataString(vendedor)}");
 
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
@@ -666,18 +667,19 @@ namespace StockView.Data
             }
         }
 
-        public static async Task<bool> EnviarCorreo(string codigoCliente, string vendedor, string fechaPedido, string token)
+        public static async Task<bool> EnviarCorreo(string codigoCliente, string vendedor, string fechaPedido, string token, string despacho)
         {
             try
             {
                 using (HttpClient client = new HttpClient(await GetInsecureHandler()))
                 {
                     // Construir la URL con los parámetros
-                    var uriBuilder = new UriBuilder("http://190.113.124.155:9099/Pedido/Estado");
+                    var uriBuilder = new UriBuilder("http://190.113.124.155:9098/Pedido/Estado");
                     var query = HttpUtility.ParseQueryString(uriBuilder.Query);
                     query["codigoCliente"] = codigoCliente;
                     query["vendedor"] = vendedor;
                     query["fechaPedido"] = fechaPedido;
+                    query["despacho"] = despacho;
                     uriBuilder.Query = query.ToString();
                     var uri = uriBuilder.Uri;
 

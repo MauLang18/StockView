@@ -4,7 +4,7 @@
     <SelectedDevice>LENOVO TB310XU</SelectedDevice>
     <SelectedPlatformGroup>PhysicalDevice</SelectedPlatformGroup>
     <ActiveDebugProfile>LENOVO TB310XU %28Android 13.0 - API 33%29</ActiveDebugProfile>
-    <DefaultDevice>tablet_420-dpi_7_4in_-_api_33</DefaultDevice>
+    <DefaultDevice>pixel_5_-_api_28</DefaultDevice>
     <AndroidDesignerPreferredTheme>MainTheme</AndroidDesignerPreferredTheme>
   </PropertyGroup>
 </Project>
