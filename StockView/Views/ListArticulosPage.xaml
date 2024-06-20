@@ -1,0 +1,444 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="StockView.Views.ListArticulosPage"
+             xmlns:xct="clr-namespace:Xamarin.CommunityToolkit.UI.Views;assembly=Xamarin.CommunityToolkit"
+             xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+             xmlns:local="clr-namespace:StockView.Data"
+             NavigationPage.HasNavigationBar="False">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local:CantidadStockConverter x:Key="CantidadStockConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ScrollView HorizontalOptions="FillAndExpand" 
+                VerticalOptions="FillAndExpand">
+        <Grid BackgroundColor="#f3f5f9" 
+              RowSpacing="0" 
+              HorizontalOptions="FillAndExpand" 
+              VerticalOptions="FillAndExpand">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="180"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid BackgroundColor="#455399"
+                  HorizontalOptions="FillAndExpand"
+                  VerticalOptions="FillAndExpand">
+                <StackLayout Margin="0,-40,0,0"
+                             HorizontalOptions="Center"
+                             VerticalOptions="Center">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        <Image HeightRequest="30"
+                               WidthRequest="30"
+                               Margin="20,0"
+                               Source="search.png">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding BuscarCommand}"/>
+                            </Image.GestureRecognizers>
+                        </Image>
+                        <Entry Grid.Column="1"
+                               x:Name="txtDescripcion"
+                               Placeholder="Buscar"
+                               TextColor="White"
+                               FontSize="15"
+                               HorizontalOptions="FillAndExpand"
+                               VerticalOptions="FillAndExpand"
+                               Text="{Binding Desc}"/>
+                        <Image Grid.Column="2"
+                               HeightRequest="30"
+                               WidthRequest="30"
+                               Margin="20,0"
+                               Source="logout.png">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding LogoutCommand}"/>
+                            </Image.GestureRecognizers>
+                        </Image>
+                        <Image Source="bin.png"
+                               Grid.Row="1"
+                               Grid.Column="0"
+                               HeightRequest="30"
+                               WidthRequest="30"
+                               VerticalOptions="Center">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ClearCommand}"/>
+                            </Image.GestureRecognizers>
+                        </Image>
+                        <Image Source="carrito.png"
+                               Grid.Row="1"
+                               Grid.Column="1"
+                               HeightRequest="30"
+                               WidthRequest="30"
+                               VerticalOptions="Center">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding CarritoCommand}" />
+                            </Image.GestureRecognizers>
+                        </Image>
+                        <Image Source="history.png"
+                               Grid.Row="1"
+                               Grid.Column="2"
+                               HeightRequest="30"
+                               WidthRequest="30"
+                               VerticalOptions="Center">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding HistoryCommand}" />
+                            </Image.GestureRecognizers>
+                        </Image>
+                    </Grid>
+                </StackLayout>
+            </Grid>
+            <yummy:PancakeView Margin="0,30,0,0"
+                               Padding="30,0,30,30"
+                               BackgroundColor="White"
+                               CornerRadius="40,40,0,0"
+                               VerticalOptions="FillAndExpand"
+                               x:Name="botonesLayout" 
+                               Grid.Row="1" 
+                               HorizontalOptions="Center" 
+                               IsVisible="False">
+                <StackLayout>
+                    <Label Margin="20"
+                           FontAttributes="Bold"
+                           FontSize="20"
+                           HorizontalOptions="CenterAndExpand"
+                           HorizontalTextAlignment="Center"
+                           Text="Categorias"
+                           TextColor="#791AE5"
+                           VerticalOptions="Center" />
+                    <Grid Margin="5" 
+                          ColumnSpacing="20" 
+                          RowSpacing="30">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="230" />
+                            <RowDefinition Height="230" />
+                            <RowDefinition Height="230" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <yummy:PancakeView Grid.Row="0"
+                                           Grid.Column="0"
+                                           Padding="10"
+                                           BackgroundColor="White"
+                                           CornerRadius="15">
+                            <StackLayout>
+                                <Image HeightRequest="50"
+                                       WidthRequest="50"
+                                       Margin="20,0"
+                                       Source="llantas.png">
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding LlantasCommand}"/>
+                                    </Image.GestureRecognizers>
+                                </Image>
+                                <Label FontAttributes="Bold"
+                                       FontSize="20"
+                                       HorizontalOptions="CenterAndExpand"
+                                       HorizontalTextAlignment="Center"
+                                       Text="Llantas"
+                                       TextColor="Black"
+                                       VerticalOptions="CenterAndExpand" />
+                            </StackLayout>
+                        </yummy:PancakeView>
+                        <yummy:PancakeView Grid.Row="0"
+                                           Grid.Column="1"
+                                           Padding="10"
+                                           BackgroundColor="White"
+                                           CornerRadius="15">
+                            <StackLayout>
+                                <Image HeightRequest="50"
+                                       WidthRequest="50"
+                                       Margin="20,0"
+                                       Source="frenos.png">
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding FrenosCommand}"/>
+                                    </Image.GestureRecognizers>
+                                </Image>
+                                <Label FontAttributes="Bold"
+                                       FontSize="20"
+                                       HorizontalOptions="CenterAndExpand"
+                                       HorizontalTextAlignment="Center"
+                                       Text="Frenos"
+                                       TextColor="Black"
+                                       VerticalOptions="CenterAndExpand" />
+                            </StackLayout>
+                        </yummy:PancakeView>
+                        <yummy:PancakeView Grid.Row="1"
+                                           Grid.Column="0"
+                                           Padding="10"
+                                           BackgroundColor="White"
+                                           CornerRadius="15">
+                            <StackLayout>
+                                <Image HeightRequest="50"
+                                       WidthRequest="50"
+                                       Margin="20,0"
+                                       Source="fajas.png">
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding FajasCommand}"/>
+                                    </Image.GestureRecognizers>
+                                </Image>
+                                <Label FontAttributes="Bold"
+                                       FontSize="20"
+                                       HorizontalOptions="CenterAndExpand"
+                                       HorizontalTextAlignment="Center"
+                                       Text="Fajas"
+                                       TextColor="Black"
+                                       VerticalOptions="CenterAndExpand" />
+                            </StackLayout>
+                        </yummy:PancakeView>
+                        <yummy:PancakeView Grid.Row="1"
+                                           Grid.Column="1"
+                                           Padding="10"
+                                           BackgroundColor="White"
+                                           CornerRadius="15">
+                            <StackLayout>
+                                <Image HeightRequest="50"
+                                       WidthRequest="50"
+                                       Margin="20,0"
+                                       Source="amortiguadores.png">
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding AmortiguadoresCommand}"/>
+                                    </Image.GestureRecognizers>
+                                </Image>
+                                <Label FontAttributes="Bold"
+                                       FontSize="20"
+                                       HorizontalOptions="CenterAndExpand"
+                                       HorizontalTextAlignment="Center"
+                                       Text="Amortiguadores"
+                                       TextColor="Black"
+                                       VerticalOptions="CenterAndExpand" />
+                            </StackLayout>
+                        </yummy:PancakeView>
+                        <yummy:PancakeView Grid.Row="2"
+                                           Grid.Column="0"
+                                           Padding="10"
+                                           BackgroundColor="White"
+                                           CornerRadius="15">
+                            <StackLayout>
+                                <Image HeightRequest="50"
+                                       WidthRequest="50"
+                                       Margin="20,0"
+                                       Source="oilPump.png">
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding BombasCommand}"/>
+                                    </Image.GestureRecognizers>
+                                </Image>
+                                <Label FontAttributes="Bold"
+                                       FontSize="20"
+                                       HorizontalOptions="CenterAndExpand"
+                                       HorizontalTextAlignment="Center"
+                                       Text="Bombas de agua/aceite"
+                                       TextColor="Black"
+                                       VerticalOptions="CenterAndExpand" />
+                            </StackLayout>
+                        </yummy:PancakeView>
+                        <yummy:PancakeView Grid.Row="2"
+                                           Grid.Column="1"
+                                           Padding="10"
+                                           BackgroundColor="White"
+                                           CornerRadius="15">
+                            <StackLayout>
+                                <Image HeightRequest="50"
+                                       WidthRequest="50"
+                                       Margin="20,0"
+                                       Source="carburetor.png">
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding CarburadorCommand}"/>
+                                    </Image.GestureRecognizers>
+                                </Image>
+                                <Label FontAttributes="Bold"
+                                       FontSize="20"
+                                       HorizontalOptions="CenterAndExpand"
+                                       HorizontalTextAlignment="Center"
+                                       Text="Carburador"
+                                       TextColor="Black"
+                                       VerticalOptions="CenterAndExpand" />
+                            </StackLayout>
+                        </yummy:PancakeView>
+                    </Grid>
+                </StackLayout>
+            </yummy:PancakeView>
+            <CollectionView Grid.Row="1"
+                            Margin="30"
+                            HorizontalOptions="FillAndExpand"
+                            VerticalOptions="FillAndExpand"
+                            SelectionMode="None"
+                            x:Name="collectionViewName"
+                            ItemsSource="{Binding ListArticulo}">
+                <CollectionView.Header>
+                    <StackLayout Orientation="Horizontal"
+                                 VerticalOptions="Center"
+                                 HorizontalOptions="Center">
+                        <Image HeightRequest="30"
+                               WidthRequest="30"
+                               Margin="20,0"
+                               Source="{Binding SortIcon}">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding SortCommand}"/>
+                            </Image.GestureRecognizers>
+                        </Image>
+                    </StackLayout>
+                </CollectionView.Header>
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical" 
+                                       ItemSpacing="20"/>
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame HasShadow="True"
+                               BackgroundColor="Transparent"
+                               VerticalOptions="StartAndExpand"
+                               HorizontalOptions="FillAndExpand"
+                               Padding="0">
+                            <Grid VerticalOptions="StartAndExpand"
+                                  HorizontalOptions="FillAndExpand">
+                                <xct:Expander x:Name="MainExpander"
+                                              Tapped="MainExpander_Tapped"
+                                              CollapseAnimationLength="500">
+                                    <xct:Expander.Header>
+                                        <Grid HorizontalOptions="FillAndExpand" 
+                                              BackgroundColor="White">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="3*"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+                                            <BoxView BackgroundColor="#A0A4C9"
+                                                     Opacity="0.2"/>
+                                            <StackLayout HorizontalOptions="Center"
+                                                         VerticalOptions="Center">
+                                                <Label Text="{Binding Codigo}"
+                                                       TextColor="#6670CC"
+                                                       FontSize="13"/>
+                                            </StackLayout>
+                                            <StackLayout Grid.Column="1"
+                                                         HorizontalOptions="Start"
+                                                         VerticalOptions="Center"
+                                                         Margin="20">
+                                                <Label Text="{Binding Descripcion}" 
+                                                       TextColor="Black"
+                                                       FontSize="15"/>
+                                            </StackLayout>
+                                            <StackLayout Grid.Column="2"
+                                                         HorizontalOptions="End"
+                                                         VerticalOptions="Center">
+                                                <Image HeightRequest="30"
+                                                       WidthRequest="30"
+                                                       Margin="20,0"
+                                                       Source="{Binding CarritoIcon}">
+                                                    <Image.GestureRecognizers>
+                                                        <TapGestureRecognizer Command="{Binding BindingContext.MoreCommand, Source={x:Reference Name=collectionViewName}}"
+                                                                              CommandParameter="{Binding .}" />
+                                                    </Image.GestureRecognizers>
+                                                </Image>
+                                            </StackLayout>
+                                        </Grid>
+                                    </xct:Expander.Header>
+                                    <Grid RowSpacing="0"
+                                          HorizontalOptions="FillAndExpand"
+                                          HeightRequest="400">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="2*"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid x:Name="DetailsView"
+                                                BackgroundColor="White"
+                                                Padding="20"
+                                                IsVisible="false">
+                                            <StackLayout>
+                                                <Label Text="Detalles"
+                                                       TextColor="Black"
+                                                       FontSize="20"
+                                                       FontAttributes="Bold"
+                                                       Opacity="0.85"/>
+                                                <StackLayout Orientation="Horizontal">
+                                                    <Label Text="Codigo:"
+                                                           TextColor="Black"
+                                                           FontSize="16.5"
+                                                           FontAttributes="Bold"/>
+                                                    <Label Text="{Binding Codigo}"
+                                                           TextColor="Black"
+                                                           FontSize="16.5"
+                                                           Opacity="0.85"/>
+                                                </StackLayout>
+                                                <StackLayout Orientation="Horizontal">
+                                                    <Label Text="Codigo de Proveedor:"
+                                                           TextColor="Black"
+                                                           FontSize="16.5"
+                                                           FontAttributes="Bold"/>
+                                                    <Label Text="{Binding CodigoProveedor}"
+                                                           TextColor="Black"
+                                                           FontSize="16.5"
+                                                           Opacity="0.85"/>
+                                                </StackLayout>
+                                                <StackLayout Orientation="Vertical">
+                                                    <Label Text="Descripcion:"
+                                                           TextColor="Black"
+                                                           FontSize="16.5"
+                                                           FontAttributes="Bold"/>
+                                                    <Editor Text="{Binding Descripcion}"
+                                                            TextColor="Black"
+                                                            FontSize="16.5"
+                                                            IsReadOnly="False"
+                                                            BackgroundColor="Transparent"
+                                                            HeightRequest="65"/>
+                                                </StackLayout>
+                                                <StackLayout Orientation="Horizontal">
+                                                    <Label Text="Bodega 1:"
+                                                           TextColor="Black"
+                                                           FontSize="16.5"
+                                                           FontAttributes="Bold"/>
+                                                    <Label Text="{Binding CantidadBodega1, Converter={StaticResource CantidadStockConverter}}"
+                                                           TextColor="Black"
+                                                           FontSize="16.5"
+                                                           Opacity="0.85"/>
+                                                </StackLayout>
+                                                <StackLayout Orientation="Horizontal">
+                                                    <Label Text="Bodega 2:"
+                                                           TextColor="Black"
+                                                           FontSize="16.5"
+                                                           FontAttributes="Bold"/>
+                                                    <Label Text="{Binding CantidadBodega2, Converter={StaticResource CantidadStockConverter}}"
+                                                           TextColor="Black"
+                                                           FontSize="16.5"
+                                                           Opacity="0.85"/>
+                                                </StackLayout>
+                                                <StackLayout Orientation="Horizontal">
+                                                    <Label Text="Subtotal:"
+                                                           TextColor="Black"
+                                                           FontSize="16.5"
+                                                           FontAttributes="Bold"/>
+                                                    <Label Text="{Binding Precio}"
+                                                           TextColor="Black"
+                                                           FontSize="16.5"
+                                                           Opacity="0.85"/>
+                                                </StackLayout>
+                                                <StackLayout Orientation="Horizontal">
+                                                    <Label Text="Total:"
+                                                           TextColor="Black"
+                                                           FontSize="16.5"
+                                                           FontAttributes="Bold"/>
+                                                    <Label Text="{Binding Total}"
+                                                           TextColor="Black"
+                                                           FontSize="16.5"
+                                                           Opacity="0.85"/>
+                                                </StackLayout>
+                                            </StackLayout>
+                                        </Grid>
+                                    </Grid>
+                                </xct:Expander>
+                            </Grid>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Grid>
+    </ScrollView>
+</ContentPage>

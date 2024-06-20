@@ -1,0 +1,86 @@
+﻿<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="StockView.Views.CarritoCompraPage"
+             Title="CarritoCompra"
+             NavigationPage.HasNavigationBar="False">
+
+    <Grid>
+        <!-- Botón "Generar Pedido" -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackLayout Grid.Row="0" Margin="30">
+            <Button Text="Generar Pedido"
+                    Command="{Binding GenerateOrderCommand}"
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="CenterAndExpand"
+                    Margin="0,0,0,20"/>
+            <Button Text="Generar Cotizacion"
+                    Command="{Binding GenerateQuoteCommand}"
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="CenterAndExpand"
+                    Margin="0,0,0,20"/>
+        </StackLayout>
+
+        <!-- CollectionView -->
+        <CollectionView Grid.Row="1"
+                        Margin="30"
+                        HorizontalOptions="FillAndExpand"
+                        VerticalOptions="FillAndExpand"
+                        SelectionMode="None"
+                        x:Name="collectionViewName"
+                        ItemsSource="{Binding ListCarritoCompra}">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="20"/>
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <SwipeView>
+                        <SwipeView.RightItems>
+                            <SwipeItems>
+                                <SwipeItem Text="Eliminar"
+                                           BackgroundColor="Red"
+                                           Command="{Binding BindingContext.DeleteCommand, Source={x:Reference collectionViewName}}"
+                                           CommandParameter="{Binding .}" />
+                            </SwipeItems>
+                        </SwipeView.RightItems>
+                        <Frame HasShadow="True"
+                               BackgroundColor="Transparent"
+                               VerticalOptions="StartAndExpand"
+                               HorizontalOptions="FillAndExpand"
+                               Padding="10">
+                            <Grid VerticalOptions="StartAndExpand"
+                                  HorizontalOptions="FillAndExpand"
+                                  RowDefinitions="Auto, Auto, Auto">
+                                <Label Text="{Binding Codigo}" TextColor="Black" FontSize="Medium"/>
+                                <Label  Grid.Row="1"  Text="{Binding Descripcion}" TextColor="Black" FontSize="Medium"/>
+                                <StackLayout Grid.Row="2"
+                                             Orientation="Horizontal"
+                                             HorizontalOptions="CenterAndExpand"
+                                             VerticalOptions="CenterAndExpand"
+                                             Spacing="10">
+                                    <Button Text="+"
+                                            BackgroundColor="Green"
+                                            TextColor="White"
+                                            FontSize="Medium"
+                                            Command="{Binding BindingContext.IncrementCommand, Source={x:Reference collectionViewName}}"
+                                            CommandParameter="{Binding .}"/>
+                                    <Label Text="{Binding Cantidad}" TextColor="Black" FontSize="Medium"/>
+                                    <Button Text="-"
+                                            BackgroundColor="Red"
+                                            TextColor="White"
+                                            FontSize="Medium"
+                                            Command="{Binding BindingContext.DecrementCommand, Source={x:Reference collectionViewName}}"
+                                            CommandParameter="{Binding .}"/>
+                                </StackLayout>
+                            </Grid>
+                        </Frame>
+                    </SwipeView>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+
+</ContentPage>
