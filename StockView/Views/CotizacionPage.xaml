@@ -3,11 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="StockView.Views.CotizacionPage"
              NavigationPage.HasNavigationBar="False">
-    <ScrollView HorizontalOptions="FillAndExpand" 
+    <ScrollView HorizontalOptions="FillAndExpand"
                 VerticalOptions="FillAndExpand">
-        <Grid BackgroundColor="#f3f5f9" 
-              RowSpacing="0" 
-              HorizontalOptions="FillAndExpand" 
+        <Grid BackgroundColor="#f3f5f9"
+              RowSpacing="0"
+              HorizontalOptions="FillAndExpand"
               VerticalOptions="FillAndExpand">
             <Grid.RowDefinitions>
                 <RowDefinition Height="180"/>
@@ -83,7 +83,7 @@
                     </StackLayout>
                 </CollectionView.Header>
                 <CollectionView.ItemsLayout>
-                    <LinearItemsLayout Orientation="Vertical" 
+                    <LinearItemsLayout Orientation="Vertical"
                                        ItemSpacing="20"/>
                 </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
@@ -95,7 +95,7 @@
                                Padding="0">
                             <Grid VerticalOptions="StartAndExpand"
                                   HorizontalOptions="FillAndExpand">
-                                <Grid HorizontalOptions="FillAndExpand" 
+                                <Grid HorizontalOptions="FillAndExpand"
                                       BackgroundColor="White">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*"/>
@@ -114,7 +114,7 @@
                                                  HorizontalOptions="Start"
                                                  VerticalOptions="Center"
                                                  Margin="20">
-                                        <Label Text="{Binding Cliente}" 
+                                        <Label Text="{Binding Cliente}"
                                                TextColor="Black"
                                                FontSize="15"/>
                                     </StackLayout>

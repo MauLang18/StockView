@@ -1,8 +1,5 @@
 ﻿using StockView.ViewModel;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Xamarin.CommunityToolkit.UI.Views;
 using Xamarin.Forms;
@@ -10,12 +7,12 @@ using Xamarin.Forms.Xaml;
 
 namespace StockView.Views
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class HistoryPage : ContentPage
-	{
-		public HistoryPage(string token, string user)
-		{
-            InitializeComponent ();
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class HistoryPage : ContentPage
+    {
+        public HistoryPage(string token, string user)
+        {
+            InitializeComponent();
             BindingContext = new HistoryPageViewModel(Navigation, token, user);
         }
 

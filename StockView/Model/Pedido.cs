@@ -22,36 +22,28 @@ namespace StockView.Model
             get { return _EstadoPedido; }
             set
             {
-                // Redondea el valor a dos decimales después de la coma
                 _EstadoPedido = value;
 
-                // Asigna el estado correspondiente basado en el valor
                 switch (_EstadoPedido)
                 {
                     case 0:
-                        // Estado: En proceso
                         _EstadoTexto = "En proceso";
                         break;
 
                     case 1:
-                        // Estado: Aprobado
                         _EstadoTexto = "Aprobado";
                         break;
 
                     case 2:
-                        // Estado: Rechazado
                         _EstadoTexto = "Rechazado";
                         break;
 
                     default:
-                        // Otro caso, puedes asignar un valor predeterminado o lanzar una excepción si lo prefieres
                         _EstadoTexto = "Desconocido";
                         break;
                 }
 
-                // Notifica que la propiedad EstadoPedido ha cambiado
                 OnPropertyChanged(nameof(EstadoPedido));
-                // Notifica que la propiedad EstadoTexto también ha cambiado
                 OnPropertyChanged(nameof(EstadoTexto));
             }
         }
@@ -59,7 +51,6 @@ namespace StockView.Model
         public string EstadoTexto
         {
             get { return _EstadoTexto; }
-            // No necesitas un set explícito ya que el valor se asigna en el set de EstadoPedido
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

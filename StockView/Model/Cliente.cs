@@ -6,7 +6,7 @@ namespace StockView.Model
     {
         public string Codigo { get; set; }
         public string Cliente { get; set; }
-        public string Obser {  get; set; }
+        public string Obser { get; set; }
     }
     public class ApiResponse4
     {

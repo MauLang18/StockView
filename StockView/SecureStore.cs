@@ -110,18 +110,15 @@ public class SecureStore
             string expiryDateStr = await SecureStorage.GetAsync(ExpiryDateKey);
             if (string.IsNullOrEmpty(expiryDateStr))
             {
-                // Si no se ha almacenado la fecha de expiración, consideramos que está expirado
                 return true;
             }
 
             DateTime expiryTime = DateTime.Parse(expiryDateStr, null, DateTimeStyles.RoundtripKind);
 
-            // Verificar si ha pasado más de 24 horas desde la fecha de almacenamiento
             return DateTime.UtcNow > expiryTime.AddHours(24);
         }
         catch (Exception ex)
         {
-            // Manejar la excepción y devolver false en caso de error
             Console.WriteLine("Error al verificar la expiración del token: " + ex.Message);
             return false;
         }
@@ -144,6 +141,7 @@ public class SecureStore
         SecureStorage.Remove(DrainsaKey);
         SecureStorage.Remove(MotornovaKey);
         SecureStorage.Remove(DespachoKey);
+        SecureStorage.Remove(InventarioKey);
     }
 
     public async Task DeletePrivAsync()

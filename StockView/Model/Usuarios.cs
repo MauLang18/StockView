@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace StockView.Model
+﻿namespace StockView.Model
 {
     public class Usuarios
     {

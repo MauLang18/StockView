@@ -11,11 +11,11 @@
             <local:CantidadStockConverter x:Key="CantidadStockConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
-    <ScrollView HorizontalOptions="FillAndExpand" 
+    <ScrollView HorizontalOptions="FillAndExpand"
                 VerticalOptions="FillAndExpand">
-        <Grid BackgroundColor="#f3f5f9" 
-              RowSpacing="0" 
-              HorizontalOptions="FillAndExpand" 
+        <Grid BackgroundColor="#f3f5f9"
+              RowSpacing="0"
+              HorizontalOptions="FillAndExpand"
               VerticalOptions="FillAndExpand">
             <Grid.RowDefinitions>
                 <RowDefinition Height="180"/>
@@ -100,9 +100,9 @@
                                BackgroundColor="White"
                                CornerRadius="40,40,0,0"
                                VerticalOptions="FillAndExpand"
-                               x:Name="botonesLayout" 
-                               Grid.Row="1" 
-                               HorizontalOptions="Center" 
+                               x:Name="botonesLayout"
+                               Grid.Row="1"
+                               HorizontalOptions="Center"
                                IsVisible="False">
                 <StackLayout>
                     <Label Margin="20"
@@ -113,8 +113,8 @@
                            Text="Categorias"
                            TextColor="#791AE5"
                            VerticalOptions="Center" />
-                    <Grid Margin="5" 
-                          ColumnSpacing="20" 
+                    <Grid Margin="5"
+                          ColumnSpacing="20"
                           RowSpacing="30">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="230" />
@@ -288,7 +288,7 @@
                     </StackLayout>
                 </CollectionView.Header>
                 <CollectionView.ItemsLayout>
-                    <LinearItemsLayout Orientation="Vertical" 
+                    <LinearItemsLayout Orientation="Vertical"
                                        ItemSpacing="20"/>
                 </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
@@ -304,7 +304,7 @@
                                               Tapped="MainExpander_Tapped"
                                               CollapseAnimationLength="500">
                                     <xct:Expander.Header>
-                                        <Grid HorizontalOptions="FillAndExpand" 
+                                        <Grid HorizontalOptions="FillAndExpand"
                                               BackgroundColor="White">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="*"/>
@@ -323,7 +323,7 @@
                                                          HorizontalOptions="Start"
                                                          VerticalOptions="Center"
                                                          Margin="20">
-                                                <Label Text="{Binding Descripcion}" 
+                                                <Label Text="{Binding Descripcion}"
                                                        TextColor="Black"
                                                        FontSize="15"/>
                                             </StackLayout>
@@ -349,9 +349,9 @@
                                             <RowDefinition Height="2*"/>
                                         </Grid.RowDefinitions>
                                         <Grid x:Name="DetailsView"
-                                                BackgroundColor="White"
-                                                Padding="20"
-                                                IsVisible="false">
+                                              BackgroundColor="White"
+                                              Padding="20"
+                                              IsVisible="false">
                                             <StackLayout>
                                                 <Label Text="Detalles"
                                                        TextColor="Black"

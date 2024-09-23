@@ -1,6 +1,5 @@
 ﻿using StockView.Data;
 using StockView.Model;
-using StockView.Views;
 using System;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;

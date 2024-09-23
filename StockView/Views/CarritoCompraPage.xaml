@@ -5,7 +5,6 @@
              NavigationPage.HasNavigationBar="False">
 
     <Grid>
-        <!-- Botón "Generar Pedido" -->
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
@@ -23,8 +22,6 @@
             VerticalOptions="CenterAndExpand"
             Margin="0,0,0,20"/>-->
         </StackLayout>
-
-        <!-- CollectionView -->
         <CollectionView Grid.Row="1"
                         Margin="30"
                         HorizontalOptions="FillAndExpand"
@@ -82,5 +79,4 @@
             </CollectionView.ItemTemplate>
         </CollectionView>
     </Grid>
-
 </ContentPage>

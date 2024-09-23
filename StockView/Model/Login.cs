@@ -1,10 +1,8 @@
-﻿using System.Collections.Generic;
-
-namespace StockView.Model
+﻿namespace StockView.Model
 {
     public class Login
     {
-        public string Username {  get; set; }
+        public string Username { get; set; }
         public string Pass { get; set; }
     }
 

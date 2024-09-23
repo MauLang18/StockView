@@ -5,55 +5,55 @@
              NavigationPage.HasNavigationBar="False">
     <StackLayout BackgroundColor="#455399">
         <Label Text="StockView"
-           HorizontalOptions="Center"
-           TextColor="Gainsboro"
-           FontSize="30"
-           FontAttributes="Bold"/>
+               HorizontalOptions="Center"
+               TextColor="Gainsboro"
+               FontSize="30"
+               FontAttributes="Bold"/>
         <Image Source="packages.png"
-           HorizontalOptions="Center"
-           HeightRequest="250"/>
+               HorizontalOptions="Center"
+               HeightRequest="250"/>
         <Frame HasShadow="False"
-           VerticalOptions="FillAndExpand"
-           Margin="20"
-           CornerRadius="10">
+               VerticalOptions="FillAndExpand"
+               Margin="20"
+               CornerRadius="10">
             <StackLayout Spacing="20"
-                     VerticalOptions="Center">
+                         VerticalOptions="Center">
                 <Frame HasShadow="False"
-                   HeightRequest="48">
+                       HeightRequest="48">
                     <StackLayout>
                         <Label Text="Usuario"
-                           FontSize="18"
-                           FontAttributes="Bold"
-                           TextColor="Black"/>
+                               FontSize="18"
+                               FontAttributes="Bold"
+                               TextColor="Black"/>
                         <Entry x:Name="txtUsuario"
-                           Placeholder="Escribe el nombre de usuario"
-                           PlaceholderColor="Gray"
-                           TextColor="Black"
-                           Text="{Binding Usuario}"/>
+                               Placeholder="Escribe el nombre de usuario"
+                               PlaceholderColor="Gray"
+                               TextColor="Black"
+                               Text="{Binding Usuario}"/>
                     </StackLayout>
                 </Frame>
                 <Frame HasShadow="False"
-                   HeightRequest="48">
+                       HeightRequest="48">
                     <StackLayout>
                         <Label Text="Contraseña"
-                           FontSize="18"
-                           FontAttributes="Bold"
-                           TextColor="Black"/>
+                               FontSize="18"
+                               FontAttributes="Bold"
+                               TextColor="Black"/>
                         <Entry x:Name="txtContrasena"
-                           Placeholder="Escriba la contraseña"
-                           IsPassword="True"
-                           TextColor="Black"
-                           PlaceholderColor="Gray"
-                           Text="{Binding Password}"/>
+                               Placeholder="Escriba la contraseña"
+                               IsPassword="True"
+                               TextColor="Black"
+                               PlaceholderColor="Gray"
+                               Text="{Binding Password}"/>
                     </StackLayout>
                 </Frame>
                 <Frame HasShadow="False"
-                   HeightRequest="48">
+                       HeightRequest="48">
                     <StackLayout>
                         <Button Text="Iniciar Sesión"
-                            BackgroundColor="#00d4ff"
-                            TextColor="Gray"
-                            Command="{Binding LoginCommand}"/>
+                                BackgroundColor="#00d4ff"
+                                TextColor="Gray"
+                                Command="{Binding LoginCommand}"/>
                     </StackLayout>
                 </Frame>
             </StackLayout>

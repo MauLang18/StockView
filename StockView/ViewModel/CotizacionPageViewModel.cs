@@ -1,6 +1,5 @@
 ﻿using StockView.Data;
 using StockView.Model;
-using StockView.Views;
 using System;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
@@ -91,7 +90,7 @@ namespace StockView.ViewModel
 
         public async Task More(Clientes selectedCliente)
         {
-            if(Obser != null && Obser != "")
+            if (Obser != null && Obser != "")
             {
                 Clientes cliente = new Clientes
                 {

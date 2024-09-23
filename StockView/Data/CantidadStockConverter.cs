@@ -31,7 +31,6 @@ namespace StockView.Data
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            // No implementes ConvertBack si no lo necesitas
             throw new NotImplementedException();
         }
     }

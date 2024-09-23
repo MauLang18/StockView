@@ -121,7 +121,6 @@ namespace StockView.ViewModel
                     foreach (var articulo in ListArticulo)
                     {
                         articulo.Count = 0;
-                        // Verificar si el artículo está en ListCarritoCompra y establecer IsCarrito en consecuencia
                         if (ListCarritoCompra != null && ListCarritoCompra.Any(a => a.Codigo == articulo.Codigo))
                         {
                             articulo.IsCarrito = true;
@@ -147,7 +146,6 @@ namespace StockView.ViewModel
                     foreach (var articulo in ListArticulo)
                     {
                         articulo.Count = 0;
-                        // Verificar si el artículo está en ListCarritoCompra y establecer IsCarrito en consecuencia
                         if (ListCarritoCompra != null && ListCarritoCompra.Any(a => a.Codigo == articulo.Codigo))
                         {
                             articulo.IsCarrito = true;
@@ -174,7 +172,6 @@ namespace StockView.ViewModel
                 foreach (var articulo in ListArticulo)
                 {
                     articulo.Count = 0;
-                    // Verificar si el artículo está en ListCarritoCompra y establecer IsCarrito en consecuencia
                     if (ListCarritoCompra != null && ListCarritoCompra.Any(a => a.Codigo == articulo.Codigo))
                     {
                         articulo.IsCarrito = true;
@@ -194,7 +191,6 @@ namespace StockView.ViewModel
                 foreach (var articulo in ListArticulo)
                 {
                     articulo.Count = 0;
-                    // Verificar si el artículo está en ListCarritoCompra y establecer IsCarrito en consecuencia
                     if (ListCarritoCompra != null && ListCarritoCompra.Any(a => a.Codigo == articulo.Codigo))
                     {
                         articulo.IsCarrito = true;
@@ -214,7 +210,6 @@ namespace StockView.ViewModel
                 foreach (var articulo in ListArticulo)
                 {
                     articulo.Count = 0;
-                    // Verificar si el artículo está en ListCarritoCompra y establecer IsCarrito en consecuencia
                     if (ListCarritoCompra != null && ListCarritoCompra.Any(a => a.Codigo == articulo.Codigo))
                     {
                         articulo.IsCarrito = true;
@@ -234,7 +229,6 @@ namespace StockView.ViewModel
                 foreach (var articulo in ListArticulo)
                 {
                     articulo.Count = 0;
-                    // Verificar si el artículo está en ListCarritoCompra y establecer IsCarrito en consecuencia
                     if (ListCarritoCompra != null && ListCarritoCompra.Any(a => a.Codigo == articulo.Codigo))
                     {
                         articulo.IsCarrito = true;
@@ -254,7 +248,6 @@ namespace StockView.ViewModel
                 foreach (var articulo in ListArticulo)
                 {
                     articulo.Count = 0;
-                    // Verificar si el artículo está en ListCarritoCompra y establecer IsCarrito en consecuencia
                     if (ListCarritoCompra != null && ListCarritoCompra.Any(a => a.Codigo == articulo.Codigo))
                     {
                         articulo.IsCarrito = true;
@@ -274,7 +267,6 @@ namespace StockView.ViewModel
                 foreach (var articulo in ListArticulo)
                 {
                     articulo.Count = 0;
-                    // Verificar si el artículo está en ListCarritoCompra y establecer IsCarrito en consecuencia
                     if (ListCarritoCompra != null && ListCarritoCompra.Any(a => a.Codigo == articulo.Codigo))
                     {
                         articulo.IsCarrito = true;
@@ -315,7 +307,6 @@ namespace StockView.ViewModel
                         foreach (var articulo in ListArticulo)
                         {
                             articulo.Count = 0;
-                            // Verificar si el artículo está en ListCarritoCompra y establecer IsCarrito en consecuencia
                             if (ListCarritoCompra != null && ListCarritoCompra.Any(a => a.Codigo == articulo.Codigo))
                             {
                                 articulo.IsCarrito = true;
@@ -340,7 +331,6 @@ namespace StockView.ViewModel
                         foreach (var articulo in ListArticulo)
                         {
                             articulo.Count = 0;
-                            // Verificar si el artículo está en ListCarritoCompra y establecer IsCarrito en consecuencia
                             if (ListCarritoCompra != null && ListCarritoCompra.Any(a => a.Codigo == articulo.Codigo))
                             {
                                 articulo.IsCarrito = true;
@@ -383,7 +373,7 @@ namespace StockView.ViewModel
             if (Inventario == "true")
             {
                 await DisplayAlert("Modo Inventario", "Actualmente solo puedes ver el inventario, no es posible agregar productos al carrito.", "OK");
-                return; // Salimos del método sin permitir agregar al carrito.
+                return;
             }
 
             if (selectedArticulo.IsCarrito)

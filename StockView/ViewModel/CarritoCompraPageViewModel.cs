@@ -118,7 +118,7 @@ namespace StockView.ViewModel
         {
             if (selectedArticulo != null)
             {
-                bool eliminado = await Metodos.EliminarDelCarrito(selectedArticulo.Id ,Token);
+                bool eliminado = await Metodos.EliminarDelCarrito(selectedArticulo.Id, Token);
 
                 if (eliminado)
                 {
@@ -161,7 +161,7 @@ namespace StockView.ViewModel
 
                             await Metodos.EnviarCorreo(codigo, User, DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss.fffffff"), Token, Despacho);
                             await Application.Current.MainPage.DisplayAlert("Pedido realizado", Data, "OK");
-                            
+
                             MessagingCenter.Send(this, "ActualizarPagina");
 
                         }
@@ -204,7 +204,7 @@ namespace StockView.ViewModel
                         if (agregado)
                         {
                             CotizacionData cotizacion = await Metodos.ObtenerCotizacion(Token, cliente, User, fecha);
-                            
+
                             if (cotizacion != null)
                             {
                                 foreach (var item in ListCarritoCompra)
@@ -214,37 +214,29 @@ namespace StockView.ViewModel
 
                                 if (agregadoCoti)
                                 {
-                                    // Generar y guardar el archivo PDF
                                     byte[] pdfBytes = await Metodos.GenerarCotizacion(cotizacion.Id, Token);
 
-                                    // Guardar el archivo PDF en el almacenamiento local del dispositivo
-                                    string nombreArchivo = $"{cotizacion.Id}-cotizacion.pdf"; // Ajusta el nombre del archivo según tus necesidades
+                                    string nombreArchivo = $"{cotizacion.Id}-cotizacion.pdf";
                                     string rutaArchivo = Path.Combine(FileSystem.AppDataDirectory, nombreArchivo);
 
                                     try
                                     {
-                                        // Guardar el archivo PDF
                                         File.WriteAllBytes(rutaArchivo, pdfBytes);
                                         Console.WriteLine($"Archivo PDF guardado en: {rutaArchivo}");
 
-                                        // Abrir el archivo PDF con el visor predeterminado
                                         await Launcher.OpenAsync(new OpenFileRequest
                                         {
                                             File = new ReadOnlyFile(rutaArchivo)
                                         });
 
-                                        // Mostrar una alerta indicando que la cotización se ha creado
                                         await Application.Current.MainPage.DisplayAlert("Cotización creada", "La cotización se ha creado correctamente.", "OK");
 
-                                        // Enviar un mensaje para actualizar la página (si es necesario)
                                         MessagingCenter.Send(this, "ActualizarPagina");
                                     }
                                     catch (Exception ex)
                                     {
-                                        // Capturar y manejar cualquier error durante el proceso
                                         Console.WriteLine($"Error al guardar o abrir el archivo PDF: {ex.Message}");
 
-                                        // Mostrar una alerta con el mensaje de error
                                         await Application.Current.MainPage.DisplayAlert("Error", $"Se ha producido un error: {ex.Message}", "OK");
                                     }
                                 }

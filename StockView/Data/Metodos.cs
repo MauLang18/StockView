@@ -246,14 +246,13 @@ namespace StockView.Data
                         ApiResponse2 apiResponse = JsonConvert.DeserializeObject<ApiResponse2>(resultado);
                         if (apiResponse != null && apiResponse.IsSuccess)
                         {
-                            string token = apiResponse.Data; // Guardar el token en una variable para uso posterior
+                            string token = apiResponse.Data;
                             Console.WriteLine("Token: " + token);
                             return token;
                         }
                         else
                         {
                             string mensaje = apiResponse != null ? apiResponse.Message : "Error desconocido en la respuesta.";
-                            //throw new ApplicationException(mensaje);
                             return mensaje;
                         }
                     }
@@ -283,7 +282,6 @@ namespace StockView.Data
                 {
                     var uri = new Uri($"http://190.113.124.155:9098/Report/Cotizacion/{id.ToString()}");
 
-                    // Agregar el token al encabezado de la solicitud para la autenticación
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
                     HttpResponseMessage response = await client.GetAsync(uri);
@@ -318,7 +316,6 @@ namespace StockView.Data
                 {
                     var uri = new Uri($"http://190.113.124.155:9098/Rol/{Uri.EscapeDataString(id.ToString())}");
 
-                    // Agregar el token a la cabecera de autorización
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
                     HttpResponseMessage response = await client.GetAsync(uri);
@@ -365,7 +362,6 @@ namespace StockView.Data
                 {
                     var uri = new Uri($"http://190.113.124.155:9098/Usuario/User?user={Uri.EscapeDataString(user)}");
 
-                    // Agregar el token a la cabecera de autorización
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
                     HttpResponseMessage response = await client.GetAsync(uri);
@@ -673,7 +669,6 @@ namespace StockView.Data
             {
                 using (HttpClient client = new HttpClient(await GetInsecureHandler()))
                 {
-                    // Construir la URL con los parámetros
                     var uriBuilder = new UriBuilder("http://190.113.124.155:9098/Pedido/Estado");
                     var query = HttpUtility.ParseQueryString(uriBuilder.Query);
                     query["codigoCliente"] = codigoCliente;
