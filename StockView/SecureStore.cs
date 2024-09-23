@@ -1,5 +1,4 @@
-﻿using StockView.Model;
-using System;
+﻿using System;
 using System.Globalization;
 using System.Threading.Tasks;
 using Xamarin.Essentials;
@@ -13,8 +12,9 @@ public class SecureStore
     private const string DrainsaKey = "Drainsa";
     private const string MotornovaKey = "Motornova";
     private const string DespachoKey = "Despacho";
+    private const string InventarioKey = "false";
 
-    public async Task StoreAuthTokenAsync(string token, DateTime expiryTime, string priv, string user, string motornova, string drainsa, string despacho)
+    public async Task StoreAuthTokenAsync(string token, DateTime expiryTime, string priv, string user, string motornova, string drainsa, string despacho, string inventario)
     {
         await SecureStorage.SetAsync(AuthTokenKey, token);
         await SecureStorage.SetAsync(ExpiryDateKey, expiryTime.ToString("O"));
@@ -23,6 +23,7 @@ public class SecureStore
         await SecureStorage.SetAsync(DrainsaKey, drainsa);
         await SecureStorage.SetAsync(MotornovaKey, motornova);
         await SecureStorage.SetAsync(DespachoKey, despacho);
+        await SecureStorage.SetAsync(InventarioKey, inventario);
     }
 
     public async Task<string> ReadAuthTokenAsync()
@@ -83,6 +84,17 @@ public class SecureStore
     public async Task<string> ReadMotornovaAsync()
     {
         string token = await SecureStorage.GetAsync(MotornovaKey);
+        if (string.IsNullOrEmpty(token))
+        {
+            return null;
+        }
+
+        return token;
+    }
+
+    public async Task<string> ReadInventarioAsync()
+    {
+        string token = await SecureStorage.GetAsync(InventarioKey);
         if (string.IsNullOrEmpty(token))
         {
             return null;

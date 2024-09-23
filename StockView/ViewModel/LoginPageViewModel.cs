@@ -18,6 +18,7 @@ namespace StockView.ViewModel
         string _Drainsa;
         string _Motornova;
         string _Despacho;
+        string _Inventario;
         private SecureStore _secureStore;
         #endregion
         #region CONSTRUCTOR
@@ -43,6 +44,8 @@ namespace StockView.ViewModel
 
             string motornova = await _secureStore.ReadMotornovaAsync();
 
+            string inventario = await _secureStore.ReadInventarioAsync();
+
             if (string.IsNullOrEmpty(data))
             {
                 Console.WriteLine("No hay token almacenado.");
@@ -59,7 +62,7 @@ namespace StockView.ViewModel
                 else
                 {
                     Console.WriteLine("El token es válido.");
-                    await Navigation.PushAsync(new MainPage(data, privilegios, user, despacho, drainsa, motornova));
+                    await Navigation.PushAsync(new MainPage(data, privilegios, user, despacho, drainsa, motornova, inventario));
                 }
             }
         }
@@ -108,16 +111,21 @@ namespace StockView.ViewModel
             get { return _Despacho; }
             set { SetValue(ref _Despacho, value); }
         }
+        public string Inventario
+        {
+            get { return _Inventario; }
+            set { SetValue(ref _Inventario, value); }
+        }
         #endregion
         #region PROCESOS
         public async Task Ingresar()
         {
-            Data = await Metodos.Login(Usuario , Password);
+            Data = await Metodos.Login(Usuario, Password);
             DateTime fechaGuardado = DateTime.Now;
 
             if (Data == "El usuario y/o contraseña es incorrecta, compruébala.")
             {
-                await DisplayAlert("No se pudo ingresar",Data,"OK");
+                await DisplayAlert("No se pudo ingresar", Data, "OK");
             }
             else
             {
@@ -127,14 +135,20 @@ namespace StockView.ViewModel
                 Motornova = priv.Motornova.ToString();
                 Drainsa = priv.Drainsa.ToString();
                 Despacho = rol.Despacho.ToString();
-                await _secureStore.StoreAuthTokenAsync(Data, fechaGuardado, Privilegios, Usuario, Motornova, Drainsa, Despacho);
-                await Navigation.PushAsync(new MainPage(Data, Privilegios, Usuario, Despacho, Drainsa, Motornova));
+
+                if (rol.Rol == 4)
+                {
+                    Inventario = "true";
+                }
+
+                await _secureStore.StoreAuthTokenAsync(Data, fechaGuardado, Privilegios, Usuario, Motornova, Drainsa, Despacho, Inventario);
+                await Navigation.PushAsync(new MainPage(Data, Privilegios, Usuario, Despacho, Drainsa, Motornova, Inventario));
             }
         }
 
         public void ProcesoSimple()
         {
-            
+
         }
         #endregion
         #region COMANDOS

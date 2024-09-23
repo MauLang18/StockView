@@ -23,6 +23,7 @@ namespace StockView.ViewModel
         string Despacho;
         string Drainsa;
         string Motornova;
+        string Inventario;
         private SecureStore _secureStore;
         private bool _IsAscending = false;
         public string SortIcon => _IsAscending ? "asc.png" : "desc.png";
@@ -31,7 +32,7 @@ namespace StockView.ViewModel
         #endregion
 
         #region CONSTRUCTOR
-        public ListArticulosPageViewModel(INavigation navigation, string token, string privilegios, string user, string despacho, string drainsa, string motornova)
+        public ListArticulosPageViewModel(INavigation navigation, string token, string privilegios, string user, string despacho, string drainsa, string motornova, string inventario)
         {
             Navigation = navigation;
             Token = token;
@@ -40,6 +41,7 @@ namespace StockView.ViewModel
             Drainsa = drainsa;
             Motornova = motornova;
             Privilegios = privilegios;
+            Inventario = inventario;
             _secureStore = new SecureStore();
 
             MessagingCenter.Subscribe<CarritoCompraPageViewModel>(this, "ActualizarPagina", async (sender) =>
@@ -53,8 +55,8 @@ namespace StockView.ViewModel
         public string Desc
         {
             get { return _Desc; }
-            set 
-            { 
+            set
+            {
                 SetValue(ref _Desc, value);
                 OnPropertyChanged();
                 BuscarCommand.Execute(null);
@@ -94,7 +96,9 @@ namespace StockView.ViewModel
         public bool IsAscending
         {
             get { return _IsAscending; }
-            set { SetValue(ref _IsAscending, value);
+            set
+            {
+                SetValue(ref _IsAscending, value);
                 OnPropertyChanged(nameof(SortIcon));
             }
         }
@@ -376,6 +380,12 @@ namespace StockView.ViewModel
 
         public async Task More(Articulo selectedArticulo)
         {
+            if (Inventario == "true")
+            {
+                await DisplayAlert("Modo Inventario", "Actualmente solo puedes ver el inventario, no es posible agregar productos al carrito.", "OK");
+                return; // Salimos del método sin permitir agregar al carrito.
+            }
+
             if (selectedArticulo.IsCarrito)
             {
                 await DisplayAlert("Ya tienes el producto en el carrito", Data, "OK");

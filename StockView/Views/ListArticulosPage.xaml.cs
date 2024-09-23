@@ -1,8 +1,6 @@
-﻿using StockView.Data;
-using StockView.Model;
+﻿using StockView.Model;
 using StockView.ViewModel;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Threading.Tasks;
@@ -15,10 +13,10 @@ namespace StockView.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ListArticulosPage : ContentPage
     {
-        public ListArticulosPage(string token, string privilegios, string user, string despacho, string drainsa, string motornova)
+        public ListArticulosPage(string token, string privilegios, string user, string despacho, string drainsa, string motornova, string inventario)
         {
             InitializeComponent();
-            BindingContext = new ListArticulosPageViewModel(Navigation, token, privilegios, user, despacho, drainsa, motornova);
+            BindingContext = new ListArticulosPageViewModel(Navigation, token, privilegios, user, despacho, drainsa, motornova, inventario);
             txtDescripcion.Completed += OnDescripcionEntryCompleted;
 
             NavigationPage.SetHasNavigationBar(this, false);
@@ -35,7 +33,7 @@ namespace StockView.Views
 
         private async Task CloseAnimation(View view, uint length = 250)
         {
-            
+
             _ = view.FadeTo(0, length);
             await view.RotateXTo(-90, length);
             view.IsVisible = false;
