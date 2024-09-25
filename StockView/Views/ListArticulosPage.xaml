@@ -415,7 +415,7 @@
                                                            TextColor="Black"
                                                            FontSize="16.5"
                                                            FontAttributes="Bold"/>
-                                                    <Label Text="{Binding Precio}"
+                                                    <Label Text="{Binding PrecioFormateado}"
                                                            TextColor="Black"
                                                            FontSize="16.5"
                                                            Opacity="0.85"/>
@@ -425,7 +425,7 @@
                                                            TextColor="Black"
                                                            FontSize="16.5"
                                                            FontAttributes="Bold"/>
-                                                    <Label Text="{Binding Total}"
+                                                    <Label Text="{Binding TotalFormateado}"
                                                            TextColor="Black"
                                                            FontSize="16.5"
                                                            Opacity="0.85"/>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 
 namespace StockView.Model
 {
@@ -24,11 +25,35 @@ namespace StockView.Model
                     _precio = Math.Round(value, 2);
                     OnPropertyChanged(nameof(Precio));
                     OnPropertyChanged(nameof(Total));
+                    OnPropertyChanged(nameof(PrecioFormateado));
+                    OnPropertyChanged(nameof(TotalFormateado));
                 }
             }
         }
 
+        public string PrecioFormateado
+        {
+            get
+            {
+                return string.Format(CultureInfo.InvariantCulture, "{0:N2}", Precio)
+                             .Replace(",", "#")
+                             .Replace(".", ",")
+                             .Replace("#", ".");
+            }
+        }
+
         public decimal Total => Math.Round(Precio * 1.13m, 2);
+
+        public string TotalFormateado
+        {
+            get
+            {
+                return string.Format(CultureInfo.InvariantCulture, "{0:N2}", Total)
+                             .Replace(",", "#")
+                             .Replace(".", ",")
+                             .Replace("#", ".");
+            }
+        }
 
         public int Count
         {
